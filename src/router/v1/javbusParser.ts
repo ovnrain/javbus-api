@@ -178,9 +178,10 @@ export function convertMagnetsHTML(html: string) {
       );
       const title = tr.querySelector('td a')?.textContent.trim() ?? '';
       const size = tr.querySelector('td:nth-child(2) a')?.textContent.trim() ?? null;
+      const numberSize = size ? bytes(size) : null;
       const shareDate = tr.querySelector('td:nth-child(3) a')?.textContent.trim() ?? null;
 
-      return { link, isHD, title, size, shareDate, hasSubtitle };
+      return { link, isHD, title, size, numberSize, shareDate, hasSubtitle };
     })
     .filter(({ link, title }) => link && title)
     .sort((a, b) => bytes.parse(b.size ?? '') - bytes.parse(a.size ?? ''));

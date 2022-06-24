@@ -35,6 +35,7 @@ export interface Magnet {
   isHD: boolean;
   title: string;
   size: string | null;
+  numberSize: number | null;
   shareDate: string | null;
   hasSubtitle: boolean;
 }

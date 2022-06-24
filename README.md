@@ -181,6 +181,8 @@ location /api {
       "isHD": true,
       "title": "SSIS-406-C",
       "size": "5.46GB",
+      // bytes
+      "numberSize": 5862630359,
       "shareDate": "2022-05-20",
       // 是否包含字幕
       "hasSubtitle": true

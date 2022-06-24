@@ -6,7 +6,7 @@
   "homepage": "https://github.com/ovnrain/javbus-api#readme",
   "scripts": {
     "start": "node dist/server.js",
-    "dev": "ts-node-dev src/server.ts",
+    "dev": "rm -rf dist && ts-node-dev src/server.ts",
     "build": "tsc",
     "format": "prettier --write 'src/**/*.ts'"
   },

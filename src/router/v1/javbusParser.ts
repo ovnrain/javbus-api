@@ -73,7 +73,8 @@ function parseMoviesPage(pageHTML: string, filter?: (movie: Movie) => boolean): 
 export function parseStarInfo(pageHTML: string, starId: string): StarInfo {
   const doc = parse(pageHTML).querySelector('#waterfall .item .avatar-box');
 
-  const avatar = doc?.querySelector('.photo-frame img')?.getAttribute('src') ?? null;
+  const avatar =
+    formatImageUrl(doc?.querySelector('.photo-frame img')?.getAttribute('src')) ?? null;
   const name = doc?.querySelector('.photo-info .pb10')?.textContent ?? '';
 
   const infos = doc?.querySelectorAll('.photo-info p');

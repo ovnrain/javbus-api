@@ -59,15 +59,17 @@ function parseMoviesPage(pageHTML: string, filter?: (movie: Movie) => boolean): 
     .filter(({ id }) => Boolean(id))
     .filter((movie) => filter?.(movie) ?? true);
 
-  const currentPage = doc.querySelector('.pagination .active a')?.textContent ?? '1';
+  const currentPage = Number(doc.querySelector('.pagination .active a')?.textContent ?? '1');
   const pages = doc
     .querySelectorAll('.pagination li a')
     .map((item) => item.textContent)
-    .filter((n) => PAGE_REG.test(n));
+    .filter((n) => PAGE_REG.test(n))
+    .map(Number);
 
   const hasNextPage = doc.querySelector('.pagination li #next') !== null;
+  const nextPage = hasNextPage ? currentPage + 1 : null;
 
-  return { movies, pagination: { currentPage, hasNextPage, pages } };
+  return { movies, pagination: { currentPage, hasNextPage, nextPage, pages } };
 }
 
 export function parseStarInfo(pageHTML: string, starId: string): StarInfo {

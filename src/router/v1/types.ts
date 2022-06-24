@@ -70,9 +70,10 @@ export interface MovieDetail {
 }
 
 export interface Pagination {
-  currentPage: string;
+  currentPage: number;
   hasNextPage: boolean;
-  pages: string[];
+  nextPage: number | null;
+  pages: number[];
 }
 
 export interface MoviesPage {

@@ -6,7 +6,7 @@ import {
   getMoviesByStarAndPage,
   getMoviesByTagAndPage,
 } from '../javbusParser';
-import { Movie, MovieTag, StarInfo } from '../types';
+import { Movie, MovieTag, Pagination, StarInfo } from '../types';
 import {
   isValidMoviesPageQuery,
   isValidMoviesStarAndPageQuery,
@@ -33,17 +33,21 @@ router.get('/', async (req, res, next) => {
   const tagId = isValidMoviesTagAndPageQuery(query) ? query.tagId : undefined;
 
   try {
-    let response: { page: number; movies: Movie[]; star?: StarInfo; tag?: MovieTag };
+    let response: { movies: Movie[]; pagination: Pagination; star?: StarInfo; tag?: MovieTag };
 
     if (starId) {
-      const { movies, starInfo: star } = await getMoviesByStarAndPage(starId, page, false);
-      response = { page: numberPage, movies, star };
+      const {
+        movies,
+        pagination,
+        starInfo: star,
+      } = await getMoviesByStarAndPage(starId, page, false);
+      response = { movies, pagination, star };
     } else if (tagId) {
-      const { movies, tagInfo: tag } = await getMoviesByTagAndPage(tagId, page);
-      response = { page: numberPage, movies, tag };
+      const { movies, pagination, tagInfo: tag } = await getMoviesByTagAndPage(tagId, page);
+      response = { movies, pagination, tag };
     } else {
-      const { movies } = await getMoviesByPage(page);
-      response = { page: numberPage, movies };
+      const { movies, pagination } = await getMoviesByPage(page);
+      response = { movies, pagination };
     }
 
     res.json(response);

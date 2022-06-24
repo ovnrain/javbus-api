@@ -10,9 +10,9 @@
 
 ## 使用
 
-**注意：本程序仅仅是 JavBus 的一个在线转换服务，每个请求会实时请求 JavBus 对应的网页，解析之后返回对应的 json 数据**
+**注意：本程序仅仅是 JavBus 的一个在线转换服务，因此不依赖数据库服务，每个请求会实时请求 JavBus 对应的网页，解析之后返回对应的 json 数据**
 
-因此需要您保证部署的机器有访问 JavBus 的能力，否则不会返回结果
+所以需要您保证部署的机器有访问 JavBus 的能力，否则不会返回结果
 
 ### Docker 部署（推荐）
 
@@ -22,8 +22,6 @@ $ docker run --name javbus-api -d --restart unless-stopped -p 8080:3000 javbus-a
 ```
 
 启动一个 Docker 容器，并将其名称设置为 `javbus-api`，端口设置为 `8080`，并且自动重启
-
-在浏览器中访问 [http://localhost:8080/api/v1/movies?page=1&magnet=exist](http://localhost:8080/api/v1/movies?page=1&magnet=exist) 即可获取结果
 
 ### node.js 部署
 
@@ -35,6 +33,8 @@ $ npm run build
 $ echo "PORT=8080" > .env # 可选，默认端口为 `3000`
 $ npm start
 ```
+
+在浏览器中访问 [http://localhost:8080/api/v1/movies?page=1&magnet=exist](http://localhost:8080/api/v1/movies?page=1&magnet=exist) 即可获取结果
 
 以上两种方式都可以配合 nginx 代理一起使用，以实现 https 访问等，例如
 
@@ -158,7 +158,10 @@ location /api {
     "publisherId": "9x",
     "publisherName": "S1 NO.1 STYLE"
   },
-  "series": null,
+  "series": {
+    "seriesId": "xx",
+    "seriesName": "xx"
+  },
   "tags": [
     {
       "tagId": "e",
@@ -194,7 +197,9 @@ location /api {
     {
       "alt": "SSIS-406 才色兼備な女上司が思う存分に羽目を外し僕を連れ回す【週末限定】裏顔デート 葵つかさ - 樣品圖像 - 1",
       "id": "8xnc_1",
+      // 大图
       "src": "https://pics.dmm.co.jp/digital/video/ssis00406/ssis00406jp-1.jpg",
+      // 缩略图
       "thumbnail": "https://www.javbus.com/pics/sample/8xnc_1.jpg"
     }
     // ...

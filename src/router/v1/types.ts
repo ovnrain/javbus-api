@@ -1,5 +1,6 @@
 export interface MoviesPageQuery {
   [key: string]: string;
+  magnet: 'all' | 'exist';
   page: string;
 }
 

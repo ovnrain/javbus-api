@@ -27,8 +27,7 @@ router.get('/', async (req, res, next) => {
     return next(new createError.BadRequest());
   }
 
-  const page = query.page;
-  const numberPage = Number(page);
+  const { magnet, page } = query;
   const starId = isValidMoviesStarAndPageQuery(query) ? query.starId : undefined;
   const tagId = isValidMoviesTagAndPageQuery(query) ? query.tagId : undefined;
 
@@ -40,13 +39,13 @@ router.get('/', async (req, res, next) => {
         movies,
         pagination,
         starInfo: star,
-      } = await getMoviesByStarAndPage(starId, page, false);
+      } = await getMoviesByStarAndPage(starId, page, magnet, false);
       response = { movies, pagination, star };
     } else if (tagId) {
-      const { movies, pagination, tagInfo: tag } = await getMoviesByTagAndPage(tagId, page);
+      const { movies, pagination, tagInfo: tag } = await getMoviesByTagAndPage(tagId, page, magnet);
       response = { movies, pagination, tag };
     } else {
-      const { movies, pagination } = await getMoviesByPage(page);
+      const { movies, pagination } = await getMoviesByPage(page, magnet);
       response = { movies, pagination };
     }
 

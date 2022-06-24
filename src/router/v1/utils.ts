@@ -5,7 +5,11 @@ import type { MoviesPageQuery, MoviesStarAndPageQuery, MoviesTagAndPageQuery } f
 export const PAGE_REG = /^[1-9]\d*$/;
 
 export function isValidMoviesPageQuery(query: ParsedQs): query is MoviesPageQuery {
-  return typeof query.page === 'string' && PAGE_REG.test(query.page);
+  return (
+    typeof query.page === 'string' &&
+    PAGE_REG.test(query.page) &&
+    (query.magnet === 'all' || query.magnet === 'exist')
+  );
 }
 
 export function isValidMoviesStarAndPageQuery(query: ParsedQs): query is MoviesStarAndPageQuery {

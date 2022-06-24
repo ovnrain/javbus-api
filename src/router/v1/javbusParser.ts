@@ -110,10 +110,12 @@ export function parseTagInfo(pageHTML: string, tagId: string): MovieTag {
   return { tagId, tagName };
 }
 
-export async function getMoviesByPage(page: string): Promise<MoviesPage> {
+export async function getMoviesByPage(page: string, magnet?: 'all' | 'exist'): Promise<MoviesPage> {
   const url = page === '1' ? JAVBUS : `${JAVBUS}/page/${page}`;
 
-  const res = await client(url).text();
+  const res = await client(url, {
+    headers: { Cookie: `existmag=${magnet === 'exist' ? 'mag' : 'all'}` },
+  }).text();
 
   return parseMoviesPage(res);
 }
@@ -121,11 +123,14 @@ export async function getMoviesByPage(page: string): Promise<MoviesPage> {
 export async function getMoviesByStarAndPage(
   starId: string,
   page = '1',
+  magnet?: 'all' | 'exist',
   isViewSingle?: boolean
 ): Promise<StarMoviesPage> {
   const url = page === '1' ? `${JAVBUS}/star/${starId}` : `${JAVBUS}/star/${starId}/${page}`;
 
-  const res = await client(url).text();
+  const res = await client(url, {
+    headers: { Cookie: `existmag=${magnet === 'exist' ? 'mag' : 'all'}` },
+  }).text();
 
   const starInfo = parseStarInfo(res, starId);
   const moviesPage = parseMoviesPage(res, (movie) =>
@@ -135,10 +140,16 @@ export async function getMoviesByStarAndPage(
   return { ...moviesPage, starInfo };
 }
 
-export async function getMoviesByTagAndPage(tagId: string, page = '1'): Promise<TagMoviesPage> {
+export async function getMoviesByTagAndPage(
+  tagId: string,
+  page = '1',
+  magnet?: 'all' | 'exist'
+): Promise<TagMoviesPage> {
   const url = page === '1' ? `${JAVBUS}/genre/${tagId}` : `${JAVBUS}/genre/${tagId}/${page}`;
 
-  const res = await client(url).text();
+  const res = await client(url, {
+    headers: { Cookie: `existmag=${magnet === 'exist' ? 'mag' : 'all'}` },
+  }).text();
 
   const moviesPage = parseMoviesPage(res);
   const tagInfo = parseTagInfo(res, tagId);

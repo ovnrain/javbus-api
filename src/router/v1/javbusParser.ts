@@ -298,6 +298,11 @@ export async function getMovieDetail(id: string): Promise<MovieDetail> {
     publisherId: publisherInfo.id,
     publisherName: publisherInfo.title,
   };
+  const seriesInfo = linkInfoFinder(infos, '系列:', 'series');
+  const series = seriesInfo && {
+    seriesId: seriesInfo.id,
+    seriesName: seriesInfo.title,
+  };
   const tags = multipleInfoFinder<MovieTag>(
     infos,
     'genre',
@@ -356,6 +361,7 @@ export async function getMovieDetail(id: string): Promise<MovieDetail> {
     director,
     producer,
     publisher,
+    series,
     tags,
     stars,
     magnets,

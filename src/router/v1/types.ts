@@ -59,6 +59,7 @@ export interface MovieDetail {
   director: { directorId: string; directorName: string } | null;
   producer: { producerId: string; producerName: string } | null;
   publisher: { publisherId: string; publisherName: string } | null;
+  series: { seriesId: string; seriesName: string } | null;
   tags: MovieTag[];
   stars: MovieStar[];
   magnets: Magnet[];

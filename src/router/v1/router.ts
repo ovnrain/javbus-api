@@ -1,9 +1,8 @@
 import { Router } from 'express';
+import movies from './routes/movies';
 
 const router = Router();
 
-router.get('/movies', (req, res) => {
-  res.json([]);
-});
+router.use('/movies', movies);
 
 export default router;

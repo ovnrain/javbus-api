@@ -2,9 +2,10 @@ import 'dotenv/config';
 import http from 'http';
 import express, { ErrorRequestHandler } from 'express';
 import createError from 'http-errors';
+import { RequestError as GotRequestError } from 'got';
 import type { ListenError, RequestError } from './types';
 import { normalizePort } from './utils';
-import v1Router from './router/v1';
+import v1Router from './router/v1/router';
 
 const PORT = normalizePort(process.env.PORT || '3000');
 const app = express();
@@ -20,7 +21,9 @@ app.use((req, res, next) => {
 });
 
 const errorHandler: ErrorRequestHandler = (err: RequestError, req, res, next) => {
-  res.status(err.status || 500).json({ error: err.message || 'unknown server error' });
+  res
+    .status(err instanceof GotRequestError ? err.response?.statusCode || 500 : 500)
+    .json({ error: err.message || 'Unknown Error' });
 };
 
 app.use(errorHandler);

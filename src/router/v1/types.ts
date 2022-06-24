@@ -67,8 +67,6 @@ export interface MovieDetail {
   magnets: Magnet[];
   imageSize: ImageSize | null;
   samples: Sample[];
-  gid: string | null;
-  uc: string | null;
 }
 
 export interface Pagination {

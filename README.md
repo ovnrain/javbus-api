@@ -189,7 +189,7 @@ location /api {
     }
     // ...
   ],
-  // 影片截图
+  // 影片预览图
   "samples": [
     {
       "alt": "SSIS-406 才色兼備な女上司が思う存分に羽目を外し僕を連れ回す【週末限定】裏顔デート 葵つかさ - 樣品圖像 - 1",
@@ -198,8 +198,6 @@ location /api {
       "thumbnail": "https://www.javbus.com/pics/sample/8xnc_1.jpg"
     }
     // ...
-  ],
-  "gid": "50217198406",
-  "uc": "0"
+  ]
 }
 ```

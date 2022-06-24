@@ -380,7 +380,5 @@ export async function getMovieDetail(id: string): Promise<MovieDetail> {
     stars,
     magnets,
     samples,
-    gid,
-    uc,
   };
 }

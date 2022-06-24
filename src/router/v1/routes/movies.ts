@@ -1,20 +1,52 @@
 import { Router } from 'express';
-import { getMovieDetail, getMoviesByPage } from '../javbusParser';
-import { isValidMoviesQuery } from '../utils';
+import createError from 'http-errors';
+import {
+  getMovieDetail,
+  getMoviesByPage,
+  getMoviesByStarAndPage,
+  getMoviesByTagAndPage,
+} from '../javbusParser';
+import { Movie, MovieTag, StarInfo } from '../types';
+import {
+  isValidMoviesPageQuery,
+  isValidMoviesStarAndPageQuery,
+  isValidMoviesTagAndPageQuery,
+} from '../utils';
 
 const router = Router();
 
 router.get('/', async (req, res, next) => {
-  if (!isValidMoviesQuery(req.query)) {
-    return res.status(400).json({ error: 'Invalid Query' });
+  const query = req.query;
+
+  if (
+    (!isValidMoviesPageQuery(query) &&
+      !isValidMoviesStarAndPageQuery(query) &&
+      !isValidMoviesTagAndPageQuery(query)) ||
+    (isValidMoviesStarAndPageQuery(query) && isValidMoviesTagAndPageQuery(query))
+  ) {
+    return next(new createError.BadRequest());
   }
 
-  const page = req.query.page;
+  const page = query.page;
+  const numberPage = Number(page);
+  const starId = isValidMoviesStarAndPageQuery(query) ? query.starId : undefined;
+  const tagId = isValidMoviesTagAndPageQuery(query) ? query.tagId : undefined;
 
   try {
-    const { movies } = await getMoviesByPage(page);
+    let response: { page: number; movies: Movie[]; star?: StarInfo; tag?: MovieTag };
 
-    res.json({ page: parseInt(page, 10), result: movies });
+    if (starId) {
+      const { movies, starInfo: star } = await getMoviesByStarAndPage(starId, page, false);
+      response = { page: numberPage, movies, star };
+    } else if (tagId) {
+      const { movies, tagInfo: tag } = await getMoviesByTagAndPage(tagId, page);
+      response = { page: numberPage, movies, tag };
+    } else {
+      const { movies } = await getMoviesByPage(page);
+      response = { page: numberPage, movies };
+    }
+
+    res.json(response);
   } catch (e) {
     next(e);
   }
@@ -28,7 +60,8 @@ router.get('/:id', async (req, res, next) => {
 
     res.json(movie);
   } catch (e) {
-    next(e);
+    // 格式化一下错误
+    next(e instanceof Error && e.message.includes('404') ? new createError.NotFound() : e);
   }
 });
 

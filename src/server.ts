@@ -1,9 +1,9 @@
 import 'dotenv/config';
 import http from 'http';
 import express, { ErrorRequestHandler } from 'express';
-import createError from 'http-errors';
-import { RequestError as GotRequestError } from 'got';
-import type { ListenError, RequestError } from './types';
+import createError, { isHttpError } from 'http-errors';
+import { RequestError } from 'got';
+import type { ListenError } from './types';
 import { normalizePort } from './utils';
 import v1Router from './router/v1/router';
 
@@ -17,12 +17,18 @@ app.set('trust proxy', true);
 app.use('/api/v1', v1Router);
 
 app.use((req, res, next) => {
-  next(createError(404));
+  next(new createError.NotFound());
 });
 
-const errorHandler: ErrorRequestHandler = (err: RequestError, req, res, next) => {
+const errorHandler: ErrorRequestHandler = (err: Error, req, res, next) => {
   res
-    .status(err instanceof GotRequestError ? err.response?.statusCode || 500 : 500)
+    .status(
+      err instanceof RequestError
+        ? err.response?.statusCode || 500
+        : isHttpError(err)
+        ? err.statusCode
+        : 500
+    )
     .json({ error: err.message || 'Unknown Error' });
 };
 

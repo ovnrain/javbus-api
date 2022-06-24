@@ -1,6 +1,14 @@
-export interface MoviesQuery {
+export interface MoviesPageQuery {
   [key: string]: string;
   page: string;
+}
+
+export interface MoviesStarAndPageQuery extends MoviesPageQuery {
+  starId: string;
+}
+
+export interface MoviesTagAndPageQuery extends MoviesPageQuery {
+  tagId: string;
 }
 
 export interface Movie {

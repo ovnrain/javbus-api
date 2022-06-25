@@ -24,14 +24,16 @@ router.get('/', async (req, res, next) => {
     (!isValidMoviesPageQuery(query) &&
       !isValidMoviesStarAndPageQuery(query) &&
       !isValidMoviesTagAndPageQuery(query)) ||
-    (isValidMoviesStarAndPageQuery(query) && isValidMoviesTagAndPageQuery(query))
+    (isValidMoviesStarAndPageQuery(query) && isValidMoviesTagAndPageQuery(query)) ||
+    (isValidMoviesStarAndPageQuery(query) && !query.starId.trim().length) ||
+    (isValidMoviesTagAndPageQuery(query) && !query.tagId.trim().length)
   ) {
     return next(new createError.BadRequest());
   }
 
   const { magnet, page } = query;
-  const starId = isValidMoviesStarAndPageQuery(query) ? query.starId : undefined;
-  const tagId = isValidMoviesTagAndPageQuery(query) ? query.tagId : undefined;
+  const starId = isValidMoviesStarAndPageQuery(query) ? query.starId.trim() : undefined;
+  const tagId = isValidMoviesTagAndPageQuery(query) ? query.tagId.trim() : undefined;
 
   try {
     let response: { movies: Movie[]; pagination: Pagination; star?: StarInfo; tag?: MovieTag };
@@ -60,14 +62,14 @@ router.get('/', async (req, res, next) => {
 router.get('/search', async (req, res, next) => {
   const query = req.query;
 
-  if (!isValidMoviesSearchQuery(query)) {
+  if (!isValidMoviesSearchQuery(query) || !query.keyword.trim().length) {
     return next(new createError.BadRequest());
   }
 
   const { keyword, magnet, page } = query;
 
   try {
-    const response = await getMoviesByKeywordAndPage(keyword, page, magnet);
+    const response = await getMoviesByKeywordAndPage(keyword.trim(), page, magnet);
     res.json(response);
   } catch (e) {
     if (e instanceof Error && e.message.includes('404')) {

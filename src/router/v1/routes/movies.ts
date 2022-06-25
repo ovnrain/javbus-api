@@ -2,6 +2,7 @@ import { Router } from 'express';
 import createError from 'http-errors';
 import {
   getMovieDetail,
+  getMoviesByKeywordAndPage,
   getMoviesByPage,
   getMoviesByStarAndPage,
   getMoviesByTagAndPage,
@@ -9,6 +10,7 @@ import {
 import { Movie, MovieTag, Pagination, StarInfo } from '../types';
 import {
   isValidMoviesPageQuery,
+  isValidMoviesSearchQuery,
   isValidMoviesStarAndPageQuery,
   isValidMoviesTagAndPageQuery,
 } from '../utils';
@@ -52,6 +54,31 @@ router.get('/', async (req, res, next) => {
     res.json(response);
   } catch (e) {
     next(e);
+  }
+});
+
+router.get('/search', async (req, res, next) => {
+  const query = req.query;
+
+  if (!isValidMoviesSearchQuery(query)) {
+    return next(new createError.BadRequest());
+  }
+
+  const { keyword, magnet, page } = query;
+
+  try {
+    const response = await getMoviesByKeywordAndPage(keyword, page, magnet);
+    res.json(response);
+  } catch (e) {
+    if (e instanceof Error && e.message.includes('404')) {
+      res.json({
+        movies: [],
+        pagination: { currentPage: Number(page), hasNextPage: false, nextPage: null, pages: [] },
+        keyword,
+      });
+    } else {
+      next(e);
+    }
   }
 });
 

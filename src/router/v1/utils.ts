@@ -1,6 +1,11 @@
 import type { ParsedQs } from 'qs';
 import { JAVBUS } from './constants';
-import type { MoviesPageQuery, MoviesStarAndPageQuery, MoviesTagAndPageQuery } from './types';
+import type {
+  MoviesPageQuery,
+  MoviesSearchQuery,
+  MoviesStarAndPageQuery,
+  MoviesTagAndPageQuery,
+} from './types';
 
 export const PAGE_REG = /^[1-9]\d*$/;
 
@@ -18,6 +23,15 @@ export function isValidMoviesStarAndPageQuery(query: ParsedQs): query is MoviesS
 
 export function isValidMoviesTagAndPageQuery(query: ParsedQs): query is MoviesTagAndPageQuery {
   return isValidMoviesPageQuery(query) && typeof query.tagId === 'string';
+}
+
+export function isValidMoviesSearchQuery(query: ParsedQs): query is MoviesSearchQuery {
+  return (
+    typeof query.page === 'string' &&
+    PAGE_REG.test(query.page) &&
+    typeof query.keyword === 'string' &&
+    (query.magnet === 'all' || query.magnet === 'exist')
+  );
 }
 
 export function formatImageUrl(url?: string) {

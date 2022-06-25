@@ -13,6 +13,7 @@ import type {
   MovieStar,
   MovieTag,
   Sample,
+  SearchMoviesPage,
   StarInfo,
   StarMoviesPage,
   TagMoviesPage,
@@ -157,6 +158,22 @@ export async function getMoviesByTagAndPage(
   return { ...moviesPage, tagInfo };
 }
 
+export async function getMoviesByKeywordAndPage(
+  keyword: string,
+  page = '1',
+  magnet?: 'all' | 'exist'
+): Promise<SearchMoviesPage> {
+  const url = `${JAVBUS}/search/${encodeURIComponent(keyword)}/${page}&type=1`;
+
+  const res = await client(url, {
+    headers: { Cookie: `existmag=${magnet === 'exist' ? 'mag' : 'all'}` },
+  }).text();
+
+  const moviesPage = parseMoviesPage(res);
+
+  return { ...moviesPage, keyword };
+}
+
 export function convertMagnetsHTML(html: string) {
   const doc = parse(html);
 
@@ -219,15 +236,6 @@ function textInfoFinder(infos: HTMLElement[], text: string, excludeText?: string
     return info?.replace(excludeText, '') ?? null;
   }
   return info;
-}
-
-function linkTextFinder(infos: HTMLElement[], text: string): string | null {
-  return (
-    infos
-      .find((info) => info.querySelector('.header')?.textContent.includes(text))
-      ?.querySelector('a')
-      ?.textContent.trim() ?? null
-  );
 }
 
 function linkInfoFinder(

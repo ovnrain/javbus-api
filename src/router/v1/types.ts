@@ -12,6 +12,13 @@ export interface MoviesTagAndPageQuery extends MoviesPageQuery {
   tagId: string;
 }
 
+export interface MoviesSearchQuery {
+  [key: string]: string;
+  keyword: string;
+  magnet: 'all' | 'exist';
+  page: string;
+}
+
 export interface Movie {
   date: string | null;
   title: string;
@@ -104,4 +111,8 @@ export interface StarMoviesPage extends MoviesPage {
 
 export interface TagMoviesPage extends MoviesPage {
   tagInfo: MovieTag;
+}
+
+export interface SearchMoviesPage extends MoviesPage {
+  keyword: string;
 }

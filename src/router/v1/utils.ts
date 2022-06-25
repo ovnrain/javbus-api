@@ -18,19 +18,26 @@ export function isValidMoviesPageQuery(query: ParsedQs): query is MoviesPageQuer
 }
 
 export function isValidMoviesStarAndPageQuery(query: ParsedQs): query is MoviesStarAndPageQuery {
-  return isValidMoviesPageQuery(query) && typeof query.starId === 'string';
+  return (
+    isValidMoviesPageQuery(query) &&
+    typeof query.starId === 'string' &&
+    query.starId.trim().length > 0
+  );
 }
 
 export function isValidMoviesTagAndPageQuery(query: ParsedQs): query is MoviesTagAndPageQuery {
-  return isValidMoviesPageQuery(query) && typeof query.tagId === 'string';
+  return (
+    isValidMoviesPageQuery(query) &&
+    typeof query.tagId === 'string' &&
+    query.tagId.trim().length > 0
+  );
 }
 
 export function isValidMoviesSearchQuery(query: ParsedQs): query is MoviesSearchQuery {
   return (
-    typeof query.page === 'string' &&
-    PAGE_REG.test(query.page) &&
+    isValidMoviesPageQuery(query) &&
     typeof query.keyword === 'string' &&
-    (query.magnet === 'all' || query.magnet === 'exist')
+    query.keyword.trim().length > 0
   );
 }
 

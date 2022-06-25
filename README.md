@@ -17,8 +17,8 @@
 ### Docker 部署（推荐）
 
 ```shell
-$ docker pull javbus-api
-$ docker run --name javbus-api -d --restart unless-stopped -p 8080:3000 javbus-api
+$ docker pull ovnrain/javbus-api
+$ docker run --name javbus-api -d --restart unless-stopped -p 8080:3000 ovnrain/javbus-api
 ```
 
 启动一个 Docker 容器，并将其名称设置为 `javbus-api`，端口设置为 `8080`，并且自动重启

@@ -121,6 +121,52 @@ location /api {
 }
 ```
 
+### /api/v1/movies/search
+
+搜索影片
+
+#### 参数
+
+- `keyword`: 搜索关键字，**必须**
+- `page`: 页码，**必须**
+- `magnet`: 根据影片是否包含磁力链接筛选，**必须**，可选值为 `all` 或 `exist`。`exist` 表示只返回有磁力链接的影片，`all` 表示返回全部影片
+
+#### 请求举例
+
+    /api/v1/movies/search?keyword=三上&page=1&magnet=exist
+
+搜索关键词为 `三上` 的影片的第一页，只返回有磁力链接的影片
+
+    /api/v1/movies/search?keyword=三上&page=1&magnet=all
+
+搜索关键词为 `三上` 的影片的第一页，包含有磁力链接和无磁力链接的影片
+
+#### 返回举例
+
+```json
+{
+  "movies": [
+    // 影片列表
+    {
+      "date": "2020-08-15",
+      "id": "SSNI-845",
+      "img": "https://www.javbus.com/pics/thumb/7t44.jpg",
+      "title": "彼女の姉は美人で巨乳しかもドS！大胆M性感プレイでなす術もなくヌキまくられるドMな僕。 三上悠亜",
+      "tags": ["高清", "字幕"]
+    }
+    // ...
+  ],
+  // 分页信息
+  "pagination": {
+    "currentPage": 2,
+    "hasNextPage": true,
+    "nextPage": 3,
+    "pages": [1, 2, 3, 4, 5]
+  },
+  "keyword": "三上"
+}
+```
+
 ### /api/v1/movies/{id}
 
 获取影片详情

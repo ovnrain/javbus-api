@@ -56,7 +56,7 @@ export interface Sample {
   alt: string | null;
   id: string;
   thumbnail: string;
-  src: string;
+  src: string | null;
 }
 
 export interface MovieDetail {

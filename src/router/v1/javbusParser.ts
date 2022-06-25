@@ -369,9 +369,9 @@ export async function getMovieDetail(id: string): Promise<MovieDetail> {
     .map<Sample>((box) => {
       const img = box.querySelector('.photo-frame img');
       const thumbnail = formatImageUrl(img?.getAttribute('src')) ?? '';
-      const id = thumbnail.match(/\/pics\/sample\/(.+)\.[a-z]+$/)?.[1] ?? '';
+      const id = thumbnail.match(/\/(?:pics|imgs)\/sample\/(.+)\.[a-z]+$/)?.[1] ?? '';
       const alt = img?.getAttribute('title') ?? null;
-      const src = formatImageUrl(box.getAttribute('href')) ?? '';
+      const src = formatImageUrl(box.getAttribute('href')) ?? null;
       return {
         alt,
         id,
@@ -379,7 +379,7 @@ export async function getMovieDetail(id: string): Promise<MovieDetail> {
         thumbnail,
       };
     })
-    .filter(({ id, src, thumbnail }) => Boolean(id) && Boolean(src) && Boolean(thumbnail));
+    .filter(({ id, src, thumbnail }) => Boolean(id) && Boolean(thumbnail));
 
   return {
     id,

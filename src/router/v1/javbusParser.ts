@@ -251,7 +251,11 @@ function linkInfoFinder(
     return null;
   }
 
-  const id = link.getAttribute('href')?.replace(`${JAVBUS}/${prefix}/`, '') ?? '';
+  const href = link.getAttribute('href');
+  const isUncensored = href?.includes('uncensored') ?? false;
+  const computedPrefix = isUncensored ? `uncensored/${prefix}` : prefix;
+  let id = link.getAttribute('href')?.replace(`${JAVBUS}/${computedPrefix}/`, '') ?? '';
+  id = id && isUncensored ? `uncensored/${id}` : id;
   const title = link.textContent.trim();
 
   if (!id || !title) {
@@ -274,7 +278,11 @@ function multipleInfoFinder<T>(
       ?.querySelectorAll('.genre')
       ?.map((genre) => {
         const node = infoNodeGetter(genre);
-        const infoId = node?.getAttribute('href')?.replace(`${JAVBUS}/${type}/`, '') ?? '';
+        const href = node?.getAttribute('href');
+        const isUncensored = href?.includes('uncensored') ?? false;
+        const computedType = isUncensored ? `uncensored/${type}` : type;
+        let infoId = node?.getAttribute('href')?.replace(`${JAVBUS}/${computedType}/`, '') ?? '';
+        infoId = infoId && isUncensored ? `uncensored/${infoId}` : infoId;
         const infoName = node?.textContent ?? '';
         return { infoId, infoName };
       })

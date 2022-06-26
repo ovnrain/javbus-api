@@ -2,6 +2,25 @@
 
 一个自我托管的 [JavBus](https://www.javbus.com) API 服务
 
+## 目录
+
+- [用途](#用途)
+- [使用](#使用)
+  - [Docker 部署（推荐）](#docker-部署推荐)
+  - [node.js 部署](#nodejs-部署)
+- [API 文档](#api-文档)
+  - [/api/v1/movies](#apiv1movies)
+    - [参数](#参数)
+    - [请求举例](#请求举例)
+    - [返回举例](#返回举例)
+  - [/api/v1/movies/search](#apiv1moviessearch)
+    - [参数](#参数-1)
+    - [请求举例](#请求举例-1)
+    - [返回举例](#返回举例-1)
+  - [/api/v1/movies/{id}](#apiv1moviesid)
+    - [请求举例](#请求举例-2)
+    - [返回举例](#返回举例-2)
+
 ## 用途
 
 - 可以用来搭建自己的视频信息网站

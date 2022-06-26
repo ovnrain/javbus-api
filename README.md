@@ -1,8 +1,8 @@
-# JavBus API
+# JavBus API <!-- omit in toc -->
 
 一个自我托管的 [JavBus](https://www.javbus.com) API 服务
 
-## 目录
+## 目录 <!-- omit in toc -->
 
 - [用途](#用途)
 - [使用](#使用)

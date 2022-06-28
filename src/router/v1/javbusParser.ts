@@ -379,7 +379,7 @@ export async function getMovieDetail(id: string): Promise<MovieDetail> {
         thumbnail,
       };
     })
-    .filter(({ id, src, thumbnail }) => Boolean(id) && Boolean(thumbnail));
+    .filter(({ id, thumbnail }) => Boolean(id) && Boolean(thumbnail));
 
   return {
     id,

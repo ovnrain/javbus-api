@@ -11,7 +11,7 @@ RUN npm ci
 COPY tsconfig.json ./
 COPY src src
 
-RUN npm run build && npm prune --production
+RUN npm run build && npm i --omit=dev
 
 # run stage
 FROM node:lts-alpine

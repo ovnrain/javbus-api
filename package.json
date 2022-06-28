@@ -9,7 +9,8 @@
     "dev": "rm -rf dist && ts-node-dev src/server.ts",
     "build": "tsc",
     "format": "prettier --write 'src/**/*.ts'",
-    "lint": "eslint src/**/*.ts"
+    "lint": "eslint src/**/*.ts",
+    "prepare": "husky install"
   },
   "keywords": [
     "javbus",
@@ -34,6 +35,8 @@
     "eslint": "^8.18.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.1.0",
+    "husky": "^8.0.0",
+    "lint-staged": "^13.0.3",
     "prettier": "^2.7.1",
     "ts-node": "^10.8.1",
     "ts-node-dev": "^2.0.0",

@@ -15,6 +15,7 @@
   },
   "plugins": ["@typescript-eslint"],
   "rules": {
-    "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^next$" }]
+    "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^next$" }],
+    "prettier/prettier": "warn"
   }
 }

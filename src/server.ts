@@ -21,15 +21,17 @@ app.use((req, res, next) => {
 });
 
 const errorHandler: ErrorRequestHandler = (err: Error, req, res, next) => {
-  res
-    .status(
-      err instanceof RequestError
-        ? err.response?.statusCode || 500
-        : isHttpError(err)
-        ? err.statusCode
-        : 500
-    )
-    .json({ error: err.message || 'Unknown Error' });
+  let status: number;
+
+  if (err instanceof RequestError) {
+    status = err.response?.statusCode || 500;
+  } else if (isHttpError(err)) {
+    status = err.statusCode;
+  } else {
+    status = 500;
+  }
+
+  res.status(status).json({ error: err.message || 'Unknown Error' });
 };
 
 app.use(errorHandler);

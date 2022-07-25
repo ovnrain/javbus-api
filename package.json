@@ -30,6 +30,7 @@
     "@types/http-errors": "^1.8.2",
     "@types/node": "^18.0.3",
     "@types/probe-image-size": "^7.2.0",
+    "@types/qs": "^6.9.7",
     "@typescript-eslint/eslint-plugin": "^5.30.6",
     "@typescript-eslint/parser": "^5.30.6",
     "eslint": "^8.19.0",
@@ -52,6 +53,7 @@
     "got": "^11.8.5",
     "http-errors": "^2.0.0",
     "node-html-parser": "^5.3.3",
-    "probe-image-size": "^7.2.3"
+    "probe-image-size": "^7.2.3",
+    "qs": "^6.11.0"
   }
 }

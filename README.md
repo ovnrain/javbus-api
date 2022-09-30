@@ -20,6 +20,9 @@
   - [/api/v1/movies/{id}](#apiv1moviesid)
     - [请求举例](#请求举例-2)
     - [返回举例](#返回举例-2)
+  - [/api/v1/stars/{id}](#apiv1starsid)
+    - [请求举例](#请求举例-3)
+    - [返回举例](#返回举例-3)
 
 ## 用途
 
@@ -275,5 +278,33 @@ location /api {
     }
     // ...
   ]
+}
+```
+
+### /api/v1/stars/{id}
+
+获取演员详情
+
+#### 请求举例
+
+    /api/v1/stars/2xi
+
+返回演员 `葵つかさ` 的详情
+
+#### 返回举例
+
+```json
+{
+  "avatar": "https://www.javbus.com/pics/actress/2xi_a.jpg",
+  "id": "2xi",
+  "name": "葵つかさ",
+  "birthday": "1990-08-14",
+  "age": "32",
+  "height": "163cm",
+  "bust": "88cm",
+  "waistline": "58cm",
+  "hipline": "86cm",
+  "birthplace": "大阪府",
+  "hobby": "ジョギング、ジャズ鑑賞、アルトサックス、ピアノ、一輪車"
 }
 ```

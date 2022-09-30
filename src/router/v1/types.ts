@@ -38,6 +38,7 @@ export interface MovieStar {
 }
 
 export interface Magnet {
+  id: string;
   link: string;
   isHD: boolean;
   title: string;

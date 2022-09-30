@@ -181,6 +181,7 @@ export function convertMagnetsHTML(html: string) {
     .querySelectorAll('tr')
     .map<Magnet>((tr) => {
       const link = tr.querySelector('td a')?.getAttribute('href') ?? '';
+      const id = link.match(/magnet:\?xt=urn:btih:(\w+)/)?.[1] ?? '';
       const isHD = Boolean(
         tr
           .querySelector('td')
@@ -198,9 +199,9 @@ export function convertMagnetsHTML(html: string) {
       const numberSize = size ? bytes(size) : null;
       const shareDate = tr.querySelector('td:nth-child(3) a')?.textContent.trim() ?? null;
 
-      return { link, isHD, title, size, numberSize, shareDate, hasSubtitle };
+      return { id, link, isHD, title, size, numberSize, shareDate, hasSubtitle };
     })
-    .filter(({ link, title }) => link && title)
+    .filter(({ id, link, title }) => id && link && title)
     .sort((a, b) => bytes.parse(b.size ?? '') - bytes.parse(a.size ?? ''));
 
   return magnets;

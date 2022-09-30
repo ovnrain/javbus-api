@@ -398,3 +398,13 @@ export async function getMovieDetail(id: string): Promise<MovieDetail> {
     samples,
   };
 }
+
+export async function getStarInfo(starId: string): Promise<StarInfo> {
+  const url = `${JAVBUS}/star/${starId}`;
+
+  const res = await client(url).text();
+
+  const starInfo = parseStarInfo(res, starId);
+
+  return starInfo;
+}

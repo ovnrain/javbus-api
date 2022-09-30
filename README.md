@@ -105,6 +105,9 @@ location /api {
 
 #### 返回举例
 
+<details>
+<summary>json</summary>
+
 ```json
 {
   // 影片列表
@@ -147,6 +150,8 @@ location /api {
 }
 ```
 
+</details>
+
 ### /api/v1/movies/search
 
 搜索影片
@@ -170,6 +175,9 @@ location /api {
 搜索关键词为 `三上` 的影片的第一页，包含有磁力链接和无磁力链接的影片
 
 #### 返回举例
+
+<details>
+<summary>json</summary>
 
 ```json
 {
@@ -195,6 +203,8 @@ location /api {
 }
 ```
 
+</details>
+
 ### /api/v1/movies/{id}
 
 获取影片详情
@@ -206,6 +216,9 @@ location /api {
 返回番号为 `SSIS-406` 的影片详情
 
 #### 返回举例
+
+<details>
+<summary>json</summary>
 
 ```json
 {
@@ -281,6 +294,8 @@ location /api {
 }
 ```
 
+</details>
+
 ### /api/v1/stars/{id}
 
 获取演员详情
@@ -292,6 +307,9 @@ location /api {
 返回演员 `葵つかさ` 的详情
 
 #### 返回举例
+
+<details>
+<summary>json</summary>
 
 ```json
 {
@@ -308,3 +326,5 @@ location /api {
   "hobby": "ジョギング、ジャズ鑑賞、アルトサックス、ピアノ、一輪車"
 }
 ```
+
+</details>

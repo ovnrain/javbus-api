@@ -40,12 +40,18 @@
 
 ### Docker 部署（推荐）
 
+[Docker Hub 地址](https://hub.docker.com/r/ovnrain/javbus-api)
+
 ```shell
 $ docker pull ovnrain/javbus-api
-$ docker run --name javbus-api -d --restart unless-stopped -p 8080:3000 ovnrain/javbus-api
+$ docker run -d \
+    --name=javbus-api \
+    --restart=unless-stopped \
+    -p 8922:3000 \
+    ovnrain/javbus-api
 ```
 
-启动一个 Docker 容器，并将其名称设置为 `javbus-api`，端口设置为 `8080`，并且自动重启
+启动一个 Docker 容器，将其名称设置为 `javbus-api`，端口设置为 `8922`，并且自动重启
 
 ### node.js 部署
 
@@ -54,22 +60,20 @@ $ git clone https://github.com/ovnrain/javbus-api.git
 $ cd javbus-api
 $ npm install
 $ npm run build
-$ echo "PORT=8080" > .env # 可选，默认端口为 `3000`
+$ echo "PORT=8922" > .env # 可选，默认端口为 `3000`
 $ npm start
 ```
 
-在浏览器中访问 [http://localhost:8080/api/v1/movies?page=1&magnet=exist](http://localhost:8080/api/v1/movies?page=1&magnet=exist) 即可获取结果
+在浏览器中访问 [http://localhost:8922](http://localhost:8922) 即可获取结果
 
 以上两种方式都可以配合 nginx 代理一起使用，以实现 https 访问等，例如
 
 ```nginx
 location /api {
-  proxy_pass http://localhost:8080;
+  proxy_pass http://localhost:8922;
   proxy_http_version 1.1;
-  proxy_set_header Upgrade $http_upgrade;
-  proxy_set_header Connection "upgrade";
   proxy_set_header Host $host;
-  proxy_cache_bypass $http_upgrade;
+
   add_header cache-control "no-cache";
 }
 ```

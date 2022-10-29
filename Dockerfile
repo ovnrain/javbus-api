@@ -23,6 +23,7 @@ USER node
 
 WORKDIR /app
 
+COPY --chown=node:node public public
 COPY --chown=node:node --from=builder /app/node_modules node_modules/
 COPY --chown=node:node --from=builder /app/dist dist/
 

@@ -13,6 +13,7 @@ app.set('port', PORT);
 app.disable('x-powered-by');
 app.set('trust proxy', true);
 
+app.use(express.static('public'));
 app.use('/api/v1', v1Router);
 
 app.use((req, res, next) => {

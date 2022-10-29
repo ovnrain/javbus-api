@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JavBus API</title>
+    <style>
+      body {
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        color: #333333;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif,
+          'Apple Color Emoji', 'Segoe UI Emoji';
+      }
+
+      p {
+        margin: 8px 0;
+      }
+
+      a {
+        text-decoration: none;
+        color: #008cc4;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      .container {
+        margin-top: 80px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .title {
+        margin: 0;
+      }
+
+      .tip,
+      .try {
+        margin-top: 16px;
+      }
+
+      .list {
+        margin: 8px 0 0 0;
+      }
+
+      .list li:not(:last-child) {
+        margin-bottom: 8px;
+      }
+
+      .list li a {
+        display: inline-flex;
+        align-items: center;
+      }
+
+      .tag {
+        background-color: #e6e6e6;
+        display: inline-block;
+        border-radius: 4px;
+        padding: 0px 4px;
+        margin: 0 2px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1 class="title">JavBus API</h1>
+      <p class="tip">如果你看到这个页面，说明服务已经成功运行起来！</p>
+      <p>
+        <a href="https://github.com/ovnrain/javbus-api#readme" target="_blank">查看文档</a>
+      </p>
+      <p class="try">你可以尝试访问以下 API：</p>
+      <ol class="list">
+        <li>
+          <a href="/api/v1/movies?page=1&magnet=exist">返回有磁力链接的第一页影片</a>
+        </li>
+        <li>
+          <a href="/api/v1/movies?page=1&starId=2xi&magnet=all">
+            返回 starId 为
+            <span class="tag">2xi</span>
+            的影片的第一页，包含有磁力链接和无磁力链接的影片
+          </a>
+        </li>
+        <li>
+          <a href="/api/v1/movies/search?keyword=三上&page=1&magnet=exist">
+            搜索关键词为
+            <span class="tag">三上</span>
+            的影片的第一页，只返回有磁力链接的影片
+          </a>
+        </li>
+        <li>
+          <a href="/api/v1/movies/SSIS-406">
+            返回番号为
+            <span class="tag">SSIS-406</span>
+            的影片详情
+          </a>
+        </li>
+      </ol>
+    </div>
+  </body>
+</html>

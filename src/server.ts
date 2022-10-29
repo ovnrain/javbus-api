@@ -1,4 +1,3 @@
-import 'dotenv/config';
 import http from 'http';
 import express, { ErrorRequestHandler } from 'express';
 import createError, { isHttpError } from 'http-errors';

@@ -111,7 +111,7 @@ location /api {
 #### 返回举例
 
 <details>
-<summary>json</summary>
+<summary>点击展开</summary>
 
 ```json
 {
@@ -182,7 +182,7 @@ location /api {
 #### 返回举例
 
 <details>
-<summary>json</summary>
+<summary>点击展开</summary>
 
 ```json
 {
@@ -223,7 +223,7 @@ location /api {
 #### 返回举例
 
 <details>
-<summary>json</summary>
+<summary>点击展开</summary>
 
 ```json
 {
@@ -314,7 +314,7 @@ location /api {
 #### 返回举例
 
 <details>
-<summary>json</summary>
+<summary>点击展开</summary>
 
 ```json
 {

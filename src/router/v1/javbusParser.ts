@@ -3,7 +3,7 @@ import bytes from 'bytes';
 import { parse } from 'node-html-parser';
 import type { HTMLElement } from 'node-html-parser';
 import probe from 'probe-image-size';
-import { JAVBUS_TIMEOUT, JAVBUS } from './constants';
+import { JAVBUS_TIMEOUT, JAVBUS, USER_AGENT } from './constants';
 import type {
   ImageSize,
   Magnet,
@@ -25,6 +25,9 @@ type StarInfoRequiredKey = 'avatar' | 'id' | 'name';
 type StarInfoOptionalKey = Exclude<keyof StarInfo, StarInfoRequiredKey>;
 
 const client = got.extend({
+  headers: {
+    'User-Agent': USER_AGENT,
+  },
   timeout: {
     request: JAVBUS_TIMEOUT,
   },

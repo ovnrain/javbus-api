@@ -10,17 +10,21 @@
   - [node.js 部署](#nodejs-部署)
 - [API 文档](#api-文档)
   - [/api/v1/movies](#apiv1movies)
+    - [method](#method)
     - [参数](#参数)
     - [请求举例](#请求举例)
     - [返回举例](#返回举例)
   - [/api/v1/movies/search](#apiv1moviessearch)
+    - [method](#method-1)
     - [参数](#参数-1)
     - [请求举例](#请求举例-1)
     - [返回举例](#返回举例-1)
   - [/api/v1/movies/{id}](#apiv1moviesid)
+    - [method](#method-2)
     - [请求举例](#请求举例-2)
     - [返回举例](#返回举例-2)
   - [/api/v1/stars/{id}](#apiv1starsid)
+    - [method](#method-3)
     - [请求举例](#请求举例-3)
     - [返回举例](#返回举例-3)
 
@@ -84,6 +88,10 @@ location /api {
 ### /api/v1/movies
 
 获取影片列表
+
+#### method
+
+GET
 
 #### 参数
 
@@ -161,6 +169,10 @@ location /api {
 
 搜索影片
 
+#### method
+
+GET
+
 #### 参数
 
 | 参数    | 是否必须 | 可选值             | 说明                                                     |
@@ -213,6 +225,10 @@ location /api {
 ### /api/v1/movies/{id}
 
 获取影片详情
+
+#### method
+
+GET
 
 #### 请求举例
 
@@ -304,6 +320,10 @@ location /api {
 ### /api/v1/stars/{id}
 
 获取演员详情
+
+#### method
+
+GET
 
 #### 请求举例
 

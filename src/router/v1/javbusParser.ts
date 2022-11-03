@@ -60,7 +60,7 @@ function parseMoviesPage(pageHTML: string, filter?: (movie: Movie) => boolean): 
 
       return { date, id, img, title, tags };
     })
-    .filter(({ id }) => Boolean(id))
+    .filter((movie): movie is Movie => Boolean(movie.id))
     .filter((movie) => filter?.(movie) ?? true);
 
   const currentPage = Number(doc.querySelector('.pagination .active a')?.textContent ?? '1');

@@ -6,7 +6,7 @@ import type { ListenError } from './types';
 import { normalizePort } from './utils';
 import v1Router from './router/v1/router';
 
-const PORT = normalizePort(process.env.PORT || '3000');
+const PORT = normalizePort(process.env['PORT'] || '3000');
 const app = express();
 
 app.set('port', PORT);
@@ -16,11 +16,11 @@ app.set('trust proxy', true);
 app.use(express.static('public'));
 app.use('/api/v1', v1Router);
 
-app.use((req, res, next) => {
+app.use((_req, _res, next) => {
   next(new createError.NotFound());
 });
 
-const errorHandler: ErrorRequestHandler = (err: Error, req, res, next) => {
+const errorHandler: ErrorRequestHandler = (err: Error, _req, res, _next) => {
   let status: number;
 
   if (err instanceof RequestError) {
@@ -47,17 +47,14 @@ server.on('error', (error: ListenError) => {
 
   const bind = typeof PORT === 'string' ? 'Pipe ' + PORT : 'Port ' + PORT;
 
-  switch (error.code) {
-    case 'EACCES':
-      console.error(bind + ' requires elevated privileges');
-      process.exit(1);
-      break;
-    case 'EADDRINUSE':
-      console.error(bind + ' is already in use');
-      process.exit(1);
-      break;
-    default:
-      throw error;
+  if (error.code === 'EACCES') {
+    console.error(bind + ' requires elevated privileges');
+    process.exit(1);
+  } else if (error.code === 'EADDRINUSE') {
+    console.error(bind + ' is already in use');
+    process.exit(1);
+  } else {
+    throw error;
   }
 });
 

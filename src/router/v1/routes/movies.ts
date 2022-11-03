@@ -7,7 +7,7 @@ import {
   getMoviesByStarAndPage,
   getMoviesByTagAndPage,
 } from '../javbusParser';
-import { Movie, MovieTag, Pagination, StarInfo } from '../types';
+import type { Movie, MovieTag, Pagination, StarInfo } from '../types';
 import {
   isValidMoviesPageQuery,
   isValidMoviesSearchQuery,

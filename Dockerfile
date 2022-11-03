@@ -1,5 +1,5 @@
 # build stage
-FROM node:lts AS builder
+FROM node:lts-hydrogen AS builder
 
 # Create app directory
 WORKDIR /app
@@ -14,7 +14,7 @@ COPY src src
 RUN npm run build && npm i --omit=dev --ignore-scripts
 
 # run stage
-FROM node:lts-alpine
+FROM node:hydrogen-alpine
 
 RUN apk add --no-cache tini
 

@@ -121,7 +121,7 @@ export async function getMoviesByPage(
   magnet?: MagnetType,
   type?: MovieType
 ): Promise<MoviesPage> {
-  const prefix = !type || type == 'normal' ? JAVBUS : `${JAVBUS}/uncensored`;
+  const prefix = !type || type == 'normal' ? JAVBUS : `${JAVBUS}/${type}`;
   const url = page === '1' ? prefix : `${prefix}/page/${page}`;
 
   const res = await client(url, {
@@ -137,7 +137,7 @@ export async function getMoviesByStarAndPage(
   magnet?: MagnetType,
   type?: MovieType
 ): Promise<StarMoviesPage> {
-  const prefix = !type || type === 'normal' ? `${JAVBUS}/star` : `${JAVBUS}/uncensored/star`;
+  const prefix = !type || type === 'normal' ? `${JAVBUS}/star` : `${JAVBUS}/${type}/star`;
   const url = page === '1' ? `${prefix}/${starId}` : `${prefix}/${starId}/${page}`;
 
   const res = await client(url, {
@@ -156,7 +156,7 @@ export async function getMoviesByTagAndPage(
   magnet?: MagnetType,
   type?: MovieType
 ): Promise<TagMoviesPage> {
-  const prefix = !type || type === 'normal' ? `${JAVBUS}/genre` : `${JAVBUS}/uncensored/genre`;
+  const prefix = !type || type === 'normal' ? `${JAVBUS}/genre` : `${JAVBUS}/${type}/genre`;
   const url = page === '1' ? `${prefix}/${tagId}` : `${prefix}/${tagId}/${page}`;
 
   const res = await client(url, {
@@ -175,7 +175,7 @@ export async function getMoviesByKeywordAndPage(
   magnet?: MagnetType,
   type?: MovieType
 ): Promise<SearchMoviesPage> {
-  const prefix = !type || type === 'normal' ? `${JAVBUS}/search` : `${JAVBUS}/uncensored/search`;
+  const prefix = !type || type === 'normal' ? `${JAVBUS}/search` : `${JAVBUS}/${type}/search`;
   const url = `${prefix}/${encodeURIComponent(keyword)}/${page}&type=1`;
 
   const res = await client(url, {

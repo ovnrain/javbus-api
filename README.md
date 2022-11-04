@@ -6,8 +6,11 @@
 
 - [用途](#用途)
 - [使用](#使用)
-  - [Docker 部署（推荐）](#docker-部署推荐)
-  - [node.js 部署](#nodejs-部署)
+  - [部署与启动](#部署与启动)
+    - [Docker 部署（推荐）](#docker-部署推荐)
+    - [Node.js 部署](#nodejs-部署)
+      - [使用 PM2 保持服务后台常驻](#使用-pm2-保持服务后台常驻)
+  - [配合 web 服务器](#配合-web-服务器)
 - [API 文档](#api-文档)
   - [/api/v1/movies](#apiv1movies)
     - [method](#method)
@@ -43,7 +46,9 @@
 
 **所以需要保证部署本程序的机器有访问 JavBus 的能力，否则请求会失败**
 
-### Docker 部署（推荐）
+### 部署与启动
+
+#### Docker 部署（推荐）
 
 [Docker Hub 地址](https://hub.docker.com/r/ovnrain/javbus-api)
 
@@ -58,20 +63,32 @@ $ docker run -d \
 
 启动一个 Docker 容器，将其名称设置为 `javbus-api`，端口设置为 `8922`，并且自动重启
 
-### node.js 部署
+#### Node.js 部署
 
 ```shell
 $ git clone https://github.com/ovnrain/javbus-api.git
 $ cd javbus-api
+$ nvm use # 可选，使用 .nvmrc 中指定的 Node.js 版本，关于 nvm 的安装与使用，请参考 https://github.com/nvm-sh/nvm
 $ npm install
 $ npm run build
 $ echo "PORT=8922" > .env # 可选，默认端口为 `3000`
 $ npm start
 ```
 
-在浏览器中访问 [http://localhost:8922](http://localhost:8922) 即可获取结果
+##### 使用 PM2 保持服务后台常驻
 
-以上两种方式都可以配合 nginx 代理一起使用，以实现 https 访问等，例如
+```shell
+$ npm install -g pm2
+$ pm2 start npm --name javbus-api -- start
+```
+
+_关于 PM2 的详细使用方法，请参考 [PM2 官方文档](https://pm2.keymetrics.io/docs/usage/quick-start/)_
+
+服务启动后，在浏览器中访问 [http://localhost:8922](http://localhost:8922) 即可获取结果
+
+### 配合 web 服务器
+
+以上两种方式都可以配合 nginx 等一起使用，以实现 https 访问等，例如 nginx 配置如下：
 
 ```nginx
 location /api {

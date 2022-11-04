@@ -17,11 +17,9 @@ export interface MoviesTagAndPageQuery extends MoviesPageQuery {
   tagId: string;
 }
 
-export interface MoviesSearchQuery {
+export interface MoviesSearchQuery extends MoviesPageQuery {
   [key: string]: string;
   keyword: string;
-  magnet: MagnetType;
-  page: string;
 }
 
 export interface Movie {

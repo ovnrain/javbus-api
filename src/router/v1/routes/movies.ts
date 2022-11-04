@@ -70,10 +70,10 @@ router.get('/search', async (req, res, next) => {
     return next(new createError.BadRequest());
   }
 
-  const { keyword, magnet, page } = query;
+  const { keyword, magnet, page, type } = query;
 
   try {
-    const response = await getMoviesByKeywordAndPage(keyword.trim(), page, magnet);
+    const response = await getMoviesByKeywordAndPage(keyword.trim(), page, magnet, type);
     res.json(response);
   } catch (e) {
     if (e instanceof Error && e.message.includes('404')) {

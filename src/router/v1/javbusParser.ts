@@ -172,9 +172,11 @@ export async function getMoviesByTagAndPage(
 export async function getMoviesByKeywordAndPage(
   keyword: string,
   page = '1',
-  magnet?: MagnetType
+  magnet?: MagnetType,
+  type?: MovieType
 ): Promise<SearchMoviesPage> {
-  const url = `${JAVBUS}/search/${encodeURIComponent(keyword)}/${page}&type=1`;
+  const prefix = !type || type === 'normal' ? `${JAVBUS}/search` : `${JAVBUS}/uncensored/search`;
+  const url = `${prefix}/${encodeURIComponent(keyword)}/${page}&type=1`;
 
   const res = await client(url, {
     headers: { Cookie: `existmag=${magnet === 'exist' ? 'mag' : 'all'}` },

@@ -413,8 +413,9 @@ export async function getMovieDetail(id: string): Promise<MovieDetail> {
   };
 }
 
-export async function getStarInfo(starId: string): Promise<StarInfo> {
-  const url = `${JAVBUS}/star/${starId}`;
+export async function getStarInfo(starId: string, type?: MovieType): Promise<StarInfo> {
+  const prefix = !type || type === 'normal' ? JAVBUS : `${JAVBUS}/${type}`;
+  const url = `${prefix}/star/${starId}`;
 
   const res = await client(url).text();
 

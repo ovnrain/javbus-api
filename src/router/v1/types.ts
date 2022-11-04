@@ -22,6 +22,11 @@ export interface MoviesSearchQuery extends MoviesPageQuery {
   keyword: string;
 }
 
+export interface StarInfoQuery {
+  [key: string]: string;
+  type?: MovieType;
+}
+
 export interface Movie {
   date: string | null;
   title: string;

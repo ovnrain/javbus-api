@@ -5,6 +5,7 @@ import type {
   MoviesSearchQuery,
   MoviesStarAndPageQuery,
   MoviesTagAndPageQuery,
+  StarInfoQuery,
 } from './types';
 
 export const PAGE_REG = /^[1-9]\d*$/;
@@ -28,6 +29,10 @@ export function isValidMoviesTagAndPageQuery(query: ParsedQs): query is MoviesTa
 
 export function isValidMoviesSearchQuery(query: ParsedQs): query is MoviesSearchQuery {
   return isValidMoviesPageQuery(query) && typeof query['keyword'] === 'string';
+}
+
+export function isValidStarInfoQuery(query: ParsedQs): query is StarInfoQuery {
+  return !query['type'] || query['type'] === 'normal' || query['type'] === 'uncensored';
 }
 
 export function formatImageUrl(url?: string) {

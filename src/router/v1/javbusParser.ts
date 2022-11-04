@@ -127,8 +127,7 @@ export async function getMoviesByPage(page: string, magnet?: 'all' | 'exist'): P
 export async function getMoviesByStarAndPage(
   starId: string,
   page = '1',
-  magnet?: 'all' | 'exist',
-  isViewSingle?: boolean
+  magnet?: 'all' | 'exist'
 ): Promise<StarMoviesPage> {
   const url = page === '1' ? `${JAVBUS}/star/${starId}` : `${JAVBUS}/star/${starId}/${page}`;
 
@@ -137,9 +136,7 @@ export async function getMoviesByStarAndPage(
   }).text();
 
   const starInfo = parseStarInfo(res, starId);
-  const moviesPage = parseMoviesPage(res, (movie) =>
-    isViewSingle ? movie.title.includes(starInfo.name) : true
-  );
+  const moviesPage = parseMoviesPage(res);
 
   return { ...moviesPage, starInfo };
 }

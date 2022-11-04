@@ -43,7 +43,7 @@ router.get('/', async (req, res, next) => {
         movies,
         pagination,
         starInfo: star,
-      } = await getMoviesByStarAndPage(starId, page, magnet, false);
+      } = await getMoviesByStarAndPage(starId, page, magnet);
       response = { movies, pagination, star };
     } else if (tagId) {
       const { movies, pagination, tagInfo: tag } = await getMoviesByTagAndPage(tagId, page, magnet);

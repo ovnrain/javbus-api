@@ -13,7 +13,8 @@ export function isValidMoviesPageQuery(query: ParsedQs): query is MoviesPageQuer
   return (
     typeof query['page'] === 'string' &&
     PAGE_REG.test(query['page']) &&
-    (query['magnet'] === 'all' || query['magnet'] === 'exist')
+    (query['magnet'] === 'all' || query['magnet'] === 'exist') &&
+    (!query['type'] || query['type'] === 'normal' || query['type'] === 'uncensored')
   );
 }
 

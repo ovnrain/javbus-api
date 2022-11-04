@@ -1,7 +1,12 @@
+export type MovieType = 'normal' | 'uncensored';
+
+export type MagnetType = 'all' | 'exist';
+
 export interface MoviesPageQuery {
   [key: string]: string;
-  magnet: 'all' | 'exist';
+  magnet: MagnetType;
   page: string;
+  type?: MovieType;
 }
 
 export interface MoviesStarAndPageQuery extends MoviesPageQuery {
@@ -15,7 +20,7 @@ export interface MoviesTagAndPageQuery extends MoviesPageQuery {
 export interface MoviesSearchQuery {
   [key: string]: string;
   keyword: string;
-  magnet: 'all' | 'exist';
+  magnet: MagnetType;
   page: string;
 }
 

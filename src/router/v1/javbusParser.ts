@@ -7,11 +7,13 @@ import { JAVBUS_TIMEOUT, JAVBUS, USER_AGENT } from './constants';
 import type {
   ImageSize,
   Magnet,
+  MagnetType,
   Movie,
   MovieDetail,
   MoviesPage,
   MovieStar,
   MovieTag,
+  MovieType,
   Sample,
   SearchMoviesPage,
   StarInfo,
@@ -114,8 +116,13 @@ export function parseTagInfo(pageHTML: string, tagId: string): MovieTag {
   return { tagId, tagName };
 }
 
-export async function getMoviesByPage(page: string, magnet?: 'all' | 'exist'): Promise<MoviesPage> {
-  const url = page === '1' ? JAVBUS : `${JAVBUS}/page/${page}`;
+export async function getMoviesByPage(
+  page: string,
+  magnet?: MagnetType,
+  type?: MovieType
+): Promise<MoviesPage> {
+  const prefix = !type || type == 'normal' ? JAVBUS : `${JAVBUS}/uncensored`;
+  const url = page === '1' ? prefix : `${prefix}/page/${page}`;
 
   const res = await client(url, {
     headers: { Cookie: `existmag=${magnet === 'exist' ? 'mag' : 'all'}` },
@@ -127,9 +134,11 @@ export async function getMoviesByPage(page: string, magnet?: 'all' | 'exist'): P
 export async function getMoviesByStarAndPage(
   starId: string,
   page = '1',
-  magnet?: 'all' | 'exist'
+  magnet?: MagnetType,
+  type?: MovieType
 ): Promise<StarMoviesPage> {
-  const url = page === '1' ? `${JAVBUS}/star/${starId}` : `${JAVBUS}/star/${starId}/${page}`;
+  const prefix = !type || type === 'normal' ? `${JAVBUS}/star` : `${JAVBUS}/uncensored/star`;
+  const url = page === '1' ? `${prefix}/${starId}` : `${prefix}/${starId}/${page}`;
 
   const res = await client(url, {
     headers: { Cookie: `existmag=${magnet === 'exist' ? 'mag' : 'all'}` },
@@ -144,9 +153,11 @@ export async function getMoviesByStarAndPage(
 export async function getMoviesByTagAndPage(
   tagId: string,
   page = '1',
-  magnet?: 'all' | 'exist'
+  magnet?: MagnetType,
+  type?: MovieType
 ): Promise<TagMoviesPage> {
-  const url = page === '1' ? `${JAVBUS}/genre/${tagId}` : `${JAVBUS}/genre/${tagId}/${page}`;
+  const prefix = !type || type === 'normal' ? `${JAVBUS}/genre` : `${JAVBUS}/uncensored/genre`;
+  const url = page === '1' ? `${prefix}/${tagId}` : `${prefix}/${tagId}/${page}`;
 
   const res = await client(url, {
     headers: { Cookie: `existmag=${magnet === 'exist' ? 'mag' : 'all'}` },
@@ -161,7 +172,7 @@ export async function getMoviesByTagAndPage(
 export async function getMoviesByKeywordAndPage(
   keyword: string,
   page = '1',
-  magnet?: 'all' | 'exist'
+  magnet?: MagnetType
 ): Promise<SearchMoviesPage> {
   const url = `${JAVBUS}/search/${encodeURIComponent(keyword)}/${page}&type=1`;
 

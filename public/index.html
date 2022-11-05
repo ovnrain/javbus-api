@@ -39,6 +39,10 @@
         margin: 0;
       }
 
+      .tip {
+        padding: 0 32px;
+      }
+
       .tip,
       .try {
         margin-top: 16px;
@@ -46,6 +50,7 @@
 
       .list {
         margin: 8px 0 0 0;
+        padding: 0 16px 0 32px;
       }
 
       .list li:not(:last-child) {
@@ -53,8 +58,7 @@
       }
 
       .list li a {
-        display: inline-flex;
-        align-items: center;
+        line-height: 24px;
       }
 
       .tag {
@@ -62,7 +66,12 @@
         display: inline-block;
         border-radius: 4px;
         padding: 0px 4px;
-        margin: 0 2px;
+      }
+
+      @media screen and (max-width: 375px) {
+        .container {
+          margin-top: 40px;
+        }
       }
     </style>
   </head>

@@ -1,5 +1,8 @@
 {
   "*.ts": [
     "eslint --config .eslintrc.commit.json --fix"
+  ],
+  "*.html": [
+    "prettier --write"
   ]
 }

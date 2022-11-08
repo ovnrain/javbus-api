@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node -r dotenv/config dist/server.js",
     "dev": "rm -rf dist && ts-node-dev -r dotenv/config src/server.ts",
-    "build": "tsc",
+    "build": "npm run lint && tsc",
     "format": "prettier --write 'src/**/*.ts'",
     "lint": "eslint src/**/*.ts",
     "prepare": "husky install"

@@ -7,33 +7,19 @@ import {
   getMoviesByStarAndPage,
   getMoviesByTagAndPage,
 } from '../javbusParser';
-import type { Movie, MovieTag, Pagination, StarInfo } from '../types';
-import {
-  isValidMoviesPageQuery,
-  isValidMoviesSearchQuery,
-  isValidMoviesStarAndPageQuery,
-  isValidMoviesTagAndPageQuery,
-} from '../utils';
+import type { MagnetType, Movie, MovieTag, MovieType, Pagination, StarInfo } from '../types';
+import { moviesPageValidator, searchMoviesPageValidator, validate } from '../validators';
 
 const router = Router();
 
-router.get('/', async (req, res, next) => {
+router.get('/', validate(moviesPageValidator), async (req, res, next) => {
   const query = req.query;
 
-  if (
-    (!isValidMoviesPageQuery(query) &&
-      !isValidMoviesStarAndPageQuery(query) &&
-      !isValidMoviesTagAndPageQuery(query)) ||
-    (isValidMoviesStarAndPageQuery(query) && isValidMoviesTagAndPageQuery(query)) ||
-    (isValidMoviesStarAndPageQuery(query) && !query.starId.trim().length) ||
-    (isValidMoviesTagAndPageQuery(query) && !query.tagId.trim().length)
-  ) {
-    return next(new createError.BadRequest());
-  }
-
-  const { magnet, page, type } = query;
-  const starId = isValidMoviesStarAndPageQuery(query) ? query.starId.trim() : undefined;
-  const tagId = isValidMoviesTagAndPageQuery(query) ? query.tagId.trim() : undefined;
+  const page = query.page as string;
+  const magnet = query.magnet as MagnetType;
+  const type = query.type as MovieType | undefined;
+  const starId = query.starId as string | undefined;
+  const tagId = query.tagId as string | undefined;
 
   try {
     let response: { movies: Movie[]; pagination: Pagination; star?: StarInfo; tag?: MovieTag };
@@ -63,14 +49,13 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-router.get('/search', async (req, res, next) => {
+router.get('/search', validate(searchMoviesPageValidator), async (req, res, next) => {
   const query = req.query;
 
-  if (!isValidMoviesSearchQuery(query) || !query.keyword.trim().length) {
-    return next(new createError.BadRequest());
-  }
-
-  const { keyword, magnet, page, type } = query;
+  const page = query.page as string;
+  const magnet = query.magnet as MagnetType;
+  const type = query.type as MovieType | undefined;
+  const keyword = query.keyword as string;
 
   try {
     const response = await getMoviesByKeywordAndPage(keyword.trim(), page, magnet, type);

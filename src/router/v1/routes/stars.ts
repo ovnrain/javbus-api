@@ -1,20 +1,17 @@
 import { Router } from 'express';
 import createError from 'http-errors';
+import { typeValidator, validate } from '../validators';
 import { getStarInfo } from '../javbusParser';
-import { isValidStarInfoQuery } from '../utils';
+import type { MovieType } from '../types';
 
 const router = Router();
 
-router.get('/:id', async (req, res, next) => {
-  const starId = req.params.id;
-  const query = req.query;
-
-  if (!isValidStarInfoQuery(query)) {
-    return next(new createError.BadRequest());
-  }
+router.get('/:id', validate([typeValidator]), async (req, res, next) => {
+  const starId = req.params.id as string;
+  const type = req.query.type as MovieType | undefined;
 
   try {
-    const starInfo = await getStarInfo(starId, query.type);
+    const starInfo = await getStarInfo(starId, type);
 
     res.json(starInfo);
   } catch (e) {

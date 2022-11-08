@@ -2,31 +2,6 @@ export type MovieType = 'normal' | 'uncensored';
 
 export type MagnetType = 'all' | 'exist';
 
-export interface MoviesPageQuery {
-  [key: string]: string;
-  magnet: MagnetType;
-  page: string;
-  type?: MovieType;
-}
-
-export interface MoviesStarAndPageQuery extends MoviesPageQuery {
-  starId: string;
-}
-
-export interface MoviesTagAndPageQuery extends MoviesPageQuery {
-  tagId: string;
-}
-
-export interface MoviesSearchQuery extends MoviesPageQuery {
-  [key: string]: string;
-  keyword: string;
-}
-
-export interface StarInfoQuery {
-  [key: string]: string;
-  type?: MovieType;
-}
-
 export interface Movie {
   date: string | null;
   title: string;

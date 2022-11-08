@@ -1,6 +1,7 @@
 import type { NextFunction, Request, Response } from 'express';
 import { RequestError } from 'got';
 import { isHttpError } from 'http-errors';
+import { QueryValidationError } from '../utils';
 
 export default function errorHandler(
   err: Error,
@@ -9,8 +10,12 @@ export default function errorHandler(
   _next: NextFunction
 ) {
   let status: number;
+  let messages: string[] = [];
 
-  if (err instanceof RequestError) {
+  if (err instanceof QueryValidationError) {
+    status = 400;
+    messages = err.messages;
+  } else if (err instanceof RequestError) {
     status = err.response?.statusCode || 500;
   } else if (isHttpError(err)) {
     status = err.statusCode;
@@ -18,5 +23,5 @@ export default function errorHandler(
     status = 500;
   }
 
-  res.status(status).json({ error: err.message || 'Unknown Error' });
+  res.status(status).json({ error: err.message || 'Unknown Error', messages });
 }

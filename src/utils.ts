@@ -13,3 +13,16 @@ export function normalizePort(val: string) {
 
   return false;
 }
+
+export class QueryValidationError extends Error {
+  messages: string[];
+
+  constructor(message: string, messages?: string[]) {
+    super(message);
+    this.name = 'QueryValidationError';
+
+    this.messages = messages || [];
+
+    Object.setPrototypeOf(this, QueryValidationError.prototype);
+  }
+}

@@ -6,7 +6,7 @@ import type { ListenError } from './types';
 import { normalizePort } from './utils';
 import v1Router from './router/v1/router';
 
-const PORT = normalizePort(process.env['PORT'] || '3000');
+const PORT = normalizePort(process.env.PORT || '3000');
 const app = express();
 
 app.set('port', PORT);

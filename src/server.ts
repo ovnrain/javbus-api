@@ -1,10 +1,10 @@
 import http from 'http';
-import express, { ErrorRequestHandler } from 'express';
-import createError, { isHttpError } from 'http-errors';
-import { RequestError } from 'got';
+import express from 'express';
+import createError from 'http-errors';
 import type { ListenError } from './types';
 import { normalizePort } from './utils';
 import v1Router from './router/v1/router';
+import { errorHandler } from './handlers';
 
 const PORT = normalizePort(process.env.PORT || '3000');
 const app = express();
@@ -19,20 +19,6 @@ app.use('/api/v1', v1Router);
 app.use((_req, _res, next) => {
   next(new createError.NotFound());
 });
-
-const errorHandler: ErrorRequestHandler = (err: Error, _req, res, _next) => {
-  let status: number;
-
-  if (err instanceof RequestError) {
-    status = err.response?.statusCode || 500;
-  } else if (isHttpError(err)) {
-    status = err.statusCode;
-  } else {
-    status = 500;
-  }
-
-  res.status(status).json({ error: err.message || 'Unknown Error' });
-};
 
 app.use(errorHandler);
 

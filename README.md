@@ -144,7 +144,7 @@ GET
 <details>
 <summary>点击展开</summary>
 
-```json
+```jsonc
 {
   // 影片列表
   "movies": [
@@ -220,7 +220,7 @@ GET
 <details>
 <summary>点击展开</summary>
 
-```json
+```jsonc
 {
   // 影片列表
   "movies": [
@@ -265,7 +265,7 @@ GET
 <details>
 <summary>点击展开</summary>
 
-```json
+```jsonc
 {
   "id": "SSIS-406",
   "title": "SSIS-406 才色兼備な女上司が思う存分に羽目を外し僕を連れ回す【週末限定】裏顔デート 葵つかさ",
@@ -370,7 +370,7 @@ GET
 <details>
 <summary>点击展开</summary>
 
-```json
+```jsonc
 {
   "avatar": "https://www.javbus.com/pics/actress/2xi_a.jpg",
   "id": "2xi",

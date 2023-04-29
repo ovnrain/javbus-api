@@ -7,8 +7,8 @@ import type { MovieType } from '../types';
 const router = Router();
 
 router.get('/:id', validate([typeValidator]), async (req, res, next) => {
-  const starId = req.params.id as string;
-  const type = req.query.type as MovieType | undefined;
+  const starId = req.params['id'] as string;
+  const type = req.query['type'] as MovieType | undefined;
 
   try {
     const starInfo = await getStarInfo(starId, type);

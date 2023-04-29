@@ -1,5 +1,5 @@
 import type { NextFunction, Request, Response } from 'express';
-import { query, ValidationChain, validationResult } from 'express-validator';
+import { query, type ValidationChain, validationResult } from 'express-validator';
 import { QueryValidationError } from '../../utils';
 
 export const typeValidator = query('type')
@@ -20,7 +20,7 @@ export const moviesPageValidator = [
     .optional()
     .trim()
     .custom((_, { req }) => {
-      if (req.query?.starId) {
+      if (req.query?.['starId']) {
         throw new Error('`starId` and `tagId` cannot be used at the same time');
       }
       return true;
@@ -33,7 +33,7 @@ export const searchMoviesPageValidator = [
 ];
 
 export const validate = (validations: ValidationChain[]) => {
-  return async (req: Request, res: Response, next: NextFunction) => {
+  return async (req: Request, _: Response, next: NextFunction) => {
     await Promise.all(validations.map((validation) => validation.run(req)));
 
     const errors = validationResult(req);

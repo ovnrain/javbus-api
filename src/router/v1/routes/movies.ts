@@ -15,11 +15,11 @@ const router = Router();
 router.get('/', validate(moviesPageValidator), async (req, res, next) => {
   const query = req.query;
 
-  const page = query.page as string;
-  const magnet = query.magnet as MagnetType;
-  const type = query.type as MovieType | undefined;
-  const starId = query.starId as string | undefined;
-  const tagId = query.tagId as string | undefined;
+  const page = query['page'] as string;
+  const magnet = query['magnet'] as MagnetType;
+  const type = query['type'] as MovieType | undefined;
+  const starId = query['starId'] as string | undefined;
+  const tagId = query['tagId'] as string | undefined;
 
   try {
     let response: { movies: Movie[]; pagination: Pagination; star?: StarInfo; tag?: MovieTag };
@@ -52,10 +52,10 @@ router.get('/', validate(moviesPageValidator), async (req, res, next) => {
 router.get('/search', validate(searchMoviesPageValidator), async (req, res, next) => {
   const query = req.query;
 
-  const page = query.page as string;
-  const magnet = query.magnet as MagnetType;
-  const type = query.type as MovieType | undefined;
-  const keyword = query.keyword as string;
+  const page = query['page'] as string;
+  const magnet = query['magnet'] as MagnetType;
+  const type = query['type'] as MovieType | undefined;
+  const keyword = query['keyword'] as string;
 
   try {
     const response = await getMoviesByKeywordAndPage(keyword.trim(), page, magnet, type);

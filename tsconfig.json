@@ -1,9 +1,10 @@
 {
-  "extends": "@tsconfig/node18-strictest/tsconfig.json",
+  "extends": [
+    "@tsconfig/strictest/tsconfig",
+    "@tsconfig/node18/tsconfig",
+    "@tsconfig/esm/tsconfig"
+  ],
   "compilerOptions": {
-    "noPropertyAccessFromIndexSignature": false,
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
     "outDir": "./dist"
   }
 }

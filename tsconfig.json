@@ -5,6 +5,8 @@
     "@tsconfig/esm/tsconfig.json"
   ],
   "compilerOptions": {
-    "outDir": "./dist"
+    "outDir": "./dist",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext"
   }
 }

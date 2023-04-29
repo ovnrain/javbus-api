@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import movies from './routes/movies.mjs';
-import stars from './routes/stars.mjs';
+import movies from './routes/movies.js';
+import stars from './routes/stars.js';
 
 const router = Router();
 

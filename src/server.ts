@@ -1,7 +1,7 @@
 import http from 'http';
-import { normalizePort } from './utils.mjs';
-import app from './app.mjs';
-import type { ListenError } from './types.mjs';
+import { normalizePort } from './utils.js';
+import app from './app.js';
+import type { ListenError } from './types.js';
 
 const PORT = normalizePort(process.env.PORT || '3000');
 

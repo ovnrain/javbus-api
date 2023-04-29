@@ -6,9 +6,9 @@ import {
   getMoviesByPage,
   getMoviesByStarAndPage,
   getMoviesByTagAndPage,
-} from '../javbusParser.mjs';
-import type { MagnetType, Movie, MovieTag, MovieType, Pagination, StarInfo } from '../types.mjs';
-import { moviesPageValidator, searchMoviesPageValidator, validate } from '../validators.mjs';
+} from '../javbusParser.js';
+import type { MagnetType, Movie, MovieTag, MovieType, Pagination, StarInfo } from '../types.js';
+import { moviesPageValidator, searchMoviesPageValidator, validate } from '../validators.js';
 
 const router = Router();
 

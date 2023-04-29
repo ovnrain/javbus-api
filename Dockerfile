@@ -26,4 +26,4 @@ COPY --chown=node:node --from=builder /app/dist dist/
 
 EXPOSE 3000
 
-CMD [ "/sbin/tini", "--", "node", "--loader", "tsx", "dist/server.js" ]
+CMD [ "/sbin/tini", "--", "node", "dist/server.mjs" ]

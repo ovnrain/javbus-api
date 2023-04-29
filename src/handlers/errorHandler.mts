@@ -1,7 +1,7 @@
 import type { NextFunction, Request, Response } from 'express';
 import { RequestError } from 'got';
 import { isHttpError } from 'http-errors';
-import { QueryValidationError } from '../utils';
+import { QueryValidationError } from '../utils.mjs';
 
 export default function errorHandler(
   err: Error,

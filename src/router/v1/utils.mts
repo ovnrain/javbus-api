@@ -1,4 +1,4 @@
-import { JAVBUS } from './constants';
+import { JAVBUS } from './constants.mjs';
 
 export const PAGE_REG = /^[1-9]\d*$/;
 

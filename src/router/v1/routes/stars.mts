@@ -1,8 +1,8 @@
 import { Router } from 'express';
 import createError from 'http-errors';
-import { typeValidator, validate } from '../validators';
-import { getStarInfo } from '../javbusParser';
-import type { MovieType } from '../types';
+import { typeValidator, validate } from '../validators.mjs';
+import { getStarInfo } from '../javbusParser.mjs';
+import type { MovieType } from '../types.mjs';
 
 const router = Router();
 

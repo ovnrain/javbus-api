@@ -1,7 +1,7 @@
 import express from 'express';
 import createError from 'http-errors';
-import v1Router from './router/v1/router';
-import { errorHandler } from './handlers';
+import v1Router from './router/v1/router.mjs';
+import { errorHandler } from './handlers/index.mjs';
 
 const app = express();
 

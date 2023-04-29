@@ -1,6 +1,6 @@
 import type { NextFunction, Request, Response } from 'express';
 import { query, type ValidationChain, validationResult } from 'express-validator';
-import { QueryValidationError } from '../../utils';
+import { QueryValidationError } from '../../utils.mjs';
 
 export const typeValidator = query('type')
   .optional()

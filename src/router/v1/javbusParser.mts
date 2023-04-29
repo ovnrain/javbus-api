@@ -3,7 +3,7 @@ import bytes from 'bytes';
 import { parse } from 'node-html-parser';
 import type { HTMLElement } from 'node-html-parser';
 import probe from 'probe-image-size';
-import { JAVBUS_TIMEOUT, JAVBUS, USER_AGENT } from './constants';
+import { JAVBUS_TIMEOUT, JAVBUS, USER_AGENT } from './constants.mjs';
 import type {
   ImageSize,
   Magnet,
@@ -19,8 +19,8 @@ import type {
   StarInfo,
   StarMoviesPage,
   TagMoviesPage,
-} from './types';
-import { formatImageUrl, PAGE_REG } from './utils';
+} from './types.mjs';
+import { formatImageUrl, PAGE_REG } from './utils.mjs';
 
 type StarInfoRequiredKey = 'avatar' | 'id' | 'name';
 

@@ -70,7 +70,7 @@ $ docker run -d \
 $ git clone https://github.com/ovnrain/javbus-api.git
 $ cd javbus-api
 $ nvm use # 可选，使用 .nvmrc 中指定的 Node.js 版本，关于 nvm 的安装与使用，请参考 https://github.com/nvm-sh/nvm
-$ npm install
+$ pnpm install # 或者 npm install 或者 yarn install
 $ npm run build
 $ echo "PORT=8922" > .env # 可选，默认端口为 `3000`
 $ npm start

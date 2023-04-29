@@ -1,17 +1,14 @@
 # build stage
-FROM node:lts-hydrogen AS builder
+FROM node:hydrogen-alpine AS builder
+
+RUN npm i -g pnpm
 
 # Create app directory
 WORKDIR /app
 
-COPY package.json package-lock.json ./
+COPY . .
 
-RUN npm ci
-
-COPY tsconfig.json ./
-COPY src src
-
-RUN npm run build && npm i --omit=dev --ignore-scripts
+RUN pnpm i --ignore-scripts && pnpm build && pnpm prune --prod --config.ignore-scripts=true
 
 # run stage
 FROM node:hydrogen-alpine
@@ -29,4 +26,4 @@ COPY --chown=node:node --from=builder /app/dist dist/
 
 EXPOSE 3000
 
-CMD [ "/sbin/tini", "--", "node", "dist/server.js" ]
+CMD [ "/sbin/tini", "--", "node", "--loader", "tsx", "dist/server.js" ]

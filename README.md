@@ -113,13 +113,13 @@ GET
 
 #### 参数
 
-| 参数   | 是否必须 | 可选值                     | 默认值   | 说明                                                     |
-| ------ | -------- | -------------------------- | -------- | -------------------------------------------------------- |
-| page   | 是       |                            |          | 页码                                                     |
-| magnet | 是       | `exist`<br />`all`         |          | `exist`: 只返回有磁力链接的影片<br />`all`: 返回全部影片 |
-| starId | 否       |                            |          | 演员 ID，不可以与 `tagId` 同时使用                       |
-| tagId  | 否       |                            |          | 标签 ID，不可以与 `starId` 同时使用                      |
-| type   | 否       | `normal`<br />`uncensored` | `normal` | `normal`: 有码影片<br />`uncensored`: 无码影片           |
+| 参数        | 是否必须 | 可选值                                                                       | 默认值   | 说明                                                                                                                                                              |
+| ----------- | -------- | ---------------------------------------------------------------------------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| page        | 是       |                                                                              |          | 页码                                                                                                                                                              |
+| magnet      | 是       | `exist`<br />`all`                                                           |          | `exist`: 只返回有磁力链接的影片<br />`all`: 返回全部影片                                                                                                          |
+| filterType  | 否       | `star`<br />`genre`<br />`director`<br />`studio`<br />`label`<br />`series` |          | 筛选类型，必须与 `filterValue` 一起使用<br />`star`: 演员<br />`genre`: 类别<br />`director`: 导演<br />`studio`: 制作商<br />`label`: 发行商<br />`series`: 系列 |
+| filterValue | 否       |                                                                              |          | 筛选值，必须与 `filterType` 一起使用                                                                                                                              |
+| type        | 否       | `normal`<br />`uncensored`                                                   | `normal` | `normal`: 有码影片<br />`uncensored`: 无码影片                                                                                                                    |
 
 #### 请求举例
 
@@ -127,13 +127,13 @@ GET
 
 返回有磁力链接的第一页影片
 
-    /api/v1/movies?page=1&starId=2xi&magnet=all
+    /api/v1/movies?page=1&filterType=star&filterValue=rsv&magnet=all
 
-返回 starId 为 `2xi` 的影片的第一页，包含有磁力链接和无磁力链接的影片
+返回演员 ID 为 `rsv` 的影片的第一页，包含有磁力链接和无磁力链接的影片
 
-    /api/v1/movies?page=2&tagId=2t&magnet=exist
+    /api/v1/movies?page=2&filterType=genre&filterValue=4&magnet=exist
 
-返回 tagId 为 `2t` 的影片的第二页，只返回有磁力链接的影片
+返回类别 ID 为 `4` 的影片的第二页，只返回有磁力链接的影片
 
     /api/v1/movies?page=1&magnet=exist&type=uncensored
 
@@ -149,11 +149,11 @@ GET
   // 影片列表
   "movies": [
     {
-      "date": "2022-07-21",
-      "id": "DLDSS-097",
-      "img": "https://www.javbus.com/pics/thumb/915m.jpg",
-      "title": "谷間を魅せつけ視線で誘惑。僕の思春期、毎日セックスをしてくれた姉が今…",
-      "tags": ["高清", "昨日新種"]
+      "date": "2023-04-28",
+      "id": "YUJ-003",
+      "img": "https://www.javbus.com/pics/thumb/9n0d.jpg",
+      "title": "夫には言えない三日間。 セックスレスで欲求不満な私は甥っ子に中出しさせています。 岬ななみ",
+      "tags": ["高清", "字幕", "3天前新種"]
     }
     // ...
   ],
@@ -162,26 +162,13 @@ GET
     "currentPage": 1,
     "hasNextPage": true,
     "nextPage": 2,
-    "pages": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    "pages": [1, 2, 3]
   },
-  // 演员信息，注意：只有在请求参数包含 starId 时才会返回
-  "star": {
-    "avatar": "https://www.javbus.com/pics/actress/2xi_a.jpg",
-    "id": "2xi",
-    "name": "葵つかさ",
-    "birthday": "1990-08-14",
-    "age": "31",
-    "height": "163cm",
-    "bust": "88cm",
-    "waistline": "58cm",
-    "hipline": "86cm",
-    "birthplace": "大阪府",
-    "hobby": "ジョギング、ジャズ鑑賞、アルトサックス、ピアノ、一輪車"
-  },
-  // 标签信息，注意：只有在请求参数包含 tagId 时才会返回
-  "tag": {
-    "tagId": "2t",
-    "tagName": "花癡"
+  // 筛选信息，注意：只有在请求参数包含 filterType 和 filterValue 时才会返回
+  "filter": {
+    "name": "岬ななみ",
+    "type": "star",
+    "value": "rsv"
   }
 }
 ```
@@ -279,33 +266,33 @@ GET
   // 影片时长
   "videoLength": 120,
   "director": {
-    "directorId": "hh",
-    "directorName": "五右衛門"
+    "id": "hh",
+    "name": "五右衛門"
   },
   "producer": {
-    "producerId": "7q",
-    "producerName": "エスワン ナンバーワンスタイル"
+    "id": "7q",
+    "name": "エスワン ナンバーワンスタイル"
   },
   "publisher": {
-    "publisherId": "9x",
-    "publisherName": "S1 NO.1 STYLE"
+    "id": "9x",
+    "name": "S1 NO.1 STYLE"
   },
   "series": {
-    "seriesId": "xx",
-    "seriesName": "xx"
+    "id": "xx",
+    "name": "xx"
   },
-  "tags": [
+  "genres": [
     {
-      "tagId": "e",
-      "tagName": "巨乳"
+      "id": "e",
+      "name": "巨乳"
     }
     // ...
   ],
   // 演员信息，一部影片可能包含多个演员
   "stars": [
     {
-      "starId": "2xi",
-      "starName": "葵つかさ"
+      "id": "2xi",
+      "name": "葵つかさ"
     }
   ],
   // 磁力链接列表

@@ -4,6 +4,11 @@ export type MagnetType = 'all' | 'exist';
 
 export type FilterType = 'star' | 'genre' | 'director' | 'studio' | 'label' | 'series';
 
+export interface Property {
+  id: string;
+  name: string;
+}
+
 export interface Movie {
   date: string | null;
   title: string;
@@ -41,12 +46,12 @@ export interface MovieDetail {
   img: string | null;
   date: string | null;
   videoLength: number | null;
-  director: { directorId: string; directorName: string } | null;
-  producer: { producerId: string; producerName: string } | null;
-  publisher: { publisherId: string; publisherName: string } | null;
-  series: { seriesId: string; seriesName: string } | null;
-  genres: { genreId: string; genreName: string }[];
-  stars: { starId: string; starName: string }[];
+  director: Property | null;
+  producer: Property | null;
+  publisher: Property | null;
+  series: Property | null;
+  genres: Property[];
+  stars: Property[];
   magnets: Magnet[];
   imageSize: ImageSize | null;
   samples: Sample[];

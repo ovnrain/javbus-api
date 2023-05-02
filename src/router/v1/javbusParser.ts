@@ -13,6 +13,7 @@ import type {
   MovieDetail,
   MoviesPage,
   MovieType,
+  Property,
   Sample,
   SearchMoviesPage,
   StarInfo,
@@ -229,7 +230,7 @@ function linkInfoFinder(
   infos: HTMLElement[],
   text: string,
   prefix: string
-): { id: string; title: string } | null {
+): { id: string; name: string } | null {
   const link = infos
     .find((info) => info.querySelector('.header')?.textContent.includes(text))
     ?.querySelector('a');
@@ -243,38 +244,38 @@ function linkInfoFinder(
   const computedPrefix = isUncensored ? `uncensored/${prefix}` : prefix;
   let id = link.getAttribute('href')?.replace(`${JAVBUS}/${computedPrefix}/`, '') ?? '';
   id = id && isUncensored ? `uncensored/${id}` : id;
-  const title = link.textContent.trim();
+  const name = link.textContent.trim();
 
-  if (!id || !title) {
+  if (!id || !name) {
     return null;
   }
 
-  return { id, title };
+  return { id, name };
 }
 
 function multipleInfoFinder<T>(
-  infos: HTMLElement[],
+  infoNodes: HTMLElement[],
   type: string,
   genreFilter: (genre: HTMLElement) => boolean,
   infoNodeGetter: (genre: HTMLElement) => HTMLElement | null,
-  mapper: (info: { infoId: string; infoName: string }) => T
-): T[] {
-  return (
-    infos
+  mapper?: (info: { id: string; name: string }) => T
+) {
+  const infos =
+    infoNodes
       .find((info) => info.querySelectorAll('.genre').filter(genreFilter).length > 0)
       ?.querySelectorAll('.genre')
-      ?.map((genre) => {
+      ?.map<Property>((genre) => {
         const node = infoNodeGetter(genre);
         const href = node?.getAttribute('href');
         const isUncensored = href?.includes('uncensored') ?? false;
         const computedType = isUncensored ? `uncensored/${type}` : type;
-        let infoId = node?.getAttribute('href')?.replace(`${JAVBUS}/${computedType}/`, '') ?? '';
-        infoId = infoId && isUncensored ? `uncensored/${infoId}` : infoId;
-        const infoName = node?.textContent ?? '';
-        return { infoId, infoName };
+        let id = node?.getAttribute('href')?.replace(`${JAVBUS}/${computedType}/`, '') ?? '';
+        id = id && isUncensored ? `uncensored/${id}` : id;
+        const name = node?.textContent ?? '';
+        return { id, name };
       })
-      .filter(({ infoId, infoName }) => Boolean(infoId) && Boolean(infoName)) ?? []
-  ).map(mapper);
+      .filter(({ id, name }) => Boolean(id) && Boolean(name)) ?? [];
+  return mapper ? infos.map<T>(mapper) : infos;
 }
 
 export async function getMovieDetail(id: string): Promise<MovieDetail> {
@@ -295,50 +296,26 @@ export async function getMovieDetail(id: string): Promise<MovieDetail> {
   }
 
   /* ----------------- 基本信息 ------------------ */
-  const infos = doc.querySelectorAll('.container .movie .info p');
+  const infoNodes = doc.querySelectorAll('.container .movie .info p');
 
-  const date = textInfoFinder(infos, '發行日期:');
-  const videoLength = textInfoFinder(infos, '長度:', '分鐘');
+  const date = textInfoFinder(infoNodes, '發行日期:');
+  const videoLength = textInfoFinder(infoNodes, '長度:', '分鐘');
   const numberVideoLength = videoLength ? Number(videoLength) : null;
-  const directorInfo = linkInfoFinder(infos, '導演:', 'director');
-  const director = directorInfo && {
-    directorId: directorInfo.id,
-    directorName: directorInfo.title,
-  };
-  const producerInfo = linkInfoFinder(infos, '製作商:', 'studio');
-  const producer = producerInfo && {
-    producerId: producerInfo.id,
-    producerName: producerInfo.title,
-  };
-  const publisherInfo = linkInfoFinder(infos, '發行商:', 'label');
-  const publisher = publisherInfo && {
-    publisherId: publisherInfo.id,
-    publisherName: publisherInfo.title,
-  };
-  const seriesInfo = linkInfoFinder(infos, '系列:', 'series');
-  const series = seriesInfo && {
-    seriesId: seriesInfo.id,
-    seriesName: seriesInfo.title,
-  };
-  const genres = multipleInfoFinder(
-    infos,
+  const director = linkInfoFinder(infoNodes, '導演:', 'director');
+  const producer = linkInfoFinder(infoNodes, '製作商:', 'studio');
+  const publisher = linkInfoFinder(infoNodes, '發行商:', 'label');
+  const series = linkInfoFinder(infoNodes, '系列:', 'series');
+  const genres = multipleInfoFinder<Property>(
+    infoNodes,
     'genre',
     (genre) => !genre.hasAttribute('onmouseover'),
-    (genre) => genre.querySelector('label a'),
-    ({ infoId, infoName }) => ({
-      genreId: infoId,
-      genreName: infoName,
-    })
+    (genre) => genre.querySelector('label a')
   );
-  const stars = multipleInfoFinder(
-    infos,
+  const stars = multipleInfoFinder<Property>(
+    infoNodes,
     'star',
     (genre) => genre.hasAttribute('onmouseover'),
-    (genre) => genre.querySelector('a'),
-    ({ infoId, infoName }) => ({
-      starId: infoId,
-      starName: infoName,
-    })
+    (genre) => genre.querySelector('a')
   );
 
   /* ----------------- 磁力链接 ------------------ */

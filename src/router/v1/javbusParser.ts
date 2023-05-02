@@ -5,20 +5,17 @@ import type { HTMLElement } from 'node-html-parser';
 import probe from 'probe-image-size';
 import { JAVBUS_TIMEOUT, JAVBUS, USER_AGENT } from './constants.js';
 import type {
+  FilterType,
   ImageSize,
   Magnet,
   MagnetType,
   Movie,
   MovieDetail,
   MoviesPage,
-  MovieStar,
-  MovieTag,
   MovieType,
   Sample,
   SearchMoviesPage,
   StarInfo,
-  StarMoviesPage,
-  TagMoviesPage,
 } from './types.js';
 import { formatImageUrl, PAGE_REG } from './utils.js';
 
@@ -108,65 +105,41 @@ export function parseStarInfo(pageHTML: string, starId: string): StarInfo {
   };
 }
 
-export function parseTagInfo(pageHTML: string, tagId: string): MovieTag {
+export function parseFilterInfo(pageHTML: string, type: FilterType, value: string) {
   const doc = parse(pageHTML);
-  const tagName =
+  const name =
     doc.querySelector('title')?.textContent.match(/^(?:第\d+?頁 - )?(.+?) - /)?.[1] ?? '';
 
-  return { tagId, tagName };
+  return { name, type, value };
 }
 
 export async function getMoviesByPage(
   page: string,
   magnet?: MagnetType,
-  type?: MovieType
-): Promise<MoviesPage> {
-  const prefix = !type || type == 'normal' ? JAVBUS : `${JAVBUS}/${type}`;
-  const url = page === '1' ? prefix : `${prefix}/page/${page}`;
-
-  const res = await client(url, {
-    headers: { Cookie: `existmag=${magnet === 'exist' ? 'mag' : 'all'}` },
-  }).text();
-
-  return parseMoviesPage(res);
-}
-
-export async function getMoviesByStarAndPage(
-  starId: string,
-  page = '1',
-  magnet?: MagnetType,
-  type?: MovieType
-): Promise<StarMoviesPage> {
-  const prefix = !type || type === 'normal' ? `${JAVBUS}/star` : `${JAVBUS}/${type}/star`;
-  const url = page === '1' ? `${prefix}/${starId}` : `${prefix}/${starId}/${page}`;
-
-  const res = await client(url, {
-    headers: { Cookie: `existmag=${magnet === 'exist' ? 'mag' : 'all'}` },
-  }).text();
-
-  const starInfo = parseStarInfo(res, starId);
-  const moviesPage = parseMoviesPage(res);
-
-  return { ...moviesPage, starInfo };
-}
-
-export async function getMoviesByTagAndPage(
-  tagId: string,
-  page = '1',
-  magnet?: MagnetType,
-  type?: MovieType
-): Promise<TagMoviesPage> {
-  const prefix = !type || type === 'normal' ? `${JAVBUS}/genre` : `${JAVBUS}/${type}/genre`;
-  const url = page === '1' ? `${prefix}/${tagId}` : `${prefix}/${tagId}/${page}`;
+  type?: MovieType,
+  filerType?: FilterType,
+  filteValue?: string
+) {
+  let prefix = !type || type == 'normal' ? JAVBUS : `${JAVBUS}/${type}`;
+  prefix = filerType ? `${prefix}/${filerType}` : prefix;
+  const url =
+    page === '1'
+      ? filerType
+        ? `${prefix}/${filteValue}`
+        : prefix
+      : filerType
+      ? `${prefix}/${filteValue}/${page}`
+      : `${prefix}/page/${page}`;
 
   const res = await client(url, {
     headers: { Cookie: `existmag=${magnet === 'exist' ? 'mag' : 'all'}` },
   }).text();
 
   const moviesPage = parseMoviesPage(res);
-  const tagInfo = parseTagInfo(res, tagId);
+  const filterInfo =
+    filerType && filteValue ? parseFilterInfo(res, filerType, filteValue) : undefined;
 
-  return { ...moviesPage, tagInfo };
+  return { ...moviesPage, filter: filterInfo };
 }
 
 export async function getMoviesByKeywordAndPage(
@@ -347,17 +320,17 @@ export async function getMovieDetail(id: string): Promise<MovieDetail> {
     seriesId: seriesInfo.id,
     seriesName: seriesInfo.title,
   };
-  const tags = multipleInfoFinder<MovieTag>(
+  const genres = multipleInfoFinder(
     infos,
     'genre',
     (genre) => !genre.hasAttribute('onmouseover'),
     (genre) => genre.querySelector('label a'),
     ({ infoId, infoName }) => ({
-      tagId: infoId,
-      tagName: infoName,
+      genreId: infoId,
+      genreName: infoName,
     })
   );
-  const stars = multipleInfoFinder<MovieStar>(
+  const stars = multipleInfoFinder(
     infos,
     'star',
     (genre) => genre.hasAttribute('onmouseover'),
@@ -407,7 +380,7 @@ export async function getMovieDetail(id: string): Promise<MovieDetail> {
     producer,
     publisher,
     series,
-    tags,
+    genres,
     stars,
     magnets,
     samples,

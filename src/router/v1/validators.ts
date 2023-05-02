@@ -15,16 +15,26 @@ const baseMoviesPageValidator = [
 
 export const moviesPageValidator = [
   ...baseMoviesPageValidator,
-  query('starId').optional().trim(),
-  query('tagId')
+  query('filterType')
     .optional()
-    .trim()
     .custom((_, { req }) => {
-      if (req.query?.['starId']) {
-        throw new Error('`starId` and `tagId` cannot be used at the same time');
+      if (!req.query?.['filterValue']) {
+        throw new Error('`filterValue` is required');
       }
       return true;
-    }),
+    })
+    .trim()
+    .isIn(['star', 'genre', 'director', 'studio', 'label', 'series'])
+    .withMessage('`filterType` must be `star`, `genre`, `director`, `studio`, `label` or `series`'),
+  query('filterValue')
+    .optional()
+    .custom((_, { req }) => {
+      if (!req.query?.['filterType']) {
+        throw new Error('`filterType` is required');
+      }
+      return true;
+    })
+    .trim(),
 ];
 
 export const searchMoviesPageValidator = [

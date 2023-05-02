@@ -1,13 +1,7 @@
 import { Router } from 'express';
 import createError from 'http-errors';
-import {
-  getMovieDetail,
-  getMoviesByKeywordAndPage,
-  getMoviesByPage,
-  getMoviesByStarAndPage,
-  getMoviesByTagAndPage,
-} from '../javbusParser.js';
-import type { MagnetType, Movie, MovieTag, MovieType, Pagination, StarInfo } from '../types.js';
+import { getMovieDetail, getMoviesByKeywordAndPage, getMoviesByPage } from '../javbusParser.js';
+import type { FilterType, MagnetType, MovieType } from '../types.js';
 import { moviesPageValidator, searchMoviesPageValidator, validate } from '../validators.js';
 
 const router = Router();
@@ -18,30 +12,11 @@ router.get('/', validate(moviesPageValidator), async (req, res, next) => {
   const page = query['page'] as string;
   const magnet = query['magnet'] as MagnetType;
   const type = query['type'] as MovieType | undefined;
-  const starId = query['starId'] as string | undefined;
-  const tagId = query['tagId'] as string | undefined;
+  const filterType = query['filterType'] as FilterType | undefined;
+  const filterValue = query['filterValue'] as string | undefined;
 
   try {
-    let response: { movies: Movie[]; pagination: Pagination; star?: StarInfo; tag?: MovieTag };
-
-    if (starId) {
-      const {
-        movies,
-        pagination,
-        starInfo: star,
-      } = await getMoviesByStarAndPage(starId, page, magnet, type);
-      response = { movies, pagination, star };
-    } else if (tagId) {
-      const {
-        movies,
-        pagination,
-        tagInfo: tag,
-      } = await getMoviesByTagAndPage(tagId, page, magnet, type);
-      response = { movies, pagination, tag };
-    } else {
-      const { movies, pagination } = await getMoviesByPage(page, magnet, type);
-      response = { movies, pagination };
-    }
+    const response = await getMoviesByPage(page, magnet, type, filterType, filterValue);
 
     res.json(response);
   } catch (e) {

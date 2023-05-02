@@ -2,22 +2,14 @@ export type MovieType = 'normal' | 'uncensored';
 
 export type MagnetType = 'all' | 'exist';
 
+export type FilterType = 'star' | 'genre' | 'director' | 'studio' | 'label' | 'series';
+
 export interface Movie {
   date: string | null;
   title: string;
   id: string;
   img: string | null;
   tags: string[];
-}
-
-export interface MovieTag {
-  tagId: string;
-  tagName: string;
-}
-
-export interface MovieStar {
-  starId: string;
-  starName: string;
 }
 
 export interface Magnet {
@@ -53,8 +45,8 @@ export interface MovieDetail {
   producer: { producerId: string; producerName: string } | null;
   publisher: { publisherId: string; publisherName: string } | null;
   series: { seriesId: string; seriesName: string } | null;
-  tags: MovieTag[];
-  stars: MovieStar[];
+  genres: { genreId: string; genreName: string }[];
+  stars: { starId: string; starName: string }[];
   magnets: Magnet[];
   imageSize: ImageSize | null;
   samples: Sample[];
@@ -87,14 +79,6 @@ export interface StarInfo {
   hipline: string | null;
   birthplace: string | null;
   hobby: string | null;
-}
-
-export interface StarMoviesPage extends MoviesPage {
-  starInfo: StarInfo;
-}
-
-export interface TagMoviesPage extends MoviesPage {
-  tagInfo: MovieTag;
 }
 
 export interface SearchMoviesPage extends MoviesPage {

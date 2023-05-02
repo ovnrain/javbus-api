@@ -1,7 +1,7 @@
 # build stage
 FROM node:hydrogen-alpine AS builder
 
-RUN npm i -g pnpm
+RUN npm i -g npm@latest && npm i -g pnpm@latest
 
 # Create app directory
 WORKDIR /app

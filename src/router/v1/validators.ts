@@ -54,8 +54,8 @@ export const validate = (validations: ValidationChain[]) => {
     next(
       new QueryValidationError(
         'query is invalid',
-        errors.array().map((error) => error.msg)
-      )
+        errors.array().map((error) => error.msg),
+      ),
     );
   };
 };

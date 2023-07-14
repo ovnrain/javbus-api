@@ -119,7 +119,7 @@ export async function getMoviesByPage(
   magnet?: MagnetType,
   type?: MovieType,
   filerType?: FilterType,
-  filteValue?: string
+  filteValue?: string,
 ) {
   let prefix = !type || type == 'normal' ? JAVBUS : `${JAVBUS}/${type}`;
   prefix = filerType ? `${prefix}/${filerType}` : prefix;
@@ -147,7 +147,7 @@ export async function getMoviesByKeywordAndPage(
   keyword: string,
   page = '1',
   magnet?: MagnetType,
-  type?: MovieType
+  type?: MovieType,
 ): Promise<SearchMoviesPage> {
   const prefix = !type || type === 'normal' ? `${JAVBUS}/search` : `${JAVBUS}/${type}/search`;
   const url = `${prefix}/${encodeURIComponent(keyword)}/${page}&type=1`;
@@ -173,13 +173,13 @@ export function convertMagnetsHTML(html: string) {
         tr
           .querySelector('td')
           ?.querySelectorAll('a')
-          .find((a) => a.textContent.includes('高清'))
+          .find((a) => a.textContent.includes('高清')),
       );
       const hasSubtitle = Boolean(
         tr
           .querySelector('td')
           ?.querySelectorAll('a')
-          .find((a) => a.textContent.includes('字幕'))
+          .find((a) => a.textContent.includes('字幕')),
       );
       const title = tr.querySelector('td a')?.textContent.trim() ?? '';
       const size = tr.querySelector('td:nth-child(2) a')?.textContent.trim() ?? null;
@@ -229,7 +229,7 @@ function textInfoFinder(infos: HTMLElement[], text: string, excludeText?: string
 function linkInfoFinder(
   infos: HTMLElement[],
   text: string,
-  prefix: string
+  prefix: string,
 ): { id: string; name: string } | null {
   const link = infos
     .find((info) => info.querySelector('.header')?.textContent.includes(text))
@@ -258,7 +258,7 @@ function multipleInfoFinder<T>(
   type: string,
   genreFilter: (genre: HTMLElement) => boolean,
   infoNodeGetter: (genre: HTMLElement) => HTMLElement | null,
-  mapper?: (info: { id: string; name: string }) => T
+  mapper?: (info: { id: string; name: string }) => T,
 ) {
   const infos =
     infoNodes
@@ -309,13 +309,13 @@ export async function getMovieDetail(id: string): Promise<MovieDetail> {
     infoNodes,
     'genre',
     (genre) => !genre.hasAttribute('onmouseover'),
-    (genre) => genre.querySelector('label a')
+    (genre) => genre.querySelector('label a'),
   );
   const stars = multipleInfoFinder<Property>(
     infoNodes,
     'star',
     (genre) => genre.hasAttribute('onmouseover'),
-    (genre) => genre.querySelector('a')
+    (genre) => genre.querySelector('a'),
   );
 
   /* ----------------- 磁力链接 ------------------ */

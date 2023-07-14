@@ -7,7 +7,7 @@ export default function errorHandler(
   err: Error,
   _req: Request,
   res: Response,
-  _next: NextFunction
+  _next: NextFunction,
 ) {
   let status: number;
   let messages: string[] = [];

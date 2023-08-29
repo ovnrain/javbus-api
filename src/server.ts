@@ -12,9 +12,7 @@ server.on('error', onError);
 server.on('listening', onListening);
 
 function onListening() {
-  const addr = server.address();
-  const bind = typeof addr === 'string' ? 'pipe ' + addr : `port ${addr?.port}`;
-  console.log(`app listening on ${bind}!`);
+  console.log(`Server is running at http://localhost:${PORT}`);
 }
 
 function onError(error: ListenError) {

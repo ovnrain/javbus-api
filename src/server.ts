@@ -1,18 +1,37 @@
-import http from 'http';
+import fs from 'fs';
+import http, { Server } from 'http';
+import https from 'https';
 import { normalizePort } from './utils.js';
 import app from './app.js';
 import type { ListenError } from './types.js';
 
 const PORT = normalizePort(process.env.PORT || '3000');
+const SSL_CERT = process.env.SSL_CERT;
+const SSL_KEY = process.env.SSL_KEY;
 
-const server = http.createServer(app);
+let server: Server;
+let scheme: 'http' | 'https';
+
+if (SSL_CERT && SSL_KEY && fs.existsSync(SSL_CERT) && fs.existsSync(SSL_KEY)) {
+  server = https.createServer(
+    {
+      cert: fs.readFileSync(SSL_CERT),
+      key: fs.readFileSync(SSL_KEY),
+    },
+    app,
+  );
+  scheme = 'https';
+} else {
+  server = http.createServer(app);
+  scheme = 'http';
+}
 
 server.listen(PORT);
 server.on('error', onError);
 server.on('listening', onListening);
 
 function onListening() {
-  console.log(`Server is running at http://localhost:${PORT}`);
+  console.log(`Server is running at ${scheme}://localhost:${PORT}`);
 }
 
 function onError(error: ListenError) {

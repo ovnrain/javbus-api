@@ -53,9 +53,11 @@
     "express-validator": "^7.0.1",
     "got": "^13.0.0",
     "http-errors": "^2.0.0",
+    "https-proxy-agent": "^7.0.1",
     "node-html-parser": "^6.1.6",
     "probe-image-size": "^7.2.3",
-    "qs": "^6.11.2"
+    "qs": "^6.11.2",
+    "socks-proxy-agent": "^8.0.1"
   },
   "type": "module"
 }

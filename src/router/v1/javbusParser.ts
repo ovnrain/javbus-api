@@ -1,9 +1,9 @@
-import got from 'got';
 import bytes from 'bytes';
 import { parse } from 'node-html-parser';
 import type { HTMLElement } from 'node-html-parser';
 import probe from 'probe-image-size';
-import { JAVBUS_TIMEOUT, JAVBUS, USER_AGENT } from './constants.js';
+import client, { agent } from './client.js';
+import { JAVBUS } from './constants.js';
 import type {
   FilterType,
   ImageSize,
@@ -23,15 +23,6 @@ import { formatImageUrl, PAGE_REG } from './utils.js';
 type StarInfoRequiredKey = 'avatar' | 'id' | 'name';
 
 type StarInfoOptionalKey = Exclude<keyof StarInfo, StarInfoRequiredKey>;
-
-const client = got.extend({
-  headers: {
-    'User-Agent': USER_AGENT,
-  },
-  timeout: {
-    request: JAVBUS_TIMEOUT,
-  },
-});
 
 const starInfoMap: Record<StarInfoOptionalKey, string> = {
   birthday: '生日: ',
@@ -291,7 +282,7 @@ export async function getMovieDetail(id: string): Promise<MovieDetail> {
   let imageSize: ImageSize | null = null;
 
   if (img) {
-    const { width, height } = await probe(img);
+    const { width, height } = await probe(img, { agent });
     imageSize = { width, height };
   }
 

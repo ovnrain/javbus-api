@@ -6,10 +6,11 @@
   "homepage": "https://github.com/ovnrain/javbus-api#readme",
   "scripts": {
     "start": "node -r dotenv/config dist/server.js",
-    "dev": "tsx watch --clear-screen=false -r dotenv/config src/server.ts",
+    "dev": "tsx watch --clear-screen=false -r dotenv/config api/server.ts",
     "build": "npm run lint && tsc && prettier \"./dist/**/*.js\" --write --ignore-path=./.prettierignore",
-    "format": "prettier --write 'src/**/*.ts'",
-    "lint": "eslint --config .eslintrc.commit.json src/**/*.ts",
+    "vercel-build": "tsc",
+    "format": "prettier --write 'api/**/*.ts'",
+    "lint": "eslint --config .eslintrc.commit.json api/**/*.ts",
     "prepare": "husky install"
   },
   "keywords": [

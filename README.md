@@ -14,6 +14,7 @@
     - [使用代理](#使用代理-1)
     - [使用 PM2 保持服务后台常驻](#使用-pm2-保持服务后台常驻)
   - [配合 web 服务器](#配合-web-服务器)
+  - [Vercel 部署](#vercel-部署)
 - [API 文档](#api-文档)
   - [/api/v1/movies](#apiv1movies)
     - [method](#method)
@@ -156,6 +157,20 @@ location /api {
   add_header cache-control "no-cache";
 }
 ```
+
+### Vercel 部署
+
+使用 Vercel 部署的优势在于：
+
+- 无需自己购买服务器
+- 无需配置代理
+- 无需配置环境依赖
+- 无需配置 https 证书
+- 公网访问，即开即用
+
+点击下方按钮，即可将本项目一键部署到 Vercel 上
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fovnrain%2Fjavbus-api&project-name=javbus-api&repository-name=javbus-api-from-ovnrain)
 
 ## API 文档
 

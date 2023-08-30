@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="zh-Hans">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -37,6 +37,27 @@
 
       .title {
         margin: 0;
+      }
+
+      .login {
+        display: none;
+      }
+
+      .login.show {
+        display: flex;
+      }
+
+      .user {
+        display: none;
+        align-items: center;
+      }
+
+      .user.show {
+        display: flex;
+      }
+
+      .username {
+        margin-right: 8px;
       }
 
       .tip {
@@ -79,6 +100,13 @@
   <body>
     <div class="container">
       <h1 class="title">JavBus API</h1>
+      <p class="login">
+        <a href="/login.html">登录</a>
+      </p>
+      <p class="user">
+        <span class="username"></span>
+        <button class="logout">退出</button>
+      </p>
       <p class="tip">如果你看到这个页面，说明服务已经成功运行起来！</p>
       <p>
         <a href="https://github.com/ovnrain/javbus-api#readme" target="_blank">查看文档</a>
@@ -112,5 +140,30 @@
         </li>
       </ol>
     </div>
+    <script>
+      const user = document.querySelector('.user');
+      const username = document.querySelector('.username');
+      const login = document.querySelector('.login');
+      const logout = document.querySelector('.logout');
+
+      fetch('/api/user')
+        .then((res) => res.json())
+        .then((res) => {
+          if (res.username) {
+            username.textContent = res.username;
+            user.classList.add('show');
+          } else if (res.useCredentials) {
+            login.classList.add('show');
+          }
+        });
+
+      logout.addEventListener('click', () => {
+        fetch('/api/logout', {
+          method: 'POST',
+        }).then(() => {
+          window.location.reload();
+        });
+      });
+    </script>
   </body>
 </html>

@@ -116,12 +116,15 @@
             });
         }
 
-        button.addEventListener('click', doLogin);
-        password.addEventListener('keydown', (e) => {
+        function doKeydownLogin(e) {
           if (e.key === 'Enter') {
             doLogin();
           }
-        });
+        }
+
+        button.addEventListener('click', doLogin);
+        username.addEventListener('keydown', doKeydownLogin);
+        password.addEventListener('keydown', doKeydownLogin);
       })();
     </script>
   </body>

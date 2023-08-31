@@ -63,7 +63,7 @@
   <body>
     <div class="container">
       <h1 class="title">登录</h1>
-      <div class="form">
+      <form class="form" action="">
         <div class="item">
           <label class="label" for="username">用户名:</label>
           <input class="input" id="username" type="text" name="username" autofocus />
@@ -74,22 +74,22 @@
         </div>
         <div class="message"></div>
         <div>
-          <button class="login-button">登录</button>
+          <button class="login-button" type="submit">登录</button>
         </div>
-      </div>
+      </form>
       <div class="return-index">
         <a href="/">回到首页</a>
       </div>
     </div>
     <script>
       (function () {
-        const username = document.getElementById('username');
-        const password = document.getElementById('password');
+        const form = document.querySelector('.form');
         const message = document.querySelector('.message');
-        const button = document.querySelector('.login-button');
 
-        function doLogin() {
-          if (!username.value || !password.value) {
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+
+          if (!form.username.value || !form.password.value) {
             message.textContent = '请输入用户名和密码';
             message.classList.add('show');
             return;
@@ -101,8 +101,8 @@
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-              username: username.value,
-              password: password.value,
+              username: form.username.value,
+              password: form.password.value,
             }),
           })
             .then((res) => res.json())
@@ -114,17 +114,7 @@
                 window.location.href = '/';
               }
             });
-        }
-
-        function doKeydownLogin(e) {
-          if (e.key === 'Enter') {
-            doLogin();
-          }
-        }
-
-        button.addEventListener('click', doLogin);
-        username.addEventListener('keydown', doKeydownLogin);
-        password.addEventListener('keydown', doKeydownLogin);
+        });
       })();
     </script>
   </body>

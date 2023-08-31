@@ -35,7 +35,9 @@ app.disable('x-powered-by');
 app.set('trust proxy', true);
 
 app.use(express.static('public'));
+// 用于解析 application/json
 app.use(express.json());
+// 用于解析 application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
 const { JAVBUS_AUTH_TOKEN, ADMIN_USERNAME, ADMIN_PASSWORD, JAVBUS_SESSION_SECRET } = process.env;

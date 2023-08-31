@@ -86,12 +86,23 @@
         const form = document.querySelector('.form');
         const message = document.querySelector('.message');
 
+        function showMessage(text) {
+          message.textContent = text;
+          message.classList.add('show');
+        }
+
+        function hideMessage() {
+          message.textContent = '';
+          message.classList.remove('show');
+        }
+
         form.addEventListener('submit', (e) => {
           e.preventDefault();
 
+          hideMessage();
+
           if (!form.username.value || !form.password.value) {
-            message.textContent = '请输入用户名和密码';
-            message.classList.add('show');
+            showMessage('请输入用户名和密码');
             return;
           }
 
@@ -108,8 +119,7 @@
             .then((res) => res.json())
             .then((res) => {
               if (!res.success) {
-                message.textContent = '用户名或密码错误';
-                message.classList.add('show');
+                showMessage('用户名或密码错误');
               } else {
                 window.location.href = '/';
               }

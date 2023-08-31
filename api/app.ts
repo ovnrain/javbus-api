@@ -104,6 +104,7 @@ app.post('/api/logout', (req, res: UserActionResponse) => {
 app.use((req, res, next) => {
   const token = req.headers['j-auth-token'];
   const user = req.session.user;
+  const originalUrl = req.originalUrl;
 
   if (token) {
     if (token === JAVBUS_AUTH_TOKEN) {
@@ -115,7 +116,7 @@ app.use((req, res, next) => {
     if (user) {
       next();
     } else {
-      res.redirect('/login.html');
+      res.redirect(`/login.html?redirect=${encodeURIComponent(originalUrl)}`);
     }
   } else {
     next();

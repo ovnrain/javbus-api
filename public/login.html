@@ -88,6 +88,8 @@
     </div>
     <script>
       (function () {
+        const redirectUrl = new URLSearchParams(window.location.search).get('redirect');
+
         const form = document.querySelector('.form');
         const message = document.querySelector('.message');
         const button = document.querySelector('.login-button');
@@ -132,7 +134,7 @@
                 button.removeAttribute('disabled');
                 button.textContent = '登录';
               } else {
-                window.location.href = '/';
+                window.location.replace(redirectUrl || '/');
               }
             })
             .catch((e) => {

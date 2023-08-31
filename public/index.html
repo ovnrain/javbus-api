@@ -157,8 +157,10 @@
             if (res.username) {
               username.textContent = res.username;
               user.classList.add('show');
+              login.classList.remove('show');
             } else if (res.useCredentials) {
               login.classList.add('show');
+              user.classList.remove('show');
             }
           });
 

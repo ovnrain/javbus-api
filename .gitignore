@@ -3,3 +3,4 @@
 .env
 /docker-*.sh
 .vercel
+*.http

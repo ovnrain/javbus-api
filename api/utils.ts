@@ -47,3 +47,19 @@ export const validate = (validations: ValidationChain[]) => {
     );
   };
 };
+
+export const validate2 = <Req extends Request = Request, Res extends Response = Response>(
+  validations: ValidationChain[],
+  callback: (res: Res, next: NextFunction) => void,
+) => {
+  return async (req: Req, res: Res, next: NextFunction) => {
+    await Promise.all(validations.map((validation) => validation.run(req)));
+
+    const errors = validationResult(req);
+    if (errors.isEmpty()) {
+      return next();
+    }
+
+    callback(res, next);
+  };
+};

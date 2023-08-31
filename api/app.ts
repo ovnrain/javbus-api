@@ -3,8 +3,9 @@ import createError, { isHttpError } from 'http-errors';
 import { RequestError } from 'got';
 import session from 'express-session';
 import memorystore from 'memorystore';
+import { body } from 'express-validator';
 import v1Router from './router/v1/router.js';
-import { QueryValidationError } from './utils.js';
+import { QueryValidationError, validate2 } from './utils.js';
 
 // 扩展 express-session 的 SessionData
 declare module 'express-session' {
@@ -39,6 +40,20 @@ app.use(express.urlencoded({ extended: true }));
 
 const { JAVBUS_AUTH_TOKEN, ADMIN_USERNAME, ADMIN_PASSWORD, JAVBUS_SESSION_SECRET } = process.env;
 const useCredentials = Boolean(ADMIN_USERNAME && ADMIN_PASSWORD);
+const loginValidators = [
+  { field: 'username', expect: ADMIN_USERNAME },
+  { field: 'password', expect: ADMIN_PASSWORD },
+].map(({ field, expect }) =>
+  body(field)
+    .notEmpty()
+    .trim()
+    .custom((value: string) => {
+      if (typeof expect === 'undefined' || !expect.length) {
+        return false;
+      }
+      return value === expect;
+    }),
+);
 const MemoryStore = memorystore(session);
 
 app.use(
@@ -63,15 +78,16 @@ app.get('/api/user', (req, res: GetUserResponse) => {
   res.json({ username: req.session.user?.username, useCredentials });
 });
 
-app.post('/api/login', (req: LoginRequest, res: UserActionResponse) => {
-  const { username, password } = req.body;
-  if (username && username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
-    req.session.user = { username };
-    res.json({ success: true, message: 'Login success' });
-  } else {
+app.post(
+  '/api/login',
+  validate2<LoginRequest, UserActionResponse>(loginValidators, (res) => {
     res.status(401).json({ success: false, message: 'Invalid username or password' });
-  }
-});
+  }),
+  (req, res) => {
+    req.session.user = { username: req.body.username as string };
+    res.json({ success: true, message: 'Login success' });
+  },
+);
 
 app.post('/api/logout', (req, res: UserActionResponse) => {
   req.session.destroy((err) => {

@@ -37,10 +37,15 @@
         height: 36px;
         border: none;
         border-radius: 4px;
-        background-color: #008cc4;
+        background-color: rgb(0, 140, 196);
         color: #ffffff;
         cursor: pointer;
         font-size: 16px;
+      }
+
+      .login-button[disabled] {
+        background-color: rgba(0, 140, 196, 0.7);
+        cursor: not-allowed;
       }
 
       .message {
@@ -85,6 +90,7 @@
       (function () {
         const form = document.querySelector('.form');
         const message = document.querySelector('.message');
+        const button = document.querySelector('.login-button');
 
         function showMessage(text) {
           message.textContent = text;
@@ -106,6 +112,9 @@
             return;
           }
 
+          button.setAttribute('disabled', true);
+          button.textContent = '登录中...';
+
           fetch('/api/login', {
             method: 'POST',
             headers: {
@@ -120,9 +129,14 @@
             .then((res) => {
               if (!res.success) {
                 showMessage('用户名或密码错误');
+                button.removeAttribute('disabled');
+                button.textContent = '登录';
               } else {
                 window.location.href = '/';
               }
+            })
+            .catch((e) => {
+              console.log(e);
             });
         });
       })();

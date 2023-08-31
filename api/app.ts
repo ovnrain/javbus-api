@@ -15,6 +15,19 @@ declare module 'express-session' {
   }
 }
 
+type UserResBody = { success: boolean; message: string };
+
+type LoginRequest = Request<
+  Record<string, never>,
+  UserResBody,
+  { username?: string; password?: string }
+>;
+
+type GetUserResponse = Response<{ username: string | undefined; useCredentials: boolean }>;
+
+// 登录、退出的响应
+type UserActionResponse = Response<UserResBody>;
+
 const app = express();
 
 app.disable('x-powered-by');
@@ -46,13 +59,13 @@ app.use(
   }),
 );
 
-app.get('/api/user', (req, res) => {
+app.get('/api/user', (req, res: GetUserResponse) => {
   res.json({ username: req.session.user?.username, useCredentials });
 });
 
-app.post('/api/login', (req, res) => {
+app.post('/api/login', (req: LoginRequest, res: UserActionResponse) => {
   const { username, password } = req.body;
-  if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+  if (username && username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
     req.session.user = { username };
     res.json({ success: true, message: 'Login success' });
   } else {
@@ -60,7 +73,7 @@ app.post('/api/login', (req, res) => {
   }
 });
 
-app.post('/api/logout', (req, res) => {
+app.post('/api/logout', (req, res: UserActionResponse) => {
   req.session.destroy((err) => {
     if (err) {
       res.json({ success: false, message: (err as Error).message || 'Unknown error' });

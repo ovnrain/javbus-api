@@ -1,30 +1,84 @@
 <!doctype html>
 <html lang="zh-Hans">
   <head>
-    <meta charset="utf-8" />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>登录</title>
+    <link rel="stylesheet" href="/css/base.css" />
+    <style>
+      .form {
+        margin-top: 16px;
+        width: 280px;
+      }
+
+      .item {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 16px;
+        align-items: flex-start;
+      }
+
+      .label {
+        margin-bottom: 8px;
+      }
+
+      .input {
+        height: 36px;
+        border: 1px solid #dddddd;
+        border-radius: 4px;
+        padding: 0 8px;
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      .login-button {
+        width: 100%;
+        height: 36px;
+        border: none;
+        border-radius: 4px;
+        background-color: #008cc4;
+        color: #ffffff;
+        cursor: pointer;
+        font-size: 16px;
+      }
+
+      .message {
+        color: red;
+        margin-bottom: 16px;
+        display: none;
+        font-size: 14px;
+      }
+
+      .message.show {
+        display: block;
+      }
+
+      .return-index {
+        margin-top: 100px;
+        text-align: center;
+      }
+    </style>
   </head>
   <body>
     <div class="container">
-      <div>
-        <h1>Login</h1>
-        <div>
-          <div>
-            <label for="username">Username:</label>
-            <input id="username" type="text" name="username" autofocus />
-          </div>
-          <div>
-            <label for="password">Password:</label>
-            <input id="password" type="password" name="password" />
-          </div>
-          <div class="message"></div>
-          <div>
-            <button class="login-button">Login</button>
-          </div>
-          <div>
-            <a href="/">回到首页</a>
-          </div>
+      <h1 class="title">登录</h1>
+      <div class="form">
+        <div class="item">
+          <label class="label" for="username">用户名:</label>
+          <input class="input" id="username" type="text" name="username" autofocus />
         </div>
+        <div class="item">
+          <label class="label" for="password">密码:</label>
+          <input class="input" id="password" type="password" name="password" />
+        </div>
+        <div class="message"></div>
+        <div>
+          <button class="login-button">登录</button>
+        </div>
+      </div>
+      <div class="return-index">
+        <a href="/">回到首页</a>
       </div>
     </div>
     <script>
@@ -36,10 +90,9 @@
       function doLogin() {
         if (!username.value || !password.value) {
           message.textContent = '请输入用户名和密码';
+          message.classList.add('show');
           return;
         }
-
-        message.textContent = '';
 
         fetch('/api/login', {
           method: 'POST',
@@ -55,6 +108,7 @@
           .then((res) => {
             if (!res.success) {
               message.textContent = '用户名或密码错误';
+              message.classList.add('show');
             } else {
               window.location.href = '/';
             }

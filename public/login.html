@@ -82,45 +82,47 @@
       </div>
     </div>
     <script>
-      const username = document.getElementById('username');
-      const password = document.getElementById('password');
-      const message = document.querySelector('.message');
-      const button = document.querySelector('.login-button');
+      (function () {
+        const username = document.getElementById('username');
+        const password = document.getElementById('password');
+        const message = document.querySelector('.message');
+        const button = document.querySelector('.login-button');
 
-      function doLogin() {
-        if (!username.value || !password.value) {
-          message.textContent = '请输入用户名和密码';
-          message.classList.add('show');
-          return;
+        function doLogin() {
+          if (!username.value || !password.value) {
+            message.textContent = '请输入用户名和密码';
+            message.classList.add('show');
+            return;
+          }
+
+          fetch('/api/login', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              username: username.value,
+              password: password.value,
+            }),
+          })
+            .then((res) => res.json())
+            .then((res) => {
+              if (!res.success) {
+                message.textContent = '用户名或密码错误';
+                message.classList.add('show');
+              } else {
+                window.location.href = '/';
+              }
+            });
         }
 
-        fetch('/api/login', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            username: username.value,
-            password: password.value,
-          }),
-        })
-          .then((res) => res.json())
-          .then((res) => {
-            if (!res.success) {
-              message.textContent = '用户名或密码错误';
-              message.classList.add('show');
-            } else {
-              window.location.href = '/';
-            }
-          });
-      }
-
-      button.addEventListener('click', doLogin);
-      password.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') {
-          doLogin();
-        }
-      });
+        button.addEventListener('click', doLogin);
+        password.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+            doLogin();
+          }
+        });
+      })();
     </script>
   </body>
 </html>

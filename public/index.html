@@ -146,29 +146,31 @@
     </div>
 
     <script>
-      const user = document.querySelector('.user');
-      const username = document.querySelector('.username');
-      const login = document.querySelector('.login');
-      const logout = document.querySelector('.logout');
+      (function () {
+        const user = document.querySelector('.user');
+        const username = document.querySelector('.username');
+        const login = document.querySelector('.login');
+        const logout = document.querySelector('.logout');
 
-      fetch('/api/user')
-        .then((res) => res.json())
-        .then((res) => {
-          if (res.username) {
-            username.textContent = res.username;
-            user.classList.add('show');
-          } else if (res.useCredentials) {
-            login.classList.add('show');
-          }
-        });
+        fetch('/api/user')
+          .then((res) => res.json())
+          .then((res) => {
+            if (res.username) {
+              username.textContent = res.username;
+              user.classList.add('show');
+            } else if (res.useCredentials) {
+              login.classList.add('show');
+            }
+          });
 
-      logout.addEventListener('click', () => {
-        fetch('/api/logout', {
-          method: 'POST',
-        }).then(() => {
-          window.location.reload();
+        logout.addEventListener('click', () => {
+          fetch('/api/logout', {
+            method: 'POST',
+          }).then(() => {
+            window.location.reload();
+          });
         });
-      });
+      })();
     </script>
   </body>
 </html>

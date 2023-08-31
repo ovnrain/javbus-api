@@ -1,11 +1,6 @@
 import { Router } from 'express';
 import createError from 'http-errors';
-import {
-  moviesPageValidator,
-  searchMoviesPageValidator,
-  typeValidator,
-  validate,
-} from './validators.js';
+import { moviesPageValidator, searchMoviesPageValidator, typeValidator } from './validators.js';
 import type { FilterType, MagnetType, MovieType } from './types.js';
 import {
   getMovieDetail,
@@ -13,6 +8,7 @@ import {
   getMoviesByPage,
   getStarInfo,
 } from './javbusParser.js';
+import { validate } from '../../utils.js';
 
 const movieRouter = Router();
 

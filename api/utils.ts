@@ -1,3 +1,6 @@
+import type { NextFunction, Request, Response } from 'express';
+import { type ValidationChain, validationResult } from 'express-validator';
+
 export function normalizePort(val: string) {
   const port = parseInt(val, 10);
 
@@ -26,3 +29,21 @@ export class QueryValidationError extends Error {
     Object.setPrototypeOf(this, QueryValidationError.prototype);
   }
 }
+
+export const validate = (validations: ValidationChain[]) => {
+  return async (req: Request, _: Response, next: NextFunction) => {
+    await Promise.all(validations.map((validation) => validation.run(req)));
+
+    const errors = validationResult(req);
+    if (errors.isEmpty()) {
+      return next();
+    }
+
+    next(
+      new QueryValidationError(
+        'query is invalid',
+        errors.array().map((error) => error.msg),
+      ),
+    );
+  };
+};

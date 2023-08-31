@@ -1,6 +1,4 @@
-import type { NextFunction, Request, Response } from 'express';
-import { query, type ValidationChain, validationResult } from 'express-validator';
-import { QueryValidationError } from '../../utils.js';
+import { query } from 'express-validator';
 
 export const typeValidator = query('type')
   .optional()
@@ -41,21 +39,3 @@ export const searchMoviesPageValidator = [
   ...baseMoviesPageValidator,
   query('keyword').trim().notEmpty().withMessage('`keyword` is required'),
 ];
-
-export const validate = (validations: ValidationChain[]) => {
-  return async (req: Request, _: Response, next: NextFunction) => {
-    await Promise.all(validations.map((validation) => validation.run(req)));
-
-    const errors = validationResult(req);
-    if (errors.isEmpty()) {
-      return next();
-    }
-
-    next(
-      new QueryValidationError(
-        'query is invalid',
-        errors.array().map((error) => error.msg),
-      ),
-    );
-  };
-};

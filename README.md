@@ -186,6 +186,8 @@ location /api {
 ```env
 ADMIN_USERNAME=your_username
 ADMIN_PASSWORD=your_password
+# 可选，用于加密 session
+JAVBUS_SESSION_SECRET=your_session_secret
 ```
 
 重新部署项目，首页会出现登录按钮，点击进入登录页面，输入用户名密码即可。如果在未登录的情况下访问 API，会跳转到登录页面。这种方式适合在浏览器中访问，如果是在 App 中访问，建议使用第二种方式

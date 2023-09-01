@@ -50,9 +50,7 @@
 
 ## 部署与启动
 
-注意：本程序仅仅是 JavBus 的一个在线转换服务，因此不依赖数据库服务，每个请求会实时请求 JavBus 对应的网页，解析之后返回对应的 json 数据
-
-因此，如果 JavBus 网站无法访问，本程序也无法正常工作
+注意：本程序仅仅是 JavBus 的一个在线转换服务，因此不依赖数据库服务，每个请求会实时请求 JavBus 对应的网页，解析之后返回对应的 json 数据。因此，如果 JavBus 网站无法访问，本程序也无法正常工作
 
 ### Docker 部署（推荐）
 
@@ -82,7 +80,7 @@ $ docker run -d \
     ovnrain/javbus-api
 ```
 
-注意：`-v` 和 `-e SSL_CERT`、`-e SSL_KEY` 这三个参数必须同时使用，否则无法启用 https 服务器
+注意：`-v` 和 `-e SSL_CERT`、`-e SSL_KEY` 这三个环境变量必须同时使用，否则无法启用 https 服务器
 
 #### 使用代理
 
@@ -115,7 +113,7 @@ $ npm start
 $ SSL_CERT=/path/to/your/cert/ssl.crt SSL_KEY=/path/to/your/cert/ssl.key npm start
 ```
 
-或者编辑 `.env` 文件，添加以下内容：
+或者编辑 `.env` 文件，添加以下环境变量：
 
 ```env
 SSL_CERT=/path/to/your/cert/ssl.crt
@@ -128,7 +126,7 @@ SSL_KEY=/path/to/your/cert/ssl.key
 $ HTTP_PROXY=http://192.168.5.123:1082 npm start
 ```
 
-或者编辑 `.env` 文件，添加以下内容：
+或者编辑 `.env` 文件，添加以下环境变量：
 
 ```env
 HTTP_PROXY=http://192.168.5.123:1082
@@ -177,9 +175,7 @@ location /api {
 
 ## 权限校验
 
-本项目默认不开启权限校验，即任何人都可以访问
-
-如果项目部署在公网上，建议开启权限校验，以防止被恶意访问
+本项目默认不开启权限校验，即任何人都可以访问。如果项目部署在公网上，建议开启权限校验，以防止被恶意访问
 
 权限校验目前有两种方式：
 
@@ -192,11 +188,7 @@ ADMIN_USERNAME=your_username
 ADMIN_PASSWORD=your_password
 ```
 
-重新部署项目，首页会出现登录按钮，点击进入登录页面，输入用户名密码即可
-
-如果在未登录的情况下访问 API，会跳转到登录页面
-
-这种方式适合在浏览器中访问，如果是在 App 中访问，建议使用第二种方式
+重新部署项目，首页会出现登录按钮，点击进入登录页面，输入用户名密码即可。如果在未登录的情况下访问 API，会跳转到登录页面。这种方式适合在浏览器中访问，如果是在 App 中访问，建议使用第二种方式
 
 ### 2. 使用 Token
 
@@ -231,13 +223,9 @@ GET http://localhost:8922/api/v1/stars/okq HTTP/1.1
 j-auth-token: your_token
 ```
 
-关于 Docker、Node.js 的环境变量设置方式，请参考上面的部署方法
+关于 Docker、Node.js 的环境变量设置方式，请参考上面的部署方法。Vercel 设置环境变量可以在项目的 `Settings` -> `Environment Variables` 中设置
 
-Vercel 设置环境变量可以在项目的 `Settings` -> `Environment Variables` 中设置
-
-**注意：仅仅设置 `JAVBUS_AUTH_TOKEN` 环境变量是不安全的，用户依然可以通过不加 `j-auth-token` 请求头，或者在浏览器中直接访问 API**
-
-因此，应该同时设置 `ADMIN_USERNAME` 和 `ADMIN_PASSWORD` 环境变量，以达到双重校验的目的
+**注意：只设置 `JAVBUS_AUTH_TOKEN` 环境变量是不安全的，用户依然可以通过不加 `j-auth-token` 请求头，或者在浏览器中直接访问 API**。因此，应该同时设置 `ADMIN_USERNAME` 和 `ADMIN_PASSWORD` 环境变量，以达到双重校验的目的
 
 ## API 文档
 

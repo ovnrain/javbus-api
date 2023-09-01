@@ -80,7 +80,7 @@ $ docker run -d \
     ovnrain/javbus-api
 ```
 
-注意：`-v` 和 `-e SSL_CERT`、`-e SSL_KEY` 这三个环境变量必须同时使用，否则无法启用 https 服务器
+注意：`-v` 和 `-e SSL_CERT`、`-e SSL_KEY` 这三个参数必须同时使用，否则无法启用 https 服务器
 
 #### 使用代理
 

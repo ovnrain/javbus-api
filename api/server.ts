@@ -1,6 +1,6 @@
 import fs from 'fs';
-import http, { Server } from 'http';
-import https from 'https';
+import http, { Server as HttpServer } from 'http';
+import https, { Server as HttpsServer } from 'https';
 import { normalizePort } from './utils.js';
 import app from './app.js';
 import type { ListenError } from './types.js';
@@ -9,7 +9,7 @@ const PORT = normalizePort(process.env.PORT || '3000');
 const SSL_CERT = process.env.SSL_CERT;
 const SSL_KEY = process.env.SSL_KEY;
 
-let server: Server;
+let server: HttpServer | HttpsServer;
 let scheme: 'http' | 'https';
 
 if (SSL_CERT && SSL_KEY && fs.existsSync(SSL_CERT) && fs.existsSync(SSL_KEY)) {
@@ -26,13 +26,11 @@ if (SSL_CERT && SSL_KEY && fs.existsSync(SSL_CERT) && fs.existsSync(SSL_KEY)) {
   scheme = 'http';
 }
 
-server.listen(PORT);
-server.on('error', onError);
-server.on('listening', onListening);
-
-function onListening() {
-  console.log(`Server is running at ${scheme}://localhost:${PORT}`);
-}
+server
+  .listen(PORT, () => {
+    console.log(`Server is running at ${scheme}://localhost:${PORT}`);
+  })
+  .on('error', onError);
 
 function onError(error: ListenError) {
   if (error.syscall !== 'listen') {

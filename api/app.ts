@@ -49,12 +49,7 @@ const loginValidators = [
   body(field)
     .notEmpty()
     .trim()
-    .custom((value: string) => {
-      if (typeof expect === 'undefined' || !expect.length) {
-        return false;
-      }
-      return value === expect;
-    }),
+    .custom((value: string) => (expect ? value === expect : false)),
 );
 const MemoryStore = memorystore(session);
 

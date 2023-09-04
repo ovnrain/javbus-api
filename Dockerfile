@@ -1,14 +1,15 @@
 # build stage
 FROM node:hydrogen-alpine AS builder
 
-RUN npm i -g npm@latest && npm i -g pnpm@latest
-
 # Create app directory
 WORKDIR /app
 
 COPY . .
 
-RUN pnpm i --ignore-scripts && pnpm build && pnpm prune --prod --config.ignore-scripts=true
+RUN npm i -g pnpm@latest && \
+  pnpm i --ignore-scripts && \
+  pnpm build && \
+  pnpm prune --prod --config.ignore-scripts=true
 
 # run stage
 FROM node:hydrogen-alpine
@@ -20,7 +21,7 @@ USER node
 
 WORKDIR /app
 
-COPY package.json .
+COPY --chown=node:node package.json .
 COPY --chown=node:node public public
 COPY --chown=node:node --from=builder /app/node_modules node_modules/
 COPY --chown=node:node --from=builder /app/dist dist/

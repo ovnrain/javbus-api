@@ -2,8 +2,12 @@ import fs from 'fs';
 import http, { Server as HttpServer } from 'http';
 import https, { Server as HttpsServer } from 'https';
 import app from './app.js';
-import type { ListenError } from './types.js';
 import ENV from './env.js';
+
+interface ListenError extends Error {
+  code: string;
+  syscall?: string;
+}
 
 const { PORT, SSL_CERT, SSL_KEY } = ENV;
 

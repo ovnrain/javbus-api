@@ -1,22 +1,6 @@
 import type { NextFunction, Request, Response } from 'express';
 import { type ValidationChain, validationResult } from 'express-validator';
 
-export function normalizePort(val: string) {
-  const port = parseInt(val, 10);
-
-  if (isNaN(port)) {
-    // named pipe
-    return val;
-  }
-
-  if (port >= 0) {
-    // port number
-    return port;
-  }
-
-  return false;
-}
-
 export class QueryValidationError extends Error {
   messages: string[];
 

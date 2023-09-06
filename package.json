@@ -58,7 +58,8 @@
     "node-html-parser": "^6.1.6",
     "probe-image-size": "^7.2.3",
     "qs": "^6.11.2",
-    "socks-proxy-agent": "^8.0.1"
+    "socks-proxy-agent": "^8.0.1",
+    "znv": "^0.4.0"
   },
   "type": "module"
 }

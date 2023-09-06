@@ -6,6 +6,7 @@ import memorystore from 'memorystore';
 import { body } from 'express-validator';
 import v1Router from './router/v1/router.js';
 import { QueryValidationError, validate2 } from './utils.js';
+import ENV from './env.js';
 
 // 扩展 express-session 的 SessionData
 declare module 'express-session' {
@@ -40,7 +41,7 @@ app.use(express.json());
 // 用于解析 application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
-const { JAVBUS_AUTH_TOKEN, ADMIN_USERNAME, ADMIN_PASSWORD, JAVBUS_SESSION_SECRET } = process.env;
+const { JAVBUS_AUTH_TOKEN, ADMIN_USERNAME, ADMIN_PASSWORD, JAVBUS_SESSION_SECRET } = ENV;
 const useCredentials = Boolean(ADMIN_USERNAME && ADMIN_PASSWORD);
 const loginValidators = [
   { field: 'username', expect: ADMIN_USERNAME },

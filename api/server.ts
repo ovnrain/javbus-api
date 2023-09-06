@@ -1,13 +1,11 @@
 import fs from 'fs';
 import http, { Server as HttpServer } from 'http';
 import https, { Server as HttpsServer } from 'https';
-import { normalizePort } from './utils.js';
 import app from './app.js';
 import type { ListenError } from './types.js';
+import ENV from './env.js';
 
-const PORT = normalizePort(process.env.PORT || '3000');
-const SSL_CERT = process.env.SSL_CERT;
-const SSL_KEY = process.env.SSL_KEY;
+const { PORT, SSL_CERT, SSL_KEY } = ENV;
 
 let server: HttpServer | HttpsServer;
 let scheme: 'http' | 'https';

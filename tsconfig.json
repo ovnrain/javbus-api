@@ -1,12 +1,9 @@
 {
-  "extends": [
-    "@tsconfig/strictest/tsconfig.json",
-    "@tsconfig/node18/tsconfig.json",
-    "@tsconfig/esm/tsconfig.json"
-  ],
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "./dist",
     "module": "NodeNext",
-    "moduleResolution": "NodeNext"
+    "moduleResolution": "NodeNext",
+    "outDir": "./dist",
+    "target": "ES2022"
   }
 }

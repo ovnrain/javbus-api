@@ -46,15 +46,6 @@ dependencies:
     version: 8.0.1
 
 devDependencies:
-  '@tsconfig/esm':
-    specifier: ^1.0.4
-    version: 1.0.4
-  '@tsconfig/node18':
-    specifier: ^18.2.1
-    version: 18.2.1
-  '@tsconfig/strictest':
-    specifier: ^2.0.1
-    version: 2.0.1
   '@types/bytes':
     specifier: ^3.1.1
     version: 3.1.1
@@ -434,18 +425,6 @@ packages:
     dependencies:
       defer-to-connect: 2.0.1
     dev: false
-
-  /@tsconfig/esm@1.0.4:
-    resolution: {integrity: sha512-bix9CWljCxyD06nGQRDYdmTw0wevvEDyrLKjbDocGV31JQYbfqqgMV1yFeJ9aDgorKQ9yDLrak8poiggsB5Liw==}
-    dev: true
-
-  /@tsconfig/node18@18.2.1:
-    resolution: {integrity: sha512-RDDZFuofwkcKpl8Vpj5wFbY+H53xOtqK7ckEL1sXsbPwvKwDdjQf3LkHbtt9sxIHn9nWIEwkmCwBRZ6z5TKU2A==}
-    dev: true
-
-  /@tsconfig/strictest@2.0.1:
-    resolution: {integrity: sha512-7JHHCbyCsGUxLd0pDbp24yz3zjxw2t673W5oAP6HCEdr/UUhaRhYd3SSnUsGCk+VnPVJVA4mXROzbhI+nyIk+w==}
-    dev: true
 
   /@types/body-parser@1.19.2:
     resolution: {integrity: sha512-ALYone6pm6QmwZoAgeyNksccT9Q4AWZQ6PvfwR37GT6r6FWUPguq6sUmNGSMV2Wr761oQoBxwGGa6DR5o1DC9g==}

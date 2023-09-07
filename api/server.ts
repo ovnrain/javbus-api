@@ -4,11 +4,6 @@ import https, { Server as HttpsServer } from 'https';
 import app from './app.js';
 import ENV from './env.js';
 
-interface ListenError extends Error {
-  code: string;
-  syscall?: string;
-}
-
 const { PORT, SSL_CERT, SSL_KEY } = ENV;
 
 let server: HttpServer | HttpsServer;
@@ -32,22 +27,16 @@ server
   .listen(PORT, () => {
     console.log(`Server is running at ${scheme}://localhost:${PORT}`);
   })
-  .on('error', onError);
+  .on('error', (e: NodeJS.ErrnoException) => {
+    if (e.syscall !== 'listen') {
+      throw e;
+    }
 
-function onError(error: ListenError) {
-  if (error.syscall !== 'listen') {
-    throw error;
-  }
-
-  const bind = typeof PORT === 'string' ? 'Pipe ' + PORT : 'Port ' + PORT;
-
-  if (error.code === 'EACCES') {
-    console.error(bind + ' requires elevated privileges');
-    process.exit(1);
-  } else if (error.code === 'EADDRINUSE') {
-    console.error(bind + ' is already in use');
-    process.exit(1);
-  } else {
-    throw error;
-  }
-}
+    if (e.code === 'EACCES') {
+      console.error(`Port ${PORT} requires elevated privileges`);
+    } else if (e.code === 'EADDRINUSE') {
+      console.error(`Port ${PORT} is already in use`);
+    } else {
+      throw e;
+    }
+  });

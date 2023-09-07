@@ -1,17 +1,28 @@
-# build stage
-FROM node:hydrogen-alpine AS builder
+FROM node:hydrogen-alpine AS base
 
-# Create app directory
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable
+
 WORKDIR /app
 
 COPY . .
 
-RUN npm i -g pnpm@latest && \
-  pnpm i --ignore-scripts && \
-  pnpm build && \
-  pnpm prune --prod --config.ignore-scripts=true
+# -------------------
 
-# run stage
+FROM base AS prod-deps
+
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --ignore-scripts --prod --frozen-lockfile
+
+# -------------------
+
+FROM base AS build
+
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --ignore-scripts --frozen-lockfile
+RUN pnpm run build
+
+# -------------------
+
 FROM node:hydrogen-alpine
 
 RUN apk add --no-cache tini
@@ -21,10 +32,10 @@ USER node
 
 WORKDIR /app
 
-COPY --chown=node:node package.json .
-COPY --chown=node:node public public
-COPY --chown=node:node --from=builder /app/node_modules node_modules/
-COPY --chown=node:node --from=builder /app/dist dist/
+COPY --chown=node:node --from=prod-deps /app/node_modules /app/node_modules
+COPY --chown=node:node --from=build /app/dist /app/dist
+COPY --chown=node:node --from=build /app/package.json /app/package.json
+COPY --chown=node:node --from=build /app/public /app/public
 
 EXPOSE 3000
 

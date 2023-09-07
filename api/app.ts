@@ -5,7 +5,7 @@ import session from 'express-session';
 import memorystore from 'memorystore';
 import { body } from 'express-validator';
 import v1Router from './router/v1/router.js';
-import { QueryValidationError, validate2 } from './utils.js';
+import { QueryValidationError, commonValidate } from './utils.js';
 import ENV from './env.js';
 
 // 扩展 express-session 的 SessionData
@@ -78,7 +78,7 @@ app.get('/api/user', (req, res: GetUserResponse) => {
 
 app.post(
   '/api/login',
-  validate2<LoginRequest, UserActionResponse>(loginValidators, (res) => {
+  commonValidate<LoginRequest, UserActionResponse>(loginValidators, (errors, req, res) => {
     res.status(401).json({ success: false, message: 'Invalid username or password' });
   }),
   (req, res) => {

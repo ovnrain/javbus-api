@@ -16,7 +16,7 @@ export const moviesPageValidator = [
   query('filterType')
     .optional()
     .custom((_, { req }) => {
-      if (!req.query?.['filterValue']) {
+      if (!req.query?.filterValue) {
         throw new Error('`filterValue` is required');
       }
       return true;
@@ -27,7 +27,7 @@ export const moviesPageValidator = [
   query('filterValue')
     .optional()
     .custom((_, { req }) => {
-      if (!req.query?.['filterType']) {
+      if (!req.query?.filterType) {
         throw new Error('`filterType` is required');
       }
       return true;

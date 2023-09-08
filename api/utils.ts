@@ -35,8 +35,10 @@ export const commonValidate = <Req extends Request = Request, Res extends Respon
   };
 };
 
-export const validate = (validations: ValidationChain[]) => {
-  return commonValidate(validations, (errors, req, res, next) => {
+export const validate = <Req extends Request = Request, Res extends Response = Response>(
+  validations: ValidationChain[],
+) => {
+  return commonValidate<Req, Res>(validations, (errors, req, res, next) => {
     next(
       new QueryValidationError(
         'query is invalid',

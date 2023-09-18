@@ -9,8 +9,8 @@
     "dev": "tsx watch --clear-screen=false -r dotenv/config api/server.ts",
     "build": "npm run lint && tsc",
     "vercel-build": "tsc",
-    "format": "prettier --write 'api/**/*.ts'",
-    "lint": "eslint --config .eslintrc.commit.json api/**/*.ts",
+    "format": "prettier --write \"api/**/*.ts\"",
+    "lint": "eslint --config .eslintrc.commit.json \"api/**/*.ts\"",
     "prepare": "husky install"
   },
   "keywords": [

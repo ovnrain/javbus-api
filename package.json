@@ -61,5 +61,13 @@
     "socks-proxy-agent": "^8.0.2",
     "znv": "^0.4.0"
   },
-  "type": "module"
+  "type": "module",
+  "lint-staged": {
+    "*.ts": [
+      "eslint --config .eslintrc.commit.json"
+    ],
+    "*.html": [
+      "prettier --write"
+    ]
+  }
 }

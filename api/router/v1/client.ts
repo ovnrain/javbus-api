@@ -20,6 +20,7 @@ if (PROXY_URL) {
 const extendOptions: ExtendOptions = {
   headers: {
     'User-Agent': USER_AGENT,
+    'accept-language': 'zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7',
   },
   timeout: {
     request: JAVBUS_TIMEOUT,

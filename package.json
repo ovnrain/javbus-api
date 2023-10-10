@@ -59,7 +59,8 @@
     "probe-image-size": "^7.2.3",
     "qs": "^6.11.2",
     "socks-proxy-agent": "^8.0.2",
-    "znv": "^0.4.0"
+    "znv": "^0.4.0",
+    "zod": "^3.22.4"
   },
   "type": "module",
   "lint-staged": {

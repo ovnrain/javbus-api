@@ -52,6 +52,8 @@
 
 注意：本程序仅仅是 JavBus 的一个在线转换服务，因此不依赖数据库服务，每个请求会实时请求 JavBus 对应的网页，解析之后返回对应的 json 数据。因此，如果 JavBus 网站无法访问，本程序也无法正常工作
 
+**注意：目前使用美国 IP 代理或者部署在美国地区 VPS 上，JavBus 会跳转到登录页面，导致本程序无法获取数据，请使用其他地区的 IP 代理或者 VPS**
+
 ### Docker 部署（推荐）
 
 [Docker Hub 地址](https://hub.docker.com/r/ovnrain/javbus-api)
@@ -172,6 +174,8 @@ location /api {
 点击下方按钮，即可将本项目一键部署到 Vercel 上
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fovnrain%2Fjavbus-api&project-name=javbus-api&repository-name=javbus-api-from-ovnrain)
+
+**注意：部署在美国地区的 Vercel 上，JavBus 会跳转到登录页面，导致本程序无法获取数据，请使用其他地区的 Vercel。设置方法：在 Vercel 项目的 `Settings` -> `Functions` 中选择除美国以外的地区，如日本、香港等**
 
 ## 权限校验
 

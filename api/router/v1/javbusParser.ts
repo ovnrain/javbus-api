@@ -158,21 +158,22 @@ export function convertMagnetsHTML(html: string) {
   const magnets = doc
     .querySelectorAll('tr')
     .map<Magnet>((tr) => {
-      const link = tr.querySelector('td a')?.getAttribute('href') ?? '';
-      const id = link.match(/magnet:\?xt=urn:btih:(\w+)/)?.[1] ?? '';
-      const isHD = Boolean(
-        tr
-          .querySelector('td')
-          ?.querySelectorAll('a')
-          .find((a) => a.textContent.includes('高清')),
-      );
-      const hasSubtitle = Boolean(
-        tr
-          .querySelector('td')
-          ?.querySelectorAll('a')
-          .find((a) => a.textContent.includes('字幕')),
-      );
-      const title = tr.querySelector('td a')?.textContent.trim() ?? '';
+      const firstAnchor = tr.querySelector('td a');
+      const tagAnchors = firstAnchor?.querySelectorAll('a');
+
+      const link = firstAnchor?.getAttribute('href') ?? '';
+      const id = link?.match(/magnet:\?xt=urn:btih:(\w+)/)?.[1] ?? '';
+
+      const isHD = Boolean(tagAnchors?.find((a) => a.textContent.includes('高清')));
+      const hasSubtitle = Boolean(tagAnchors?.find((a) => a.textContent.includes('字幕')));
+
+      if (tagAnchors?.length) {
+        tagAnchors.forEach((a) => {
+          a.remove();
+        });
+      }
+
+      const title = firstAnchor?.textContent.trim() ?? '';
       const size = tr.querySelector('td:nth-child(2) a')?.textContent.trim() ?? null;
       const numberSize = size ? bytes(size) : null;
       const shareDate = tr.querySelector('td:nth-child(3) a')?.textContent.trim() ?? null;
@@ -180,7 +181,7 @@ export function convertMagnetsHTML(html: string) {
       return { id, link, isHD, title, size, numberSize, shareDate, hasSubtitle };
     })
     .filter(({ id, link, title }) => id && link && title)
-    .sort((a, b) => bytes.parse(b.size ?? '') - bytes.parse(a.size ?? ''));
+    .sort((a, b) => (a.numberSize && b.numberSize ? b.numberSize - a.numberSize : 0));
 
   return magnets;
 }

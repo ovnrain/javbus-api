@@ -52,7 +52,9 @@
 
 注意：本程序仅仅是 JavBus 的一个在线转换服务，因此不依赖数据库服务，每个请求会实时请求 JavBus 对应的网页，解析之后返回对应的 json 数据。因此，如果 JavBus 网站无法访问，本程序也无法正常工作
 
-**注意：目前使用美国 IP 代理或者部署在美国地区 VPS 上，JavBus 会跳转到登录页面，导致本程序无法获取数据，请使用其他地区的 IP 代理或者 VPS**
+> **Note**
+>
+> **目前使用美国 IP 代理或者部署在美国地区 VPS 上，JavBus 会跳转到登录页面，导致本程序无法获取数据，请使用其他地区的 IP 代理或者 VPS**
 
 ### Docker 部署（推荐）
 
@@ -233,7 +235,9 @@ _关于 PM2 的详细使用方法，请参考 [PM2 官方文档](https://pm2.key
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fovnrain%2Fjavbus-api&project-name=javbus-api&repository-name=javbus-api-from-ovnrain)
 
-**注意：部署在美国地区的 Vercel 上，JavBus 会跳转到登录页面，导致本程序无法获取数据，请使用其他地区的 Vercel。设置方法：在 Vercel 项目的 `Settings` -> `Functions` 中选择除美国以外的地区，如日本、香港等**
+> **Note**
+>
+> **部署在美国地区的 Vercel 上，JavBus 会跳转到登录页面，导致本程序无法获取数据，请使用其他地区的 Vercel。设置方法：在 Vercel 项目的 `Settings` -> `Functions` 中选择除美国以外的地区，如日本、香港等**
 
 ## 权限校验
 
@@ -289,7 +293,9 @@ j-auth-token: your_token
 
 关于 Docker、Node.js 的环境变量设置方式，请参考上面的部署方法。Vercel 设置环境变量可以在项目的 `Settings` -> `Environment Variables` 中设置
 
-**注意：只设置 `JAVBUS_AUTH_TOKEN` 环境变量是不安全的，用户依然可以通过不加 `j-auth-token` 请求头，或者在浏览器中直接访问 API**。因此，应该同时设置 `ADMIN_USERNAME` 和 `ADMIN_PASSWORD` 环境变量，以达到双重校验的目的
+> **Note**
+>
+> **只设置 `JAVBUS_AUTH_TOKEN` 环境变量是不安全的，用户依然可以通过不加 `j-auth-token` 请求头，或者在浏览器中直接访问 API。因此，应该同时设置 `ADMIN_USERNAME` 和 `ADMIN_PASSWORD` 环境变量，以达到双重校验的目的**
 
 ## API 文档
 

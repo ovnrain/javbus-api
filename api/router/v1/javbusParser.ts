@@ -120,8 +120,8 @@ export async function getMoviesByPage(
         ? `${prefix}/${filteValue}`
         : prefix
       : filerType
-      ? `${prefix}/${filteValue}/${page}`
-      : `${prefix}/page/${page}`;
+        ? `${prefix}/${filteValue}/${page}`
+        : `${prefix}/page/${page}`;
 
   const res = await client(url, {
     headers: { Cookie: `existmag=${magnet === 'exist' ? 'mag' : 'all'}` },

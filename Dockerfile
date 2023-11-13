@@ -2,7 +2,7 @@ FROM node:lts-alpine AS base
 
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
-RUN npm i -g pnpm
+RUN corepack enable
 
 WORKDIR /app
 

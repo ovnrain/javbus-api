@@ -1,4 +1,4 @@
-FROM node:hydrogen-alpine AS base
+FROM node:lts-alpine AS base
 
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
@@ -25,7 +25,7 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
 
 # -------------------
 
-FROM node:hydrogen-alpine
+FROM node:lts-alpine
 
 RUN apk add --no-cache tini
 

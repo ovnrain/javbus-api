@@ -316,27 +316,27 @@ GET
 
 | 参数        | 是否必须 | 可选值                                                                       | 默认值   | 说明                                                                                                                                                              |
 | ----------- | -------- | ---------------------------------------------------------------------------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| page        | 是       |                                                                              |          | 页码                                                                                                                                                              |
-| magnet      | 是       | `exist`<br />`all`                                                           |          | `exist`: 只返回有磁力链接的影片<br />`all`: 返回全部影片                                                                                                          |
+| page        | 否       |                                                                              | `1`      | 页码                                                                                                                                                              |
+| magnet      | 否       | `exist`<br />`all`                                                           | `exist`  | `exist`: 只返回有磁力链接的影片<br />`all`: 返回全部影片                                                                                                          |
 | filterType  | 否       | `star`<br />`genre`<br />`director`<br />`studio`<br />`label`<br />`series` |          | 筛选类型，必须与 `filterValue` 一起使用<br />`star`: 演员<br />`genre`: 类别<br />`director`: 导演<br />`studio`: 制作商<br />`label`: 发行商<br />`series`: 系列 |
 | filterValue | 否       |                                                                              |          | 筛选值，必须与 `filterType` 一起使用                                                                                                                              |
 | type        | 否       | `normal`<br />`uncensored`                                                   | `normal` | `normal`: 有码影片<br />`uncensored`: 无码影片                                                                                                                    |
 
 #### 请求举例
 
-    /api/movies?page=1&magnet=exist
+    /api/movies
 
 返回有磁力链接的第一页影片
 
-    /api/movies?page=1&filterType=star&filterValue=rsv&magnet=all
+    /api/movies?filterType=star&filterValue=rsv&magnet=all
 
 返回演员 ID 为 `rsv` 的影片的第一页，包含有磁力链接和无磁力链接的影片
 
-    /api/movies?page=2&filterType=genre&filterValue=4&magnet=exist
+    /api/movies?page=2&filterType=genre&filterValue=4
 
 返回类别 ID 为 `4` 的影片的第二页，只返回有磁力链接的影片
 
-    /api/movies?page=1&magnet=exist&type=uncensored
+    /api/movies?type=uncensored
 
 返回无码影片的第一页，只返回有磁力链接的影片
 
@@ -389,17 +389,17 @@ GET
 | 参数    | 是否必须 | 可选值                     | 默认值   | 说明                                                     |
 | ------- | -------- | -------------------------- | -------- | -------------------------------------------------------- |
 | keyword | 是       |                            |          | 搜索关键字                                               |
-| page    | 是       |                            |          | 页码                                                     |
-| magnet  | 是       | `exist`<br />`all`         |          | `exist`: 只返回有磁力链接的影片<br />`all`: 返回全部影片 |
+| page    | 否       |                            | `1`      | 页码                                                     |
+| magnet  | 否       | `exist`<br />`all`         | `exist`  | `exist`: 只返回有磁力链接的影片<br />`all`: 返回全部影片 |
 | type    | 否       | `normal`<br />`uncensored` | `normal` | `normal`: 有码影片<br />`uncensored`: 无码影片           |
 
 #### 请求举例
 
-    /api/movies/search?keyword=三上&page=1&magnet=exist
+    /api/movies/search?keyword=三上
 
 搜索关键词为 `三上` 的影片的第一页，只返回有磁力链接的影片
 
-    /api/movies/search?keyword=三上&page=1&magnet=all
+    /api/movies/search?keyword=三上&magnet=all
 
 搜索关键词为 `三上` 的影片的第一页，包含有磁力链接和无磁力链接的影片
 

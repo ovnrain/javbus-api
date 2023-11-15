@@ -2,5 +2,13 @@
   "singleQuote": true,
   "tabWidth": 2,
   "printWidth": 100,
-  "semi": true
+  "semi": true,
+  "overrides": [
+    {
+      "files": "*.html",
+      "options": {
+        "printWidth": 150
+      }
+    }
+  ]
 }

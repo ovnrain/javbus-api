@@ -43,4 +43,26 @@ export const searchMoviesPageValidator = [
 export const magnetsValidator = [
   query('gid').trim().notEmpty().withMessage('`gid` is required'),
   query('uc').trim().notEmpty().withMessage('`uc` is required'),
+  query('sortBy')
+    .optional()
+    .custom((_, { req }) => {
+      if (!req.query?.sortOrder) {
+        throw new Error('`sortOrder` is required');
+      }
+      return true;
+    })
+    .trim()
+    .isIn(['date', 'size'])
+    .withMessage('`sortBy` must be `date` or `size`'),
+  query('sortOrder')
+    .optional()
+    .custom((_, { req }) => {
+      if (!req.query?.sortBy) {
+        throw new Error('`sortBy` is required');
+      }
+      return true;
+    })
+    .trim()
+    .isIn(['asc', 'desc'])
+    .withMessage('`sortOrder` must be `asc` or `desc`'),
 ];

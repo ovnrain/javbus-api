@@ -16,6 +16,8 @@ import type {
   Property,
   Sample,
   SearchMoviesPage,
+  SortBy,
+  SortOrder,
   StarInfo,
 } from './types.js';
 import { formatImageUrl, PAGE_REG } from './utils.js';
@@ -190,6 +192,8 @@ export async function getMovieMagnets(params: {
   movieId: string;
   gid: string;
   uc: string;
+  sortBy?: SortBy;
+  sortOrder?: SortOrder;
 }): Promise<Magnet[]> {
   const { movieId, gid, uc } = params;
 
@@ -204,7 +208,29 @@ export async function getMovieMagnets(params: {
     },
   }).text();
 
-  return convertMagnetsHTML(magnetsRes);
+  const magnets = convertMagnetsHTML(magnetsRes);
+
+  if (params.sortBy && params.sortOrder) {
+    const { sortBy, sortOrder } = params;
+
+    magnets.sort((a, b) => {
+      if (sortBy === 'date') {
+        if (a.shareDate && b.shareDate) {
+          const aDate = new Date(a.shareDate).getTime();
+          const bDate = new Date(b.shareDate).getTime();
+
+          return sortOrder === 'asc' ? aDate - bDate : bDate - aDate;
+        }
+      } else if (sortBy === 'size') {
+        if (a.numberSize && b.numberSize) {
+          return sortOrder === 'asc' ? a.numberSize - b.numberSize : b.numberSize - a.numberSize;
+        }
+      }
+      return 0;
+    });
+  }
+
+  return magnets;
 }
 
 function textInfoFinder(infos: HTMLElement[], text: string, excludeText?: string): string | null {

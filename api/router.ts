@@ -6,7 +6,7 @@ import {
   searchMoviesPageValidator,
   typeValidator,
 } from './validators.js';
-import type { FilterType, MagnetType, MovieType } from './types.js';
+import type { FilterType, MagnetType, MovieType, SortBy, SortOrder } from './types.js';
 import {
   getMovieDetail,
   getMovieMagnets,
@@ -95,9 +95,11 @@ magnetRouter.get('/:movieId', validate(magnetsValidator), async (req, res, next)
   const movieId = req.params.movieId as string;
   const gid = req.query.gid as string;
   const uc = req.query.uc as string;
+  const sortBy = req.query.sortBy as SortBy | undefined;
+  const sortOrder = req.query.sortOrder as SortOrder | undefined;
 
   try {
-    const magnets = await getMovieMagnets({ movieId, gid, uc });
+    const magnets = await getMovieMagnets({ movieId, gid, uc, sortBy, sortOrder });
 
     res.json(magnets);
   } catch (e) {

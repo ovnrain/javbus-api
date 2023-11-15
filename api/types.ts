@@ -4,6 +4,10 @@ export type MagnetType = 'all' | 'exist';
 
 export type FilterType = 'star' | 'genre' | 'director' | 'studio' | 'label' | 'series';
 
+export type SortBy = 'date' | 'size';
+
+export type SortOrder = 'asc' | 'desc';
+
 export interface Property {
   id: string;
   name: string;

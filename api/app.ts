@@ -4,8 +4,8 @@ import { RequestError } from 'got';
 import session from 'express-session';
 import memorystore from 'memorystore';
 import { body } from 'express-validator';
-import v1Router from './router/v1/router.js';
-import { QueryValidationError, commonValidate } from './utils.js';
+import router from './router.js';
+import { QueryValidationError, commonValidate } from './validatorUtils.js';
 import ENV from './env.js';
 
 // 扩展 express-session 的 SessionData
@@ -119,7 +119,7 @@ app.use((req, res, next) => {
   }
 });
 
-app.use('/api/v1', v1Router);
+app.use('/api', router);
 
 app.use((_req, _res, next) => {
   next(new createError.NotFound());

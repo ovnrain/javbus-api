@@ -8,7 +8,7 @@ import {
   getMoviesByPage,
   getStarInfo,
 } from './javbusParser.js';
-import { validate } from '../../utils.js';
+import { validate } from './validatorUtils.js';
 
 const movieRouter = Router();
 

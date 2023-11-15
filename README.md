@@ -19,21 +19,21 @@
   - [1. 使用用户名密码](#1-使用用户名密码)
   - [2. 使用 Token](#2-使用-token)
 - [API 文档](#api-文档)
-  - [/api/v1/movies](#apiv1movies)
+  - [/api/movies](#apiv1movies)
     - [method](#method)
     - [参数](#参数)
     - [请求举例](#请求举例)
     - [返回举例](#返回举例)
-  - [/api/v1/movies/search](#apiv1moviessearch)
+  - [/api/movies/search](#apiv1moviessearch)
     - [method](#method-1)
     - [参数](#参数-1)
     - [请求举例](#请求举例-1)
     - [返回举例](#返回举例-1)
-  - [/api/v1/movies/{id}](#apiv1moviesid)
+  - [/api/movies/{id}](#apiv1moviesid)
     - [method](#method-2)
     - [请求举例](#请求举例-2)
     - [返回举例](#返回举例-2)
-  - [/api/v1/stars/{id}](#apiv1starsid)
+  - [/api/stars/{id}](#apiv1starsid)
     - [method](#method-3)
     - [参数](#参数-2)
     - [请求举例](#请求举例-3)
@@ -275,19 +275,19 @@ JAVBUS_AUTH_TOKEN=your_token
 使用 `curl`
 
 ```shell
-$ curl -H "j-auth-token: your_token" http://localhost:8922/api/v1/stars/okq
+$ curl -H "j-auth-token: your_token" http://localhost:8922/api/stars/okq
 ```
 
 使用 `Wget`
 
 ```shell
-$ wget --header="j-auth-token: your_token" http://localhost:8922/api/v1/stars/okq
+$ wget --header="j-auth-token: your_token" http://localhost:8922/api/stars/okq
 ```
 
 使用 [REST Client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client)
 
 ```http
-GET http://localhost:8922/api/v1/stars/okq HTTP/1.1
+GET http://localhost:8922/api/stars/okq HTTP/1.1
 j-auth-token: your_token
 ```
 
@@ -299,7 +299,7 @@ j-auth-token: your_token
 
 ## API 文档
 
-### /api/v1/movies
+### /api/movies
 
 获取影片列表
 
@@ -319,19 +319,19 @@ GET
 
 #### 请求举例
 
-    /api/v1/movies?page=1&magnet=exist
+    /api/movies?page=1&magnet=exist
 
 返回有磁力链接的第一页影片
 
-    /api/v1/movies?page=1&filterType=star&filterValue=rsv&magnet=all
+    /api/movies?page=1&filterType=star&filterValue=rsv&magnet=all
 
 返回演员 ID 为 `rsv` 的影片的第一页，包含有磁力链接和无磁力链接的影片
 
-    /api/v1/movies?page=2&filterType=genre&filterValue=4&magnet=exist
+    /api/movies?page=2&filterType=genre&filterValue=4&magnet=exist
 
 返回类别 ID 为 `4` 的影片的第二页，只返回有磁力链接的影片
 
-    /api/v1/movies?page=1&magnet=exist&type=uncensored
+    /api/movies?page=1&magnet=exist&type=uncensored
 
 返回无码影片的第一页，只返回有磁力链接的影片
 
@@ -371,7 +371,7 @@ GET
 
 </details>
 
-### /api/v1/movies/search
+### /api/movies/search
 
 搜索影片
 
@@ -390,11 +390,11 @@ GET
 
 #### 请求举例
 
-    /api/v1/movies/search?keyword=三上&page=1&magnet=exist
+    /api/movies/search?keyword=三上&page=1&magnet=exist
 
 搜索关键词为 `三上` 的影片的第一页，只返回有磁力链接的影片
 
-    /api/v1/movies/search?keyword=三上&page=1&magnet=all
+    /api/movies/search?keyword=三上&page=1&magnet=all
 
 搜索关键词为 `三上` 的影片的第一页，包含有磁力链接和无磁力链接的影片
 
@@ -429,7 +429,7 @@ GET
 
 </details>
 
-### /api/v1/movies/{id}
+### /api/movies/{id}
 
 获取影片详情
 
@@ -439,7 +439,7 @@ GET
 
 #### 请求举例
 
-    /api/v1/movies/SSIS-406
+    /api/movies/SSIS-406
 
 返回番号为 `SSIS-406` 的影片详情
 
@@ -524,7 +524,7 @@ GET
 
 </details>
 
-### /api/v1/stars/{id}
+### /api/stars/{id}
 
 获取演员详情
 
@@ -540,11 +540,11 @@ GET
 
 #### 请求举例
 
-    /api/v1/stars/2xi
+    /api/stars/2xi
 
 返回演员 `葵つかさ` 的详情
 
-    /api/v1/stars/2jd?type=uncensored
+    /api/stars/2jd?type=uncensored
 
 返回演员 `波多野結衣` 的详情
 

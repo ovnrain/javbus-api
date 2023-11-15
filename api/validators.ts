@@ -39,3 +39,8 @@ export const searchMoviesPageValidator = [
   ...baseMoviesPageValidator,
   query('keyword').trim().notEmpty().withMessage('`keyword` is required'),
 ];
+
+export const magnetsValidator = [
+  query('gid').trim().notEmpty().withMessage('`gid` is required'),
+  query('uc').trim().notEmpty().withMessage('`uc` is required'),
+];

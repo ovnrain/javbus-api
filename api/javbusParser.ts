@@ -317,8 +317,6 @@ export async function getMovieDetail(id: string): Promise<MovieDetail> {
   const gid = res.match(gidReg)?.[1] ?? null;
   const uc = res.match(ucReg)?.[1] ?? null;
 
-  const magnets = gid && uc ? await getMovieMagnets({ movieId: id, gid, uc }) : [];
-
   /* ----------------- 样品图片 ------------------ */
   const samples = doc
     .querySelectorAll('#sample-waterfall .sample-box')
@@ -351,8 +349,9 @@ export async function getMovieDetail(id: string): Promise<MovieDetail> {
     series,
     genres,
     stars,
-    magnets,
     samples,
+    gid,
+    uc,
   };
 }
 

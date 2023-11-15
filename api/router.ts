@@ -1,9 +1,15 @@
 import { Router } from 'express';
 import createError from 'http-errors';
-import { moviesPageValidator, searchMoviesPageValidator, typeValidator } from './validators.js';
+import {
+  magnetsValidator,
+  moviesPageValidator,
+  searchMoviesPageValidator,
+  typeValidator,
+} from './validators.js';
 import type { FilterType, MagnetType, MovieType } from './types.js';
 import {
   getMovieDetail,
+  getMovieMagnets,
   getMoviesByKeywordAndPage,
   getMoviesByPage,
   getStarInfo,
@@ -83,9 +89,26 @@ starRouter.get('/:id', validate([typeValidator]), async (req, res, next) => {
   }
 });
 
+const magnetRouter = Router();
+
+magnetRouter.get('/:movieId', validate(magnetsValidator), async (req, res, next) => {
+  const movieId = req.params.movieId as string;
+  const gid = req.query.gid as string;
+  const uc = req.query.uc as string;
+
+  try {
+    const magnets = await getMovieMagnets({ movieId, gid, uc });
+
+    res.json(magnets);
+  } catch (e) {
+    next(e);
+  }
+});
+
 const router = Router();
 
 router.use('/movies', movieRouter);
 router.use('/stars', starRouter);
+router.use('/magnets', magnetRouter);
 
 export default router;

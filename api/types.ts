@@ -52,9 +52,10 @@ export interface MovieDetail {
   series: Property | null;
   genres: Property[];
   stars: Property[];
-  magnets: Magnet[];
   imageSize: ImageSize | null;
   samples: Sample[];
+  gid: string | null;
+  uc: string | null;
 }
 
 export interface Pagination {

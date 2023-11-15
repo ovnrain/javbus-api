@@ -19,25 +19,30 @@
   - [1. 使用用户名密码](#1-使用用户名密码)
   - [2. 使用 Token](#2-使用-token)
 - [API 文档](#api-文档)
-  - [/api/movies](#apiv1movies)
+  - [/api/movies](#apimovies)
     - [method](#method)
     - [参数](#参数)
     - [请求举例](#请求举例)
     - [返回举例](#返回举例)
-  - [/api/movies/search](#apiv1moviessearch)
+  - [/api/movies/search](#apimoviessearch)
     - [method](#method-1)
     - [参数](#参数-1)
     - [请求举例](#请求举例-1)
     - [返回举例](#返回举例-1)
-  - [/api/movies/{id}](#apiv1moviesid)
+  - [/api/movies/{movieId}](#apimoviesmovieid)
     - [method](#method-2)
     - [请求举例](#请求举例-2)
     - [返回举例](#返回举例-2)
-  - [/api/stars/{id}](#apiv1starsid)
+  - [/api/magnets/{movieId}](#apimagnetsmovieid)
     - [method](#method-3)
     - [参数](#参数-2)
     - [请求举例](#请求举例-3)
     - [返回举例](#返回举例-3)
+  - [/api/stars/{starId}](#apistarsstarid)
+    - [method](#method-4)
+    - [参数](#参数-3)
+    - [请求举例](#请求举例-4)
+    - [返回举例](#返回举例-4)
 
 ## 用途
 
@@ -429,7 +434,7 @@ GET
 
 </details>
 
-### /api/movies/{id}
+### /api/movies/{movieId}
 
 获取影片详情
 
@@ -491,22 +496,6 @@ GET
       "name": "葵つかさ"
     }
   ],
-  // 磁力链接列表
-  "magnets": [
-    {
-      "link": "magnet:?xt=urn:btih:A6D7C90FAB7E4223C61425A2E4CDF9E503CEDAA2&dn=SSIS-406-C",
-      // 是否高清
-      "isHD": true,
-      "title": "SSIS-406-C",
-      "size": "5.46GB",
-      // bytes
-      "numberSize": 5862630359,
-      "shareDate": "2022-05-20",
-      // 是否包含字幕
-      "hasSubtitle": true
-    }
-    // ...
-  ],
   // 影片预览图
   "samples": [
     {
@@ -518,13 +507,72 @@ GET
       "thumbnail": "https://www.javbus.com/pics/sample/8xnc_1.jpg"
     }
     // ...
-  ]
+  ],
+  "gid": "50217160940",
+  "uc": "0"
 }
 ```
 
 </details>
 
-### /api/stars/{id}
+### /api/magnets/{movieId}
+
+获取影片磁力链接
+
+#### method
+
+GET
+
+#### 参数
+
+| 参数      | 是否必须 | 可选值             | 默认值 | 说明                                            |
+| --------- | -------- | ------------------ | ------ | ----------------------------------------------- |
+| gid       | 是       |                    |        | 从影片详情获取到的 `gid`                        |
+| uc        | 是       |                    |        | 从影片详情获取到的 `uc`                         |
+| sortBy    | 否       | `date`<br />`size` | `size` | 按照日期或大小排序，必须与 `sortOrder` 一起使用 |
+| sortOrder | 否       | `asc`<br />`desc`  | `desc` | 升序或降序，必须与 `sortBy` 一起使用            |
+
+#### 请求举例
+
+    /api/magnets/SSNI-730?gid=42785257471&uc=0
+
+返回番号为 `SSNI-730` 的影片的磁力链接
+
+    /api/magnets/SSNI-730?gid=42785257471&uc=0&sortBy=size&sortOrder=asc
+
+返回番号为 `SSNI-730` 的影片的磁力链接，并按照大小升序排序
+
+    /api/magnets/SSNI-730?gid=42785257471&uc=0&sortBy=date&sortOrder=desc
+
+返回番号为 `SSNI-730` 的影片的磁力链接，并按照日期降序排序
+
+#### 返回举例
+
+<details>
+<summary>点击展开</summary>
+
+```jsonc
+[
+  {
+    "id": "17508BF5C17CBDF7C77E12DAAD1BDAB325116585",
+    "link": "magnet:?xt=urn:btih:17508BF5C17CBDF7C77E12DAAD1BDAB325116585&dn=SSNI-730-C",
+    // 是否高清
+    "isHD": true,
+    "title": "SSNI-730-C",
+    "size": "6.57GB",
+    // bytes
+    "numberSize": 7054483783,
+    "shareDate": "2021-03-14",
+    // 是否包含字幕
+    "hasSubtitle": true
+  }
+  // ...
+]
+```
+
+</details>
+
+### /api/stars/{starId}
 
 获取演员详情
 

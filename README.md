@@ -80,7 +80,7 @@ $ docker run -d \
 
 _以下配置仅为示例，具体配置请根据自己的实际情况进行修改_
 
-docker-compose.yml
+docker-compose.yml:
 
 ```yaml
 version: '3.8'
@@ -106,7 +106,7 @@ services:
     restart: unless-stopped
 ```
 
-nginx.conf
+nginx.conf:
 
 ```nginx
 # 其他配置省略...
@@ -142,7 +142,7 @@ http {
 }
 ```
 
-启动容器
+启动容器:
 
 ```shell
 $ docker-compose up -d
@@ -246,7 +246,9 @@ _关于 PM2 的详细使用方法，请参考 [PM2 官方文档](https://pm2.key
 
 ## 权限校验
 
-本项目默认不开启权限校验，即任何人都可以访问。如果项目部署在公网上，建议开启权限校验，以防止被恶意访问
+> **Note**
+>
+> **本项目默认不开启权限校验，即任何人都可以访问。如果项目部署在公网上，建议开启权限校验，以防止被恶意访问**
 
 权限校验目前有两种方式：
 

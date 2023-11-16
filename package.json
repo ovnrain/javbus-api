@@ -1,6 +1,6 @@
 {
   "name": "javbus-api",
-  "version": "1.7.3",
+  "version": "2.0.0",
   "description": "JavBus API",
   "main": "index.js",
   "homepage": "https://github.com/ovnrain/javbus-api#readme",

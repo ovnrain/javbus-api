@@ -43,4 +43,4 @@ COPY --chown=node:node --from=build /app/public /app/public
 
 EXPOSE 3000
 
-CMD [ "/sbin/tini", "--", "node", "dist/server.js" ]
+CMD [ "/usr/bin/tini", "--", "node", "dist/server.js" ]

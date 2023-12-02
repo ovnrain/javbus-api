@@ -37,4 +37,4 @@ jobs:
           tags: |
             ovnrain/javbus-api:latest
             ovnrain/javbus-api:${{ steps.package-version.outputs.current-version }}
-          platforms: linux/amd64,linux/arm64,linux/arm/v7,linux/arm/v6
+          platforms: linux/amd64,linux/arm64,linux/arm/v7

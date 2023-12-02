@@ -1,4 +1,4 @@
-FROM node:iron-alpine AS base
+FROM node:iron-slim AS base
 
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
@@ -25,9 +25,11 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
 
 # -------------------
 
-FROM node:iron-alpine
+FROM node:iron-slim
 
-RUN apk add --no-cache tini
+RUN apt-get update && \
+  apt-get install -y --no-install-recommends tini && \
+  rm -rf /var/lib/apt/lists/*
 
 ENV NODE_ENV production
 USER node

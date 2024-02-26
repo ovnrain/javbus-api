@@ -11,7 +11,7 @@
     "vercel-build": "tsc",
     "format": "prettier --write \"api/**/*.ts\"",
     "lint": "eslint --config .eslintrc.commit.json \"api/**/*.ts\"",
-    "prepare": "husky install"
+    "prepare": "husky"
   },
   "keywords": [
     "javbus",

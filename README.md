@@ -510,6 +510,15 @@ GET
     }
     // ...
   ],
+  // 同类影片
+  "similarMovies": [
+    {
+      "id": "SNIS-477",
+      "title": "クレーム処理会社の女社長 土下座とカラダで解決します 夢乃あいか",
+      "img": "https://www.javbus.com/pics/thumb/4wml.jpg"
+    }
+    // ...
+  ],
   "gid": "50217160940",
   "uc": "0"
 }

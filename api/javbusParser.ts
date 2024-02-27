@@ -16,6 +16,7 @@ import type {
   Property,
   Sample,
   SearchMoviesPage,
+  SimilarMovie,
   SortBy,
   SortOrder,
   StarInfo,
@@ -362,6 +363,22 @@ export async function getMovieDetail(id: string): Promise<MovieDetail> {
     })
     .filter(({ id, thumbnail }) => Boolean(id) && Boolean(thumbnail));
 
+  /* ----------------- 同类影片 ------------------ */
+  const similarMovies =
+    doc
+      .querySelector('#related-waterfall')
+      ?.querySelectorAll('a')
+      .map((link) => {
+        const href = link.getAttribute('href');
+
+        const id = href?.split('/').pop();
+        const title = link.getAttribute('title');
+        const img = formatImageUrl(link.querySelector('img')?.getAttribute('src')) ?? null;
+
+        return { id, title, img };
+      })
+      .filter((movie): movie is SimilarMovie => Boolean(id) && Boolean(title)) ?? [];
+
   return {
     id,
     title,
@@ -376,6 +393,7 @@ export async function getMovieDetail(id: string): Promise<MovieDetail> {
     genres,
     stars,
     samples,
+    similarMovies,
     gid,
     uc,
   };

@@ -21,6 +21,12 @@ export interface Movie {
   tags: string[];
 }
 
+export interface SimilarMovie {
+  id: string;
+  title: string;
+  img: string | null;
+}
+
 export interface Magnet {
   id: string;
   link: string;
@@ -58,6 +64,7 @@ export interface MovieDetail {
   stars: Property[];
   imageSize: ImageSize | null;
   samples: Sample[];
+  similarMovies: SimilarMovie[];
   gid: string | null;
   uc: string | null;
 }

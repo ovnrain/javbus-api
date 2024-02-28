@@ -224,8 +224,6 @@ $ pm2 start npm --name javbus-api -- start
 
 _关于 PM2 的详细使用方法，请参考 [PM2 官方文档](https://pm2.keymetrics.io/docs/usage/quick-start/)_
 
-服务启动后，在浏览器中访问 [http://localhost:8922](http://localhost:8922) 即可获取结果
-
 ### Vercel 部署
 
 使用 Vercel 部署的优势在于：

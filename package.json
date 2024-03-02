@@ -31,7 +31,7 @@
     "@types/express": "^4.17.21",
     "@types/express-session": "^1.18.0",
     "@types/http-errors": "^2.0.4",
-    "@types/node": "^20.11.22",
+    "@types/node": "^20.11.24",
     "@types/probe-image-size": "^7.2.4",
     "@types/qs": "^6.9.12",
     "@typescript-eslint/eslint-plugin": "^7.1.0",
@@ -48,7 +48,7 @@
   "dependencies": {
     "bytes": "^3.1.2",
     "dotenv": "^16.4.5",
-    "express": "^4.18.2",
+    "express": "^4.18.3",
     "express-session": "^1.18.0",
     "express-validator": "^7.0.1",
     "got": "^14.2.0",

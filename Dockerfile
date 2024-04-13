@@ -21,6 +21,7 @@ FROM base AS build
 
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
   pnpm install --ignore-scripts --frozen-lockfile && \
+  pnpm run lint && \
   pnpm run build
 
 # -------------------

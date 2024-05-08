@@ -1,16 +1,16 @@
 {
   "name": "javbus-api",
   "version": "2.1.0",
+  "private": true,
   "description": "JavBus API",
-  "main": "index.js",
   "homepage": "https://github.com/ovnrain/javbus-api#readme",
   "scripts": {
-    "start": "node -r dotenv/config dist/server.js",
-    "dev": "tsx watch --clear-screen=false -r dotenv/config api/server.ts",
-    "build": "tsc",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
     "vercel-build": "tsc",
     "format": "prettier --write \"api/**/*.ts\"",
-    "lint": "eslint --config .eslintrc.commit.json \"api/**/*.ts\"",
     "prepare": "husky"
   },
   "keywords": [
@@ -43,7 +43,10 @@
     "lint-staged": "^15.2.2",
     "prettier": "^3.2.5",
     "tsx": "^4.9.3",
-    "typescript": "^5.4.5"
+    "typescript": "^5.4.5",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "eslint-config-next": "14.2.3"
   },
   "dependencies": {
     "bytes": "^3.1.2",
@@ -60,15 +63,9 @@
     "qs": "^6.12.1",
     "socks-proxy-agent": "^8.0.3",
     "znv": "^0.4.0",
-    "zod": "^3.23.7"
-  },
-  "type": "module",
-  "lint-staged": {
-    "*.ts": [
-      "eslint --config .eslintrc.commit.json"
-    ],
-    "*.html": [
-      "prettier --write"
-    ]
+    "zod": "^3.23.7",
+    "react": "^18",
+    "react-dom": "^18",
+    "next": "14.2.3"
   }
 }

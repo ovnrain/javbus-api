@@ -5,12 +5,6 @@
   "semi": true,
   "overrides": [
     {
-      "files": "*.html",
-      "options": {
-        "printWidth": 150
-      }
-    },
-    {
       "files": "*.md",
       "options": {
         "trailingComma": "none"

@@ -1,3 +1,7 @@
+import './normalize.css';
+import './base.css';
+import styles from './layout.module.scss';
+
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -10,8 +14,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body>{children}</body>
+    <html lang="zh-Hans">
+      <body>
+        <div className={styles.container}>{children}</div>
+      </body>
     </html>
   );
 }

@@ -58,10 +58,10 @@ importers:
         version: 8.0.3
       znv:
         specifier: ^0.4.0
-        version: 0.4.0(zod@3.23.7)
+        version: 0.4.0(zod@3.23.8)
       zod:
-        specifier: ^3.23.7
-        version: 3.23.7
+        specifier: ^3.23.8
+        version: 3.23.8
     devDependencies:
       '@types/bytes':
         specifier: ^3.1.4
@@ -76,8 +76,8 @@ importers:
         specifier: ^2.0.4
         version: 2.0.4
       '@types/node':
-        specifier: ^20.12.10
-        version: 20.12.10
+        specifier: ^20.12.11
+        version: 20.12.11
       '@types/probe-image-size':
         specifier: ^7.2.4
         version: 7.2.4
@@ -444,8 +444,8 @@ packages:
   '@types/needle@3.2.3':
     resolution: {integrity: sha512-aUtoZUGROl654rDZlZYPRYaysAOBaVgjnbmYKq3n32afuqFvEts31YGixTebSOCJt7B7qKnHzCzcjbMig5LcQg==}
 
-  '@types/node@20.12.10':
-    resolution: {integrity: sha512-Eem5pH9pmWBHoGAT8Dr5fdc5rYA+4NAovdM4EktRPVAAiJhmWWfQrA0cFhAbOsQdSfIHjAud6YdkbL69+zSKjw==}
+  '@types/node@20.12.11':
+    resolution: {integrity: sha512-vDg9PZ/zi+Nqp6boSOT7plNuthRugEKixDv5sFTIpkE89MmNtEArAShI4mxuX2+UrLEe9pxC1vm2cjm9YlWbJw==}
 
   '@types/probe-image-size@7.2.4':
     resolution: {integrity: sha512-HVqYj3L+D+S/6qpQRv5qMxrD/5pglzZuhP7ZIqgVSZ+Ck4z1TCFkNIRG8WesFueQTqWFTSgkkAl6f8lwxFPQSw==}
@@ -2289,8 +2289,8 @@ packages:
     peerDependencies:
       zod: ^3.13.2
 
-  zod@3.23.7:
-    resolution: {integrity: sha512-NBeIoqbtOiUMomACV/y+V3Qfs9+Okr18vR5c/5pHClPpufWOrsx8TENboDPe265lFdfewX2yBtNTLPvnmCxwog==}
+  zod@3.23.8:
+    resolution: {integrity: sha512-XBx9AXhXktjUqnepgTiE5flcKIYWi/rme0Eaj+5Y0lftuGBq+jyRu/md4WnuxqgP1ubdpNCsYEYPxrzVHD8d6g==}
 
 snapshots:
 
@@ -2481,17 +2481,17 @@ snapshots:
   '@types/body-parser@1.19.5':
     dependencies:
       '@types/connect': 3.4.38
-      '@types/node': 20.12.10
+      '@types/node': 20.12.11
 
   '@types/bytes@3.1.4': {}
 
   '@types/connect@3.4.38':
     dependencies:
-      '@types/node': 20.12.10
+      '@types/node': 20.12.11
 
   '@types/express-serve-static-core@4.17.41':
     dependencies:
-      '@types/node': 20.12.10
+      '@types/node': 20.12.11
       '@types/qs': 6.9.15
       '@types/range-parser': 1.2.7
       '@types/send': 0.17.4
@@ -2521,16 +2521,16 @@ snapshots:
 
   '@types/needle@3.2.3':
     dependencies:
-      '@types/node': 20.12.10
+      '@types/node': 20.12.11
 
-  '@types/node@20.12.10':
+  '@types/node@20.12.11':
     dependencies:
       undici-types: 5.26.5
 
   '@types/probe-image-size@7.2.4':
     dependencies:
       '@types/needle': 3.2.3
-      '@types/node': 20.12.10
+      '@types/node': 20.12.11
 
   '@types/prop-types@15.7.12': {}
 
@@ -2552,13 +2552,13 @@ snapshots:
   '@types/send@0.17.4':
     dependencies:
       '@types/mime': 1.3.5
-      '@types/node': 20.12.10
+      '@types/node': 20.12.11
 
   '@types/serve-static@1.15.5':
     dependencies:
       '@types/http-errors': 2.0.4
       '@types/mime': 3.0.4
-      '@types/node': 20.12.10
+      '@types/node': 20.12.11
 
   '@typescript-eslint/eslint-plugin@7.8.0(@typescript-eslint/parser@7.8.0(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0)(typescript@5.4.5)':
     dependencies:
@@ -4718,9 +4718,9 @@ snapshots:
 
   yocto-queue@0.1.0: {}
 
-  znv@0.4.0(zod@3.23.7):
+  znv@0.4.0(zod@3.23.8):
     dependencies:
       colorette: 2.0.20
-      zod: 3.23.7
+      zod: 3.23.8
 
-  zod@3.23.7: {}
+  zod@3.23.8: {}

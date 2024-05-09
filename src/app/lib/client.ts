@@ -3,9 +3,9 @@ import { HttpsProxyAgent } from 'https-proxy-agent';
 import { SocksProxyAgent } from 'socks-proxy-agent';
 import got, { type ExtendOptions } from 'got';
 import { JAVBUS_TIMEOUT, USER_AGENT } from './constants';
-import ENV from '../env';
 
-const PROXY_URL = ENV.HTTP_PROXY || ENV.HTTPS_PROXY;
+const { HTTP_PROXY, HTTPS_PROXY } = process.env;
+const PROXY_URL = HTTP_PROXY || HTTPS_PROXY;
 
 export let agent: HttpsAgent | undefined = undefined;
 

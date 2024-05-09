@@ -1,15 +1,14 @@
 import styles from './page.module.scss';
 import { Fragment } from 'react';
 import Link from 'next/link';
-import ENV from './env';
 import Title from './components/title';
-import { getIronSessionData } from './lib/session';
+import { getSession } from './lib/session';
 
 export default async function Home() {
-  const { ADMIN_USERNAME, ADMIN_PASSWORD } = ENV;
+  const { ADMIN_USERNAME, ADMIN_PASSWORD } = process.env;
 
   const useCredentials = Boolean(ADMIN_USERNAME && ADMIN_PASSWORD);
-  const session = await getIronSessionData();
+  const session = await getSession();
 
   return (
     <Fragment>
@@ -80,14 +79,14 @@ export default async function Home() {
         </li>
       </ol>
       <div className={styles['user-wrapper']}>
-        {useCredentials && !session.username && (
+        {useCredentials && !session?.username && (
           <div className={styles.login}>
             <Link className={styles['login-link']} href="/login">
               登录
             </Link>
           </div>
         )}
-        {useCredentials && session.username && (
+        {useCredentials && session?.username && (
           <div className={styles.user}>
             <span className={styles.username}>{session.username}</span>
             <Link className={styles.logout} href="/logout">

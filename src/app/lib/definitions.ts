@@ -101,3 +101,9 @@ export interface StarInfo {
 export interface SearchMoviesPage extends MoviesPage {
   keyword: string;
 }
+
+export interface SessionPayload {
+  [key: string]: unknown;
+  username: string;
+  expiresAt: Date;
+}

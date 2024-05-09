@@ -58,7 +58,7 @@
     "got": "^14.2.1",
     "http-errors": "^2.0.0",
     "https-proxy-agent": "^7.0.4",
-    "iron-session": "^8.0.1",
+    "jose": "^5.2.4",
     "memorystore": "^1.6.7",
     "next": "14.3.0-canary.52",
     "node-html-parser": "^6.1.13",
@@ -67,7 +67,6 @@
     "react": "19.0.0-beta-4508873393-20240430",
     "react-dom": "19.0.0-beta-4508873393-20240430",
     "socks-proxy-agent": "^8.0.3",
-    "znv": "^0.4.0",
     "zod": "^3.23.8"
   }
 }

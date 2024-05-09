@@ -5,3 +5,5 @@ export const JAVBUS_TIMEOUT = 5000;
 
 export const USER_AGENT =
   'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36';
+
+export const DEFAULT_SESSION_SECRET = 'iPkwRtvlORDEwnVyux8K9MVlh5ozTCrJPUBgRy52MUM=';

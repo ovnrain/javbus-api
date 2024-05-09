@@ -1,8 +1,6 @@
 'use server';
 
 import { redirect } from 'next/navigation';
-
-import ENV from '../env';
 import { createSession } from '../lib/session';
 
 export interface FormState {
@@ -12,7 +10,7 @@ export interface FormState {
 }
 
 export async function login(_: FormState, data: FormData) {
-  const { ADMIN_USERNAME, ADMIN_PASSWORD } = ENV;
+  const { ADMIN_USERNAME, ADMIN_PASSWORD } = process.env;
 
   const username = (data.get('username') || '') as string;
   const password = (data.get('password') || '') as string;

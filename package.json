@@ -10,7 +10,7 @@
     "start": "next start",
     "lint": "next lint",
     "vercel-build": "tsc",
-    "format": "prettier --write \"api/**/*.ts\"",
+    "format": "prettier --write \"src/**/*.{ts,tsx,css,scss}\"",
     "prepare": "husky"
   },
   "keywords": [

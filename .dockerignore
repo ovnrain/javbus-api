@@ -3,3 +3,7 @@ npm-debug.log
 dist
 .git
 .gitignore
+.next
+.vercel
+.vscode
+.github

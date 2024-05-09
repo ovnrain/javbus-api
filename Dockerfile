@@ -21,16 +21,13 @@ FROM base AS build
 
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
   pnpm install --ignore-scripts --frozen-lockfile && \
-  pnpm run lint && \
   pnpm run build
 
 # -------------------
 
-FROM node:iron-slim
+FROM node:iron-alpine
 
-RUN apt-get update && \
-  apt-get install -y --no-install-recommends tini && \
-  rm -rf /var/lib/apt/lists/*
+RUN apk add --no-cache tini
 
 ENV NODE_ENV production
 USER node
@@ -38,10 +35,9 @@ USER node
 WORKDIR /app
 
 COPY --chown=node:node --from=prod-deps /app/node_modules /app/node_modules
-COPY --chown=node:node --from=build /app/dist /app/dist
+COPY --chown=node:node --from=build /app/.next /app/.next
 COPY --chown=node:node --from=build /app/package.json /app/package.json
-COPY --chown=node:node --from=build /app/public /app/public
 
 EXPOSE 3000
 
-CMD [ "/usr/bin/tini", "--", "node", "dist/server.js" ]
+CMD [ "/sbin/tini", "--", "npm", "start" ]

@@ -56,12 +56,7 @@
 }
 
 .user {
-  display: none;
   align-items: center;
-}
-
-.user.show {
-  display: flex;
 }
 
 .username {
@@ -69,11 +64,9 @@
 }
 
 .logout {
-  border: none;
   border-radius: 4px;
   background-color: #008cc4;
   color: #ffffff;
-  cursor: pointer;
   font-size: 14px;
   width: 48px;
   height: 24px;
@@ -81,5 +74,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0;
+
+  &:hover {
+    text-decoration: none;
+  }
 }

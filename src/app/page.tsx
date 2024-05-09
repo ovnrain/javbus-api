@@ -3,10 +3,13 @@ import { Fragment } from 'react';
 import Link from 'next/link';
 import ENV from './env';
 import Title from './components/title';
+import { getIronSessionData } from './lib/session';
 
-export default function Home() {
+export default async function Home() {
   const { ADMIN_USERNAME, ADMIN_PASSWORD } = ENV;
+
   const useCredentials = Boolean(ADMIN_USERNAME && ADMIN_PASSWORD);
+  const session = await getIronSessionData();
 
   return (
     <Fragment>
@@ -77,17 +80,21 @@ export default function Home() {
         </li>
       </ol>
       <div className={styles['user-wrapper']}>
-        {useCredentials && (
+        {useCredentials && !session.username && (
           <div className={styles.login}>
             <Link className={styles['login-link']} href="/login">
               登录
             </Link>
           </div>
         )}
-        <div className={styles.user}>
-          <span className={styles.username}></span>
-          <button className={styles.logout}>退出</button>
-        </div>
+        {useCredentials && session.username && (
+          <div className={styles.user}>
+            <span className={styles.username}>{session.username}</span>
+            <Link className={styles.logout} href="/logout">
+              退出
+            </Link>
+          </div>
+        )}
       </div>
     </Fragment>
   );

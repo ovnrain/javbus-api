@@ -17,7 +17,7 @@ const envSchema = {
   ADMIN_USERNAME: z.string().optional(),
   ADMIN_PASSWORD: z.string().optional(),
   JAVBUS_AUTH_TOKEN: z.string().optional(),
-  AUTH_SECRET: z.string().optional(),
+  JAVBUS_SESSION_SECRET: z.string().default('iPkwRtvlORDEwnVyux8K9MVlh5ozTCrJPUBgRy52MUM='),
 };
 
 const ENV = parseEnv(process.env, envSchema);

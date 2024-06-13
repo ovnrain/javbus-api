@@ -310,8 +310,17 @@ export async function getMovieDetail(id: string): Promise<MovieDetail> {
   let imageSize: ImageSize | null = null;
 
   if (img) {
-    const { width, height } = await probe(img, { agent });
-    imageSize = { width, height };
+    try {
+      const { width, height } = await probe(img, {
+        agent,
+        cookies: {
+          existmag: 'mag',
+        },
+      });
+      imageSize = { width, height };
+    } catch (e) {
+      //
+    }
   }
 
   /* ----------------- 基本信息 ------------------ */

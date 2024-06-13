@@ -4,3 +4,4 @@
 /docker-*.sh
 .vercel
 *.http
+.DS_Store

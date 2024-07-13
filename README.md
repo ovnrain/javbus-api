@@ -5,7 +5,6 @@
 ## 目录 <!-- omit in toc -->
 
 - [用途](#用途)
-- [Telegram](#telegram)
 - [部署与启动](#部署与启动)
   - [Docker 部署（推荐）](#docker-部署推荐)
     - [使用 Docker Compose 配合 NGINX 部署](#使用-docker-compose-配合-nginx-部署)
@@ -53,10 +52,6 @@
 - 可以用来制作 iOS/macOS 快捷指令
 - 可以用来开发 Telegram 机器人
 - 等等...
-
-## Telegram
-
-[交流群](https://t.me/javbus_api)
 
 ## 部署与启动
 

@@ -313,8 +313,8 @@ export async function getMovieDetail(id: string): Promise<MovieDetail> {
     try {
       const { width, height } = await probe(img, {
         agent,
-        cookies: {
-          existmag: 'mag',
+        headers: {
+          Referer: 'https://www.javbus.com/',
         },
       });
       imageSize = { width, height };

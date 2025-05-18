@@ -1,6 +1,5 @@
 import bytes from 'bytes';
-import { parse } from 'node-html-parser';
-import type { HTMLElement } from 'node-html-parser';
+import { parse, type HTMLElement } from 'node-html-parser';
 import probe from 'probe-image-size';
 import client, { agent } from './client.js';
 import { JAVBUS } from './constants.js';

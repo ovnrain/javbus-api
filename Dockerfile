@@ -1,4 +1,4 @@
-FROM node:iron-slim AS base
+FROM node:lts-slim AS base
 
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
@@ -26,13 +26,13 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
 
 # -------------------
 
-FROM node:iron-slim
+FROM node:lts-slim
 
 RUN apt-get update && \
   apt-get install -y --no-install-recommends tini && \
   rm -rf /var/lib/apt/lists/*
 
-ENV NODE_ENV production
+ENV NODE_ENV=production
 USER node
 
 WORKDIR /app

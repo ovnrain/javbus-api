@@ -6,7 +6,7 @@ import {
   searchMoviesPageValidator,
   typeValidator,
 } from './validators.js';
-import type { FilterType, MagnetType, MovieType, SortBy, SortOrder } from './types.js';
+import type { MagnetType, MovieType, SortBy, SortOrder } from './types.js';
 import {
   getMovieDetail,
   getMovieMagnets,
@@ -19,16 +19,8 @@ import { validate } from './validatorUtils.js';
 const movieRouter = Router();
 
 movieRouter.get('/', validate(moviesPageValidator), async (req, res, next) => {
-  const query = req.query;
-
-  const page = query.page as string;
-  const magnet = query.magnet as MagnetType;
-  const type = query.type as MovieType | undefined;
-  const filterType = query.filterType as FilterType | undefined;
-  const filterValue = query.filterValue as string | undefined;
-
   try {
-    const response = await getMoviesByPage(page, magnet, type, filterType, filterValue);
+    const response = await getMoviesByPage(req.query);
 
     res.json(response);
   } catch (e) {

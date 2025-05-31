@@ -5,6 +5,7 @@ import client, { agent } from './client.js';
 import { JAVBUS } from './constants.js';
 import type {
   FilterType,
+  GetMoviesQuery,
   ImageSize,
   Magnet,
   MagnetType,
@@ -107,22 +108,22 @@ export function parseFilterInfo(pageHTML: string, type: FilterType, value: strin
   return { name, type, value };
 }
 
-export async function getMoviesByPage(
-  page: string,
-  magnet?: MagnetType,
-  type?: MovieType,
-  filerType?: FilterType,
-  filteValue?: string,
-) {
+export async function getMoviesByPage({
+  page = '1',
+  magnet = 'exist',
+  type,
+  filterType,
+  filterValue,
+}: GetMoviesQuery) {
   let prefix = !type || type == 'normal' ? JAVBUS : `${JAVBUS}/${type}`;
-  prefix = filerType ? `${prefix}/${filerType}` : prefix;
+  prefix = filterType ? `${prefix}/${filterType}` : prefix;
   const url =
     page === '1'
-      ? filerType
-        ? `${prefix}/${filteValue}`
+      ? filterType
+        ? `${prefix}/${filterValue}`
         : prefix
-      : filerType
-        ? `${prefix}/${filteValue}/${page}`
+      : filterType
+        ? `${prefix}/${filterValue}/${page}`
         : `${prefix}/page/${page}`;
 
   const res = await client(url, {
@@ -131,7 +132,7 @@ export async function getMoviesByPage(
 
   const moviesPage = parseMoviesPage(res);
   const filterInfo =
-    filerType && filteValue ? parseFilterInfo(res, filerType, filteValue) : undefined;
+    filterType && filterValue ? parseFilterInfo(res, filterType, filterValue) : undefined;
 
   return { ...moviesPage, filter: filterInfo };
 }

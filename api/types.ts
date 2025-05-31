@@ -101,3 +101,11 @@ export interface StarInfo {
 export interface SearchMoviesPage extends MoviesPage {
   keyword: string;
 }
+
+export interface GetMoviesQuery {
+  page?: string;
+  type?: MovieType;
+  magnet?: MagnetType;
+  filterType?: FilterType;
+  filterValue?: string;
+}

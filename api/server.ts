@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import fs from 'fs';
 import http, { Server as HttpServer } from 'http';
 import https, { Server as HttpsServer } from 'https';

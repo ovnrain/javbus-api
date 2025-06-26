@@ -10,7 +10,7 @@
     "build": "tsc",
     "vercel-build": "tsc",
     "format": "prettier --write \"api/**/*.ts\"",
-    "lint": "eslint --config .eslintrc.commit.json \"api/**/*.ts\"",
+    "lint": "eslint --config eslint.commit.config.mjs \"api/**/*.ts\"",
     "prepare": "husky"
   },
   "keywords": [
@@ -27,6 +27,7 @@
   },
   "license": "MIT",
   "devDependencies": {
+    "@eslint/js": "^9.29.0",
     "@types/bytes": "^3.1.5",
     "@types/express": "^5.0.2",
     "@types/express-session": "^1.18.1",
@@ -34,16 +35,16 @@
     "@types/node": "^22.15.29",
     "@types/probe-image-size": "^7.2.5",
     "@types/qs": "^6.14.0",
-    "@typescript-eslint/eslint-plugin": "^8.33.0",
-    "@typescript-eslint/parser": "^8.33.0",
-    "eslint": "^8.57.0",
+    "eslint": "^9.29.0",
     "eslint-config-prettier": "^10.1.5",
-    "eslint-plugin-prettier": "^5.4.1",
+    "eslint-plugin-prettier": "^5.5.1",
+    "globals": "^16.2.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.1.0",
     "prettier": "^3.5.3",
     "tsx": "^4.19.4",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.35.0"
   },
   "dependencies": {
     "bytes": "^3.1.2",
@@ -65,7 +66,7 @@
   "type": "module",
   "lint-staged": {
     "*.ts": [
-      "eslint --config .eslintrc.commit.json"
+      "eslint --config eslint.commit.config.mjs"
     ],
     "*.html": [
       "prettier --write"

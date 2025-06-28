@@ -10,7 +10,7 @@
     "build": "tsc",
     "vercel-build": "tsc",
     "format": "prettier --write \"api/**/*.ts\"",
-    "lint": "eslint --config eslint.commit.config.mjs \"api/**/*.ts\"",
+    "lint": "eslint . --config eslint.commit.config.mjs",
     "prepare": "husky"
   },
   "keywords": [

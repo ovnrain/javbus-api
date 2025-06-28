@@ -1,25 +1,14 @@
+import { globalIgnores } from 'eslint/config';
 import js from '@eslint/js';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
-import prettier from 'eslint-plugin-prettier';
-import prettierConfig from 'eslint-config-prettier';
+import prettierRecommended from 'eslint-plugin-prettier/recommended';
 
 export default tseslint.config(
-  { ignores: ['dist'] },
-  // 全局配置（适用于所有 TypeScript 文件）
-  {
-    files: ['**/*.{ts,mjs}'],
-    extends: [prettierConfig],
-    plugins: {
-      prettier,
-    },
-    rules: {
-      'prettier/prettier': 'warn',
-    },
-  },
+  globalIgnores(['dist']),
   {
     files: ['**/*.ts'],
-    extends: [js.configs.recommended, ...tseslint.configs.recommended],
+    extends: [js.configs.recommended, tseslint.configs.recommended],
     languageOptions: {
       ecmaVersion: 2021,
       globals: globals.node,
@@ -31,6 +20,13 @@ export default tseslint.config(
         'warn',
         { argsIgnorePattern: '^_', caughtErrors: 'none' },
       ],
+    },
+  },
+  {
+    files: ['**/*.{ts,mjs}'],
+    extends: [prettierRecommended],
+    rules: {
+      'prettier/prettier': 'warn',
     },
   },
 );

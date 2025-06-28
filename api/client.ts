@@ -1,4 +1,4 @@
-import { Agent as HttpsAgent } from 'https';
+import type { Agent as HttpsAgent } from 'node:https';
 import { HttpsProxyAgent } from 'https-proxy-agent';
 import { SocksProxyAgent } from 'socks-proxy-agent';
 import got, { type ExtendOptions } from 'got';
@@ -11,9 +11,9 @@ export let agent: HttpsAgent | undefined = undefined;
 
 if (PROXY_URL) {
   if (/^https?:\/\//.test(PROXY_URL)) {
-    agent = new HttpsProxyAgent(PROXY_URL);
+    agent = new HttpsProxyAgent(PROXY_URL) as HttpsAgent;
   } else if (/^socks/.test(PROXY_URL)) {
-    agent = new SocksProxyAgent(PROXY_URL);
+    agent = new SocksProxyAgent(PROXY_URL) as HttpsAgent;
   }
 }
 

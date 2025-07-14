@@ -10,7 +10,7 @@
     "build": "tsc",
     "vercel-build": "tsc",
     "format": "prettier --write \"api/**/*.ts\"",
-    "lint": "eslint . --config eslint.commit.config.mjs",
+    "lint": "eslint . --max-warnings 0",
     "prepare": "husky"
   },
   "keywords": [
@@ -66,7 +66,7 @@
   "type": "module",
   "lint-staged": {
     "*.ts": [
-      "eslint --config eslint.commit.config.mjs"
+      "eslint --max-warnings 0"
     ],
     "*.html": [
       "prettier --write"

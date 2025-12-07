@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import createError from 'http-errors';
 import {
+  baseMoviesPageValidator,
   magnetsValidator,
   moviesPageValidator,
   searchMoviesPageValidator,
@@ -13,6 +14,8 @@ import {
   getMoviesByKeywordAndPage,
   getMoviesByPage,
   getStarInfo,
+  getGenreMovies,
+  getAllGenres,
 } from './javbusParser.js';
 import { validate } from './validatorUtils.js';
 
@@ -81,6 +84,36 @@ starRouter.get('/:id', validate([typeValidator]), async (req, res, next) => {
   }
 });
 
+const genreRouter = Router();
+
+genreRouter.get('/', validate([typeValidator]), async (req, res, next) => {
+  const type = req.query.type as MovieType | undefined;
+
+  try {
+    const genres = await getAllGenres(type);
+
+    res.json(genres);
+  } catch (e) {
+    next(e);
+  }
+});
+
+genreRouter.get('/:id', validate([...baseMoviesPageValidator]), async (req, res, next) => {
+  const genreId = req.params.id as string;
+  const page = (req.query.page as string) || '1';
+  const type = req.query.type as MovieType | undefined;
+  const magnet = req.query.magnet as MagnetType | undefined;
+
+  try {
+    const response = await getGenreMovies(genreId, page, type, magnet);
+
+    res.json(response);
+  } catch (e) {
+    // 格式化一下错误
+    next(e instanceof Error && e.message.includes('404') ? new createError.NotFound() : e);
+  }
+});
+
 const magnetRouter = Router();
 
 magnetRouter.get('/:movieId', validate(magnetsValidator), async (req, res, next) => {
@@ -103,6 +136,7 @@ const router = Router();
 
 router.use('/movies', movieRouter);
 router.use('/stars', starRouter);
+router.use('/genres', genreRouter);
 router.use('/magnets', magnetRouter);
 
 export default router;

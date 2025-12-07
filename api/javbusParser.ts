@@ -426,13 +426,25 @@ export async function getGenreMovies(
   type?: MovieType,
   magnet?: MagnetType,
 ) {
-  return getMoviesByPage({
+  // JavBus supports multiple genres in the URL using dashes (e.g., /genre/62-4r)
+  // The genreId can be a single genre like "7w" or multiple genres like "62-4r" or "62-4r-5"
+  // We pass it directly to getMoviesByPage which will construct the URL correctly
+  const response = await getMoviesByPage({
     page,
     type,
     magnet,
     filterType: 'genre',
     filterValue: genreId,
   });
+
+  // Parse the genre IDs from the combined format (e.g., "62-4r" -> ["62", "4r"])
+  const genreIds = genreId.includes('-') ? genreId.split('-') : [genreId];
+
+  return {
+    ...response,
+    // Include parsed genre IDs for reference
+    requestedGenres: genreIds.length > 1 ? genreIds : undefined,
+  };
 }
 
 export async function getAllGenres(type?: MovieType): Promise<Genre[]> {

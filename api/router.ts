@@ -99,12 +99,16 @@ genreRouter.get('/', validate([typeValidator]), async (req, res, next) => {
 });
 
 genreRouter.get('/:id', validate([...baseMoviesPageValidator]), async (req, res, next) => {
+  // Support JavBus format: /genre/62-4r (multiple genres separated by dashes)
+  // The genreId can be a single genre or multiple genres like "62-4r" or "62-4r-5"
   const genreId = req.params.id as string;
   const page = (req.query.page as string) || '1';
   const type = req.query.type as MovieType | undefined;
   const magnet = req.query.magnet as MagnetType | undefined;
 
   try {
+    // JavBus supports multiple genres in the URL path using dashes (e.g., /genre/62-4r)
+    // We can pass the combined genreId directly to getGenreMovies
     const response = await getGenreMovies(genreId, page, type, magnet);
 
     res.json(response);

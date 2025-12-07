@@ -701,6 +701,8 @@ GET
 | magnet | 否       | `exist`<br />`all`         | `exist`  | `exist`: 只返回有磁力链接的影片<br />`all`: 返回全部影片       |
 | type   | 否       | `normal`<br />`uncensored` | `normal` | `normal`: 有码影片<br />`uncensored`: 无码影片                 |
 
+**注意**：`genreId` 路径参数支持 JavBus 原生的多类别组合格式，使用连字符（`-`）分隔多个类别 ID。例如：`/api/genres/62-4r` 表示同时筛选类别 `62` 和 `4r` 的影片。
+
 #### 请求举例
 
     /api/genres/7w
@@ -714,6 +716,14 @@ GET
     /api/genres/7w?type=uncensored
 
 返回无码影片中类别 ID 为 `7w` 的影片的第一页
+
+    /api/genres/62-4r
+
+返回同时包含类别 `62` 和 `4r` 的影片的第一页（使用 JavBus 原生的多类别组合格式）
+
+    /api/genres/62-4r-5?page=2
+
+返回同时包含类别 `62`、`4r` 和 `5` 的影片的第二页
 
 #### 返回举例
 
@@ -745,7 +755,9 @@ GET
     "name": "巨乳",
     "type": "genre",
     "value": "7w"
-  }
+  },
+  // 当使用多类别组合格式（如 /api/genres/62-4r）时，会返回此字段
+  "requestedGenres": ["62", "4r"]
 }
 ```
 

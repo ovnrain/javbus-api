@@ -6,7 +6,7 @@
   "homepage": "https://github.com/ovnrain/javbus-api#readme",
   "scripts": {
     "start": "node -r dotenv/config dist/server.js",
-    "dev": "tsx watch --clear-screen=false -r dotenv/config src/index.ts",
+    "dev": "tsx watch --clear-screen=false -r dotenv/config src/server.ts",
     "build": "tsc",
     "vercel-build": "tsc",
     "format": "prettier --write \"api/**/*.ts\"",

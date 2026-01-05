@@ -5,6 +5,7 @@ import client, { agent } from './client.js';
 import { JAVBUS } from './constants.js';
 import type {
   FilterType,
+  Genre,
   GetMoviesQuery,
   ImageSize,
   Magnet,
@@ -417,4 +418,120 @@ export async function getStarInfo(starId: string, type?: MovieType): Promise<Sta
   const starInfo = parseStarInfo(res, starId);
 
   return starInfo;
+}
+
+export async function getGenreMovies(
+  genreId: string,
+  page = '1',
+  type?: MovieType,
+  magnet?: MagnetType,
+) {
+  // JavBus supports multiple genres in the URL using dashes (e.g., /genre/62-4r)
+  // The genreId can be a single genre like "7w" or multiple genres like "62-4r" or "62-4r-5"
+  // We pass it directly to getMoviesByPage which will construct the URL correctly
+  const response = await getMoviesByPage({
+    page,
+    type,
+    magnet,
+    filterType: 'genre',
+    filterValue: genreId,
+  });
+
+  // Parse the genre IDs from the combined format (e.g., "62-4r" -> ["62", "4r"])
+  const genreIds = genreId.includes('-') ? genreId.split('-') : [genreId];
+
+  return {
+    ...response,
+    // Include parsed genre IDs for reference
+    requestedGenres: genreIds.length > 1 ? genreIds : undefined,
+  };
+}
+
+export async function getAllGenres(type?: MovieType): Promise<Genre[]> {
+  const prefix = !type || type === 'normal' ? JAVBUS : `${JAVBUS}/${type}`;
+  const genrePageUrl = `${prefix}/genre`;
+
+  const genres: Genre[] = [];
+  const genreMap = new Map<string, Genre>();
+
+  try {
+    // Fetch the genre listing page at /genre
+    const res = await client(genrePageUrl).text();
+    const doc = parse(res);
+
+    // Look for genre links in the main content area
+    // Try to find the container that holds the genre list (avoid navigation/filter links)
+    // Common containers: .container, #waterfall, or specific genre list containers
+    const container = doc.querySelector('.container') || doc.querySelector('#waterfall') || doc;
+
+    // Get all genre links, but exclude those in navigation or filter sections
+    const allLinks = container.querySelectorAll('a[href*="/genre/"]');
+
+    allLinks.forEach((link) => {
+      const href = link.getAttribute('href');
+      if (!href) return;
+
+      // Skip if it's the current page link, navigation, or filter links
+      if (
+        href === '/genre' ||
+        href.endsWith('/genre') ||
+        href.includes('/genre/sub') ||
+        href.includes('/genre/hd')
+      )
+        return;
+
+      // Extract genre ID from href (e.g., /genre/7w or /uncensored/genre/7w)
+      const genreMatch = href.match(/\/genre\/([^/]+)/);
+      if (!genreMatch || !genreMatch[1]) return;
+
+      const genreId = genreMatch[1];
+
+      // Skip special filter genres like 'sub' and 'hd'
+      if (genreId === 'sub' || genreId === 'hd') return;
+
+      const name = link.textContent?.trim() || '';
+
+      // Skip if name is empty or just navigation text
+      if (
+        !name ||
+        name === '類別' ||
+        name === '有碼類別' ||
+        name === '無碼類別' ||
+        name === '字幕' ||
+        name === '高清'
+      )
+        return;
+
+      // Try to extract count from the link text (e.g., "Genre Name (123)")
+      const countMatch = name.match(/\((\d+)\)$/);
+      const count = countMatch && countMatch[1] ? parseInt(countMatch[1], 10) : undefined;
+      const cleanName = countMatch ? name.replace(/\s*\(\d+\)$/, '').trim() : name;
+
+      if (genreId && cleanName) {
+        // Handle uncensored genres
+        const isUncensored = href.includes('uncensored') || type === 'uncensored';
+        const finalId =
+          isUncensored && !genreId.startsWith('uncensored/') ? `uncensored/${genreId}` : genreId;
+
+        // Only add if we haven't seen this genre ID before
+        if (!genreMap.has(finalId)) {
+          genreMap.set(finalId, {
+            id: finalId,
+            name: cleanName,
+            count,
+          });
+        }
+      }
+    });
+
+    genres.push(...Array.from(genreMap.values()));
+  } catch (e) {
+    // If we can't fetch genres, return empty array
+    // Silently fail - genres list is optional
+  }
+
+  // Sort by name
+  genres.sort((a, b) => a.name.localeCompare(b.name));
+
+  return genres;
 }

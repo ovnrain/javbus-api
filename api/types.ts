@@ -109,3 +109,9 @@ export interface GetMoviesQuery {
   filterType?: FilterType;
   filterValue?: string;
 }
+
+export interface Genre {
+  id: string;
+  name: string;
+  count?: number;
+}

@@ -49,7 +49,7 @@ function parseMoviesPage(pageHTML: string, filter?: (movie: Movie) => boolean): 
       const title = item.querySelector('.photo-frame img')?.getAttribute('title') ?? '';
       const info = item.querySelectorAll('.photo-info date');
       const id = info[0]?.textContent;
-      const date = info[1]?.textContent ?? null;
+      const date = info[1]?.textContent || null;
       const tags = item.querySelectorAll('.item-tag button').map((item) => item.textContent);
 
       return { date, id, img, title, tags };

@@ -6,7 +6,7 @@
   "homepage": "https://github.com/ovnrain/javbus-api#readme",
   "scripts": {
     "start": "node -r dotenv/config dist/server.js",
-    "dev": "tsx watch --clear-screen=false -r dotenv/config api/server.ts",
+    "dev": "tsx watch --clear-screen=false -r dotenv/config src/index.ts",
     "build": "tsc",
     "vercel-build": "tsc",
     "format": "prettier --write \"api/**/*.ts\"",
@@ -47,12 +47,14 @@
     "typescript-eslint": "^8.51.0"
   },
   "dependencies": {
+    "@hono/node-server": "^1.19.7",
     "bytes": "^3.1.2",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
     "express-session": "^1.18.2",
     "express-validator": "^7.3.1",
     "got": "^14.6.6",
+    "hono": "^4.11.3",
     "http-errors": "^2.0.1",
     "https-proxy-agent": "^7.0.6",
     "memorystore": "^1.6.7",

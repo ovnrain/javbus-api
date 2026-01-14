@@ -5,3 +5,5 @@
 .vercel
 *.http
 .DS_Store
+*.local
+.env.*.local

@@ -42,6 +42,7 @@ export const validate = <Req extends Request = Request, Res extends Response = R
     next(
       new QueryValidationError(
         'query is invalid',
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
         errors.array().map((error) => error.msg),
       ),
     );

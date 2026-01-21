@@ -3,6 +3,7 @@
   "tabWidth": 2,
   "printWidth": 100,
   "semi": true,
+  "trailingComma": "all",
   "overrides": [
     {
       "files": "*.html",

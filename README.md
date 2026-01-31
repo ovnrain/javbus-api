@@ -43,6 +43,16 @@
     - [参数](#参数-3)
     - [请求举例](#请求举例-4)
     - [返回举例](#返回举例-4)
+  - [/api/genres](#apigenres)
+    - [method](#method-5)
+    - [参数](#参数-4)
+    - [请求举例](#请求举例-5)
+    - [返回举例](#返回举例-5)
+  - [/api/genres/{genreId}](#apigenresgenreid)
+    - [method](#method-6)
+    - [参数](#参数-5)
+    - [请求举例](#请求举例-6)
+    - [返回举例](#返回举例-6)
 
 ## 用途
 
@@ -623,6 +633,129 @@ GET
   "hipline": "86cm",
   "birthplace": "大阪府",
   "hobby": "ジョギング、ジャズ鑑賞、アルトサックス、ピアノ、一輪車"
+}
+```
+
+</details>
+
+### /api/genres
+
+获取所有类别列表
+
+#### method
+
+GET
+
+#### 参数
+
+| 参数 | 是否必须 | 可选值                     | 默认值   | 说明                                                           |
+| ---- | -------- | -------------------------- | -------- | -------------------------------------------------------------- |
+| type | 否       | `normal`<br />`uncensored` | `normal` | `normal`: 有码影片类别<br />`uncensored`: 无码影片类别 |
+
+#### 请求举例
+
+    /api/genres
+
+返回所有有码影片类别列表
+
+    /api/genres?type=uncensored
+
+返回所有无码影片类别列表
+
+#### 返回举例
+
+<details>
+<summary>点击展开</summary>
+
+```jsonc
+[
+  {
+    "id": "7w",
+    "name": "巨乳",
+  },
+  {
+    "id": "4",
+    "name": "美少女",
+  }
+  // ...
+]
+```
+
+</details>
+
+### /api/genres/{genreId}
+
+获取指定类别的影片列表
+
+#### method
+
+GET
+
+#### 参数
+
+| 参数   | 是否必须 | 可选值                     | 默认值   | 说明                                                           |
+| ------ | -------- | -------------------------- | -------- | -------------------------------------------------------------- |
+| page   | 否       |                            | `1`      | 页码                                                           |
+| magnet | 否       | `exist`<br />`all`         | `exist`  | `exist`: 只返回有磁力链接的影片<br />`all`: 返回全部影片       |
+| type   | 否       | `normal`<br />`uncensored` | `normal` | `normal`: 有码影片<br />`uncensored`: 无码影片                 |
+
+**注意**：`genreId` 路径参数支持 JavBus 原生的多类别组合格式，使用连字符（`-`）分隔多个类别 ID。例如：`/api/genres/62-4r` 表示同时筛选类别 `62` 和 `4r` 的影片。
+
+#### 请求举例
+
+    /api/genres/7w
+
+返回类别 ID 为 `7w` 的影片的第一页，只返回有磁力链接的影片
+
+    /api/genres/7w?page=2&magnet=all
+
+返回类别 ID 为 `7w` 的影片的第二页，包含有磁力链接和无磁力链接的影片
+
+    /api/genres/7w?type=uncensored
+
+返回无码影片中类别 ID 为 `7w` 的影片的第一页
+
+    /api/genres/62-4r
+
+返回同时包含类别 `62` 和 `4r` 的影片的第一页（使用 JavBus 原生的多类别组合格式）
+
+    /api/genres/62-4r-5?page=2
+
+返回同时包含类别 `62`、`4r` 和 `5` 的影片的第二页
+
+#### 返回举例
+
+<details>
+<summary>点击展开</summary>
+
+```jsonc
+{
+  // 影片列表
+  "movies": [
+    {
+      "date": "2023-04-28",
+      "id": "YUJ-003",
+      "img": "https://www.javbus.com/pics/thumb/9n0d.jpg",
+      "title": "夫には言えない三日間。 セックスレスで欲求不満な私は甥っ子に中出しさせています。 岬ななみ",
+      "tags": ["高清", "字幕", "3天前新種"]
+    }
+    // ...
+  ],
+  // 分页信息
+  "pagination": {
+    "currentPage": 1,
+    "hasNextPage": true,
+    "nextPage": 2,
+    "pages": [1, 2, 3]
+  },
+  // 类别信息
+  "filter": {
+    "name": "巨乳",
+    "type": "genre",
+    "value": "7w"
+  },
+  // 当使用多类别组合格式（如 /api/genres/62-4r）时，会返回此字段
+  "requestedGenres": ["62", "4r"]
 }
 ```
 

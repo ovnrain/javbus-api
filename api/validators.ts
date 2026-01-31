@@ -5,7 +5,7 @@ export const typeValidator = query('type')
   .isIn(['normal', 'uncensored'])
   .withMessage('`type` must be `normal` or `uncensored`');
 
-const baseMoviesPageValidator = [
+export const baseMoviesPageValidator = [
   query('page').optional().isInt({ min: 1 }).withMessage('`page` must be a positive integer'),
   query('magnet')
     .optional()

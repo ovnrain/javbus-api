@@ -1,12 +1,13 @@
 import express, { type NextFunction, type Request, type Response } from 'express';
-import createError, { isHttpError } from 'http-errors';
-import { RequestError } from 'got';
 import session from 'express-session';
-import memorystore from 'memorystore';
 import { body } from 'express-validator';
-import router from './router.js';
-import { QueryValidationError, commonValidate } from './validatorUtils.js';
+import { RequestError } from 'got';
+import createError, { isHttpError } from 'http-errors';
+import memorystore from 'memorystore';
+
 import ENV from './env.js';
+import router from './router.js';
+import { commonValidate, QueryValidationError } from './validatorUtils.js';
 
 // 扩展 express-session 的 SessionData
 declare module 'express-session' {
@@ -17,7 +18,10 @@ declare module 'express-session' {
   }
 }
 
-type UserResBody = { success: boolean; message: string };
+interface UserResBody {
+  success: boolean;
+  message: string;
+}
 
 type LoginRequest = Request<
   Record<string, never>,
@@ -65,7 +69,7 @@ app.use(
     name: 'javbus.api.sid',
     resave: false,
     saveUninitialized: false,
-    secret: JAVBUS_SESSION_SECRET || '_jav_bus_',
+    secret: JAVBUS_SESSION_SECRET ?? '_jav_bus_',
     store: new MemoryStore({
       checkPeriod: 24 * 60 * 60 * 1000, // prune expired entries every 24h
     }),
@@ -78,11 +82,16 @@ app.get('/api/user', (req, res: GetUserResponse) => {
 
 app.post(
   '/api/login',
-  commonValidate<LoginRequest, UserActionResponse>(loginValidators, (errors, req, res) => {
+  commonValidate(loginValidators, (errors, req, res) => {
     res.status(401).json({ success: false, message: 'Invalid username or password' });
   }),
-  (req, res) => {
-    req.session.user = { username: req.body.username as string };
+  (req: LoginRequest, res: UserActionResponse) => {
+    const { username } = req.body;
+
+    if (username) {
+      req.session.user = { username };
+    }
+
     res.json({ success: true, message: 'Login success' });
   },
 );
@@ -133,7 +142,7 @@ app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
     status = 400;
     messages = err.messages;
   } else if (err instanceof RequestError) {
-    status = err.response?.statusCode || 500;
+    status = err.response?.statusCode ?? 500;
   } else if (isHttpError(err)) {
     status = err.statusCode;
   } else {

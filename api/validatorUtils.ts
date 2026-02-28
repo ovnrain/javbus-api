@@ -1,9 +1,9 @@
 import type { NextFunction, Request, Response } from 'express';
 import {
   Result,
-  validationResult,
   type ValidationChain,
   type ValidationError,
+  validationResult,
 } from 'express-validator';
 
 export class QueryValidationError extends Error {
@@ -13,32 +13,38 @@ export class QueryValidationError extends Error {
     super(message);
     this.name = 'QueryValidationError';
 
-    this.messages = messages || [];
+    this.messages = messages ?? [];
 
     Object.setPrototypeOf(this, QueryValidationError.prototype);
   }
 }
 
-export const commonValidate = <Req extends Request = Request, Res extends Response = Response>(
+export const commonValidate = (
   validations: ValidationChain[],
-  callback: (errors: Result<ValidationError>, req: Req, res: Res, next: NextFunction) => void,
-) => {
-  return async (req: Req, res: Res, next: NextFunction) => {
+  callback: (
+    errors: Result<ValidationError>,
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) => void,
+): ((req: Request, res: Response, next: NextFunction) => Promise<void>) => {
+  return async (req: Request, res: Response, next: NextFunction) => {
     await Promise.all(validations.map((validation) => validation.run(req)));
 
     const errors = validationResult(req);
     if (errors.isEmpty()) {
-      return next();
+      next();
+      return;
     }
 
     callback(errors, req, res, next);
   };
 };
 
-export const validate = <Req extends Request = Request, Res extends Response = Response>(
+export const validate = (
   validations: ValidationChain[],
-) => {
-  return commonValidate<Req, Res>(validations, (errors, req, res, next) => {
+): ((req: Request, res: Response, next: NextFunction) => Promise<void>) => {
+  return commonValidate(validations, (errors, req, res, next) => {
     next(
       new QueryValidationError(
         'query is invalid',

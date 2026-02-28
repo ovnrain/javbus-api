@@ -1,6 +1,7 @@
 import bytes from 'bytes';
-import { parse, type HTMLElement } from 'node-html-parser';
+import { type HTMLElement, parse } from 'node-html-parser';
 import probe from 'probe-image-size';
+
 import client, { agent } from './client.js';
 import { JAVBUS } from './constants.js';
 import type {
@@ -119,10 +120,10 @@ export async function getMoviesByPage({
   prefix = filterType ? `${prefix}/${filterType}` : prefix;
   const url =
     page === '1'
-      ? filterType
+      ? filterType && filterValue
         ? `${prefix}/${filterValue}`
         : prefix
-      : filterType
+      : filterType && filterValue
         ? `${prefix}/${filterValue}/${page}`
         : `${prefix}/page/${page}`;
 
@@ -165,7 +166,7 @@ export function convertMagnetsHTML(html: string) {
       const tagAnchors = firstAnchor?.querySelectorAll('a');
 
       const link = firstAnchor?.getAttribute('href') ?? '';
-      const id = link?.match(/magnet:\?xt=urn:btih:(\w+)/)?.[1] ?? '';
+      const id = /magnet:\?xt=urn:btih:(\w+)/.exec(link)?.[1] ?? '';
 
       const isHD = Boolean(tagAnchors?.find((a) => a.textContent.includes('高清')));
       const hasSubtitle = Boolean(tagAnchors?.find((a) => a.textContent.includes('字幕')));
@@ -222,7 +223,7 @@ export async function getMovieMagnets(params: {
 
           return sortOrder === 'asc' ? aDate - bDate : bDate - aDate;
         }
-      } else if (sortBy === 'size') {
+      } else {
         if (a.numberSize && b.numberSize) {
           return sortOrder === 'asc' ? a.numberSize - b.numberSize : b.numberSize - a.numberSize;
         }
@@ -283,7 +284,7 @@ function multipleInfoFinder<T>(
     infoNodes
       .find((info) => info.querySelectorAll('.genre').filter(genreFilter).length > 0)
       ?.querySelectorAll('.genre')
-      ?.map<Property>((genre) => {
+      .map<Property>((genre) => {
         const node = infoNodeGetter(genre);
         const href = node?.getAttribute('href');
         const isUncensored = href?.includes('uncensored') ?? false;
@@ -350,8 +351,8 @@ export async function getMovieDetail(id: string): Promise<MovieDetail> {
   const gidReg = /var gid = (\d+);/;
   const ucReg = /var uc = (\d+);/;
 
-  const gid = res.match(gidReg)?.[1] ?? null;
-  const uc = res.match(ucReg)?.[1] ?? null;
+  const gid = gidReg.exec(res)?.[1] ?? null;
+  const uc = ucReg.exec(res)?.[1] ?? null;
 
   /* ----------------- 样品图片 ------------------ */
   const samples = doc

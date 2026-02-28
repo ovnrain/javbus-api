@@ -1,12 +1,6 @@
 import { Router } from 'express';
 import createError from 'http-errors';
-import {
-  magnetsValidator,
-  moviesPageValidator,
-  searchMoviesPageValidator,
-  typeValidator,
-} from './validators.js';
-import type { MagnetType, MovieType, SortBy, SortOrder } from './types.js';
+
 import {
   getMovieDetail,
   getMovieMagnets,
@@ -14,6 +8,13 @@ import {
   getMoviesByPage,
   getStarInfo,
 } from './javbusParser.js';
+import type { MagnetType, MovieType, SortBy, SortOrder } from './types.js';
+import {
+  magnetsValidator,
+  moviesPageValidator,
+  searchMoviesPageValidator,
+  typeValidator,
+} from './validators.js';
 import { validate } from './validatorUtils.js';
 
 const movieRouter = Router();
@@ -68,7 +69,13 @@ movieRouter.get('/:id', async (req, res, next) => {
 const starRouter = Router();
 
 starRouter.get('/:id', validate([typeValidator]), async (req, res, next) => {
-  const starId = req.params.id as string;
+  const { id: starId } = req.params;
+
+  if (!starId) {
+    next(new createError.BadRequest('star id is required'));
+    return;
+  }
+
   const type = req.query.type as MovieType | undefined;
 
   try {
@@ -84,7 +91,13 @@ starRouter.get('/:id', validate([typeValidator]), async (req, res, next) => {
 const magnetRouter = Router();
 
 magnetRouter.get('/:movieId', validate(magnetsValidator), async (req, res, next) => {
-  const movieId = req.params.movieId as string;
+  const { movieId } = req.params;
+
+  if (!movieId) {
+    next(new createError.BadRequest('movie id is required'));
+    return;
+  }
+
   const gid = req.query.gid as string;
   const uc = req.query.uc as string;
   const sortBy = req.query.sortBy as SortBy | undefined;

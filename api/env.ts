@@ -1,4 +1,4 @@
-import { parseEnv, z, port } from 'znv';
+import { parseEnv, port, z } from 'znv';
 
 const proxySchema = z
   .string()

@@ -3,7 +3,7 @@ name: build and push docker image
 on:
   push:
     branches:
-      - 'publish'
+      - publish
   workflow_dispatch:
 
 jobs:
@@ -35,6 +35,6 @@ jobs:
           context: .
           push: true
           tags: |
-            ovnrain/javbus-api:latest
             ovnrain/javbus-api:${{ steps.package-version.outputs.current-version }}
+            ovnrain/javbus-api:latest
           platforms: linux/amd64,linux/arm64,linux/arm/v7

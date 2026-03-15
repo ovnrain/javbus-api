@@ -89,35 +89,35 @@
       </div>
     </div>
     <script>
-      (function () {
-        const redirectUrl = new URLSearchParams(window.location.search).get('redirect');
+      ;(function () {
+        const redirectUrl = new URLSearchParams(window.location.search).get('redirect')
 
-        const form = document.querySelector('.form');
-        const message = document.querySelector('.message');
-        const button = document.querySelector('.login-button');
+        const form = document.querySelector('.form')
+        const message = document.querySelector('.message')
+        const button = document.querySelector('.login-button')
 
         function showMessage(text) {
-          message.textContent = text;
-          message.classList.add('show');
+          message.textContent = text
+          message.classList.add('show')
         }
 
         function hideMessage() {
-          message.textContent = '';
-          message.classList.remove('show');
+          message.textContent = ''
+          message.classList.remove('show')
         }
 
         form.addEventListener('submit', (e) => {
-          e.preventDefault();
+          e.preventDefault()
 
-          hideMessage();
+          hideMessage()
 
           if (!form.username.value || !form.password.value) {
-            showMessage('请输入用户名和密码');
-            return;
+            showMessage('请输入用户名和密码')
+            return
           }
 
-          button.setAttribute('disabled', true);
-          button.textContent = '登录中...';
+          button.setAttribute('disabled', true)
+          button.textContent = '登录中...'
 
           fetch('/api/login', {
             method: 'POST',
@@ -132,18 +132,18 @@
             .then((res) => res.json())
             .then((res) => {
               if (!res.success) {
-                showMessage('用户名或密码错误');
-                button.removeAttribute('disabled');
-                button.textContent = '登录';
+                showMessage('用户名或密码错误')
+                button.removeAttribute('disabled')
+                button.textContent = '登录'
               } else {
-                window.location.replace(redirectUrl || '/');
+                window.location.replace(redirectUrl || '/')
               }
             })
             .catch((e) => {
-              console.log(e);
-            });
-        });
-      })();
+              console.log(e)
+            })
+        })
+      })()
     </script>
   </body>
 </html>

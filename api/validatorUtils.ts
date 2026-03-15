@@ -1,21 +1,21 @@
-import type { NextFunction, Request, Response } from 'express';
+import type { NextFunction, Request, Response } from 'express'
 import {
   Result,
   type ValidationChain,
   type ValidationError,
   validationResult,
-} from 'express-validator';
+} from 'express-validator'
 
 export class QueryValidationError extends Error {
-  messages: string[];
+  messages: string[]
 
   constructor(message: string, messages?: string[]) {
-    super(message);
-    this.name = 'QueryValidationError';
+    super(message)
+    this.name = 'QueryValidationError'
 
-    this.messages = messages ?? [];
+    this.messages = messages ?? []
 
-    Object.setPrototypeOf(this, QueryValidationError.prototype);
+    Object.setPrototypeOf(this, QueryValidationError.prototype)
   }
 }
 
@@ -29,17 +29,17 @@ export const commonValidate = (
   ) => void,
 ): ((req: Request, res: Response, next: NextFunction) => Promise<void>) => {
   return async (req: Request, res: Response, next: NextFunction) => {
-    await Promise.all(validations.map((validation) => validation.run(req)));
+    await Promise.all(validations.map((validation) => validation.run(req)))
 
-    const errors = validationResult(req);
+    const errors = validationResult(req)
     if (errors.isEmpty()) {
-      next();
-      return;
+      next()
+      return
     }
 
-    callback(errors, req, res, next);
-  };
-};
+    callback(errors, req, res, next)
+  }
+}
 
 export const validate = (
   validations: ValidationChain[],
@@ -51,6 +51,6 @@ export const validate = (
         // eslint-disable-next-line @typescript-eslint/no-unsafe-return
         errors.array().map((error) => error.msg),
       ),
-    );
-  });
-};
+    )
+  })
+}

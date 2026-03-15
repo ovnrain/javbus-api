@@ -1,9 +1,9 @@
-import { query } from 'express-validator';
+import { query } from 'express-validator'
 
 export const typeValidator = query('type')
   .optional()
   .isIn(['normal', 'uncensored'])
-  .withMessage('`type` must be `normal` or `uncensored`');
+  .withMessage('`type` must be `normal` or `uncensored`')
 
 const baseMoviesPageValidator = [
   query('page').optional().isInt({ min: 1 }).withMessage('`page` must be a positive integer'),
@@ -12,7 +12,7 @@ const baseMoviesPageValidator = [
     .isIn(['all', 'exist'])
     .withMessage('`magnet` must be `all` or `exist`'),
   typeValidator,
-];
+]
 
 export const moviesPageValidator = [
   ...baseMoviesPageValidator,
@@ -20,9 +20,9 @@ export const moviesPageValidator = [
     .optional()
     .custom((_, { req }) => {
       if (!req.query?.filterValue) {
-        throw new Error('`filterValue` is required');
+        throw new Error('`filterValue` is required')
       }
-      return true;
+      return true
     })
     .trim()
     .isIn(['star', 'genre', 'director', 'studio', 'label', 'series'])
@@ -31,17 +31,17 @@ export const moviesPageValidator = [
     .optional()
     .custom((_, { req }) => {
       if (!req.query?.filterType) {
-        throw new Error('`filterType` is required');
+        throw new Error('`filterType` is required')
       }
-      return true;
+      return true
     })
     .trim(),
-];
+]
 
 export const searchMoviesPageValidator = [
   ...baseMoviesPageValidator,
   query('keyword').trim().notEmpty().withMessage('`keyword` is required'),
-];
+]
 
 export const magnetsValidator = [
   query('gid').trim().notEmpty().withMessage('`gid` is required'),
@@ -50,9 +50,9 @@ export const magnetsValidator = [
     .optional()
     .custom((_, { req }) => {
       if (!req.query?.sortOrder) {
-        throw new Error('`sortOrder` is required');
+        throw new Error('`sortOrder` is required')
       }
-      return true;
+      return true
     })
     .trim()
     .isIn(['date', 'size'])
@@ -61,11 +61,11 @@ export const magnetsValidator = [
     .optional()
     .custom((_, { req }) => {
       if (!req.query?.sortBy) {
-        throw new Error('`sortBy` is required');
+        throw new Error('`sortBy` is required')
       }
-      return true;
+      return true
     })
     .trim()
     .isIn(['asc', 'desc'])
     .withMessage('`sortOrder` must be `asc` or `desc`'),
-];
+]

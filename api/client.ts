@@ -1,21 +1,21 @@
-import type { Agent as HttpsAgent } from 'node:https';
+import type { Agent as HttpsAgent } from 'node:https'
 
-import got, { type ExtendOptions } from 'got';
-import { HttpsProxyAgent } from 'https-proxy-agent';
-import { SocksProxyAgent } from 'socks-proxy-agent';
+import got, { type ExtendOptions } from 'got'
+import { HttpsProxyAgent } from 'https-proxy-agent'
+import { SocksProxyAgent } from 'socks-proxy-agent'
 
-import { JAVBUS_TIMEOUT, USER_AGENT } from './constants.js';
-import ENV from './env.js';
+import { JAVBUS_TIMEOUT, USER_AGENT } from './constants.js'
+import ENV from './env.js'
 
-const PROXY_URL = ENV.HTTP_PROXY ?? ENV.HTTPS_PROXY;
+const PROXY_URL = ENV.HTTP_PROXY ?? ENV.HTTPS_PROXY
 
-export let agent: HttpsAgent | undefined = undefined;
+export let agent: HttpsAgent | undefined = undefined
 
 if (PROXY_URL) {
   if (/^https?:\/\//.test(PROXY_URL)) {
-    agent = new HttpsProxyAgent(PROXY_URL) as HttpsAgent;
+    agent = new HttpsProxyAgent(PROXY_URL) as HttpsAgent
   } else if (PROXY_URL.startsWith('socks')) {
-    agent = new SocksProxyAgent(PROXY_URL) as HttpsAgent;
+    agent = new SocksProxyAgent(PROXY_URL) as HttpsAgent
   }
 }
 
@@ -27,12 +27,12 @@ const extendOptions: ExtendOptions = {
   timeout: {
     request: JAVBUS_TIMEOUT,
   },
-};
-
-if (agent) {
-  extendOptions.agent = { http: agent, https: agent };
 }
 
-const client = got.extend(extendOptions);
+if (agent) {
+  extendOptions.agent = { http: agent, https: agent }
+}
 
-export default client;
+const client = got.extend(extendOptions)
+
+export default client

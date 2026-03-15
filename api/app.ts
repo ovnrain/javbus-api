@@ -1,52 +1,52 @@
-import express, { type NextFunction, type Request, type Response } from 'express';
-import session from 'express-session';
-import { body } from 'express-validator';
-import { RequestError } from 'got';
-import createError, { isHttpError } from 'http-errors';
-import memorystore from 'memorystore';
+import express, { type NextFunction, type Request, type Response } from 'express'
+import session from 'express-session'
+import { body } from 'express-validator'
+import { RequestError } from 'got'
+import createError, { isHttpError } from 'http-errors'
+import memorystore from 'memorystore'
 
-import ENV from './env.js';
-import router from './router.js';
-import { commonValidate, QueryValidationError } from './validatorUtils.js';
+import ENV from './env.js'
+import router from './router.js'
+import { commonValidate, QueryValidationError } from './validatorUtils.js'
 
 // 扩展 express-session 的 SessionData
 declare module 'express-session' {
   interface SessionData {
     user?: {
-      username: string;
-    };
+      username: string
+    }
   }
 }
 
 interface UserResBody {
-  success: boolean;
-  message: string;
+  success: boolean
+  message: string
 }
 
 type LoginRequest = Request<
   Record<string, never>,
   UserResBody,
   { username?: string; password?: string }
->;
+>
 
-type GetUserResponse = Response<{ username: string | undefined; useCredentials: boolean }>;
+type GetUserResponse = Response<{ username: string | undefined; useCredentials: boolean }>
 
 // 登录、退出的响应
-type UserActionResponse = Response<UserResBody>;
+type UserActionResponse = Response<UserResBody>
 
-const app = express();
+const app = express()
 
-app.disable('x-powered-by');
-app.set('trust proxy', true);
+app.disable('x-powered-by')
+app.set('trust proxy', true)
 
-app.use(express.static('public'));
+app.use(express.static('public'))
 // 用于解析 application/json
-app.use(express.json());
+app.use(express.json())
 // 用于解析 application/x-www-form-urlencoded
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }))
 
-const { JAVBUS_AUTH_TOKEN, ADMIN_USERNAME, ADMIN_PASSWORD, JAVBUS_SESSION_SECRET } = ENV;
-const useCredentials = Boolean(ADMIN_USERNAME && ADMIN_PASSWORD);
+const { JAVBUS_AUTH_TOKEN, ADMIN_USERNAME, ADMIN_PASSWORD, JAVBUS_SESSION_SECRET } = ENV
+const useCredentials = Boolean(ADMIN_USERNAME && ADMIN_PASSWORD)
 const loginValidators = [
   { field: 'username', expect: ADMIN_USERNAME },
   { field: 'password', expect: ADMIN_PASSWORD },
@@ -55,8 +55,8 @@ const loginValidators = [
     .notEmpty()
     .trim()
     .custom((value: string) => (expect ? value === expect : false)),
-);
-const MemoryStore = memorystore(session);
+)
+const MemoryStore = memorystore(session)
 
 app.use(
   session({
@@ -74,82 +74,82 @@ app.use(
       checkPeriod: 24 * 60 * 60 * 1000, // prune expired entries every 24h
     }),
   }),
-);
+)
 
 app.get('/api/user', (req, res: GetUserResponse) => {
-  res.json({ username: req.session.user?.username, useCredentials });
-});
+  res.json({ username: req.session.user?.username, useCredentials })
+})
 
 app.post(
   '/api/login',
   commonValidate(loginValidators, (errors, req, res) => {
-    res.status(401).json({ success: false, message: 'Invalid username or password' });
+    res.status(401).json({ success: false, message: 'Invalid username or password' })
   }),
   (req: LoginRequest, res: UserActionResponse) => {
-    const { username } = req.body;
+    const { username } = req.body
 
     if (username) {
-      req.session.user = { username };
+      req.session.user = { username }
     }
 
-    res.json({ success: true, message: 'Login success' });
+    res.json({ success: true, message: 'Login success' })
   },
-);
+)
 
 app.post('/api/logout', (req, res: UserActionResponse) => {
   req.session.destroy((err) => {
     if (err) {
-      res.json({ success: false, message: (err as Error).message || 'Unknown error' });
+      res.json({ success: false, message: (err as Error).message || 'Unknown error' })
     } else {
-      res.json({ success: true, message: 'Logout success' });
+      res.json({ success: true, message: 'Logout success' })
     }
-  });
-});
+  })
+})
 
 app.use((req, res, next) => {
-  const token = req.headers['j-auth-token'];
-  const user = req.session.user;
-  const originalUrl = req.originalUrl;
+  const token = req.headers['j-auth-token']
+  const user = req.session.user
+  const originalUrl = req.originalUrl
 
   if (token) {
     if (token === JAVBUS_AUTH_TOKEN) {
-      next();
+      next()
     } else {
-      res.status(401).json({ error: 'Unauthorized' });
+      res.status(401).json({ error: 'Unauthorized' })
     }
   } else if (useCredentials) {
     if (user) {
-      next();
+      next()
     } else {
-      res.redirect(`/login.html?redirect=${encodeURIComponent(originalUrl)}`);
+      res.redirect(`/login.html?redirect=${encodeURIComponent(originalUrl)}`)
     }
   } else {
-    next();
+    next()
   }
-});
+})
 
-app.use('/api', router);
+app.use('/api', router)
 
 app.use((_req, _res, next) => {
-  next(new createError.NotFound());
-});
+  next(new createError.NotFound())
+})
 
 app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
-  let status: number;
-  let messages: string[] = [];
+  let status: number
+  let messages: string[] = []
 
   if (err instanceof QueryValidationError) {
-    status = 400;
-    messages = err.messages;
+    status = 400
+    messages = err.messages
   } else if (err instanceof RequestError) {
-    status = err.response?.statusCode ?? 500;
+    status = err.response?.statusCode ?? 500
   } else if (isHttpError(err)) {
-    status = err.statusCode;
+    status = err.statusCode
   } else {
-    status = 500;
+    status = 500
   }
 
-  res.status(status).json({ error: err.message || 'Unknown Error', messages });
-});
+  res.status(status).json({ error: err.message || 'Unknown Error', messages })
+})
 
-export default app;
+export default app

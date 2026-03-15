@@ -1,11 +1,11 @@
-import { z } from 'zod';
+import { z } from 'zod'
 
 const proxySchema = z
   .string()
   .regex(/^(https?|socks5?):\/\//, {
     message: 'Proxy must start with http:// or https:// or socks:// or socks5://',
   })
-  .optional();
+  .optional()
 
 const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'production']).default('development'),
@@ -18,8 +18,8 @@ const envSchema = z.object({
   ADMIN_PASSWORD: z.string().optional(),
   JAVBUS_AUTH_TOKEN: z.string().optional(),
   JAVBUS_SESSION_SECRET: z.string().optional(),
-});
+})
 
-const ENV = envSchema.parse(process.env);
+const ENV = envSchema.parse(process.env)
 
-export default ENV;
+export default ENV

@@ -1,9 +1,9 @@
-import js from '@eslint/js';
-import { defineConfig, globalIgnores } from 'eslint/config';
-import prettierRecommended from 'eslint-plugin-prettier/recommended';
-import simpleImportSort from 'eslint-plugin-simple-import-sort';
-import globals from 'globals';
-import tseslint from 'typescript-eslint';
+import js from '@eslint/js'
+import { defineConfig, globalIgnores } from 'eslint/config'
+import prettierRecommended from 'eslint-plugin-prettier/recommended'
+import simpleImportSort from 'eslint-plugin-simple-import-sort'
+import globals from 'globals'
+import tseslint from 'typescript-eslint'
 
 export default defineConfig([
   globalIgnores(['dist']),
@@ -40,4 +40,4 @@ export default defineConfig([
       'simple-import-sort/exports': 'error',
     },
   },
-]);
+])

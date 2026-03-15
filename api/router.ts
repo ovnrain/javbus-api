@@ -7,15 +7,15 @@ import {
   getMoviesByKeywordAndPage,
   getMoviesByPage,
   getStarInfo,
-} from './javbusParser.js'
+} from './javbus-parser.js'
 import type { MagnetType, MovieType, SortBy, SortOrder } from './types.js'
+import { validate } from './validator-utils.js'
 import {
   magnetsValidator,
   moviesPageValidator,
   searchMoviesPageValidator,
   typeValidator,
 } from './validators.js'
-import { validate } from './validatorUtils.js'
 
 const movieRouter = Router()
 

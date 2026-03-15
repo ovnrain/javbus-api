@@ -1,4 +1,4 @@
-import { parseEnv, port, z } from 'znv';
+import { z } from 'zod';
 
 const proxySchema = z
   .string()
@@ -7,9 +7,9 @@ const proxySchema = z
   })
   .optional();
 
-const envSchema = {
+const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'production']).default('development'),
-  PORT: port().default(3000),
+  PORT: z.coerce.number().int().min(1).max(65535).default(3000),
   SSL_CERT: z.string().optional(),
   SSL_KEY: z.string().optional(),
   HTTP_PROXY: proxySchema,
@@ -18,8 +18,8 @@ const envSchema = {
   ADMIN_PASSWORD: z.string().optional(),
   JAVBUS_AUTH_TOKEN: z.string().optional(),
   JAVBUS_SESSION_SECRET: z.string().optional(),
-};
+});
 
-const ENV = parseEnv(process.env, envSchema);
+const ENV = envSchema.parse(process.env);
 
 export default ENV;

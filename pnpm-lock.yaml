@@ -47,12 +47,9 @@ importers:
       socks-proxy-agent:
         specifier: ^9.0.0
         version: 9.0.0
-      znv:
-        specifier: ^0.5.0
-        version: 0.5.0(zod@3.25.67)
       zod:
-        specifier: ^3.25.67
-        version: 3.25.67
+        specifier: ^4.3.6
+        version: 4.3.6
     devDependencies:
       '@eslint/js':
         specifier: ^10.0.1
@@ -1378,13 +1375,8 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
 
-  znv@0.5.0:
-    resolution: {integrity: sha512-o4s0CemQU7+ByxBQQnqe72QtlVDsw1GAPxBbTCbQP3sNe7/5bztRJ8fUf2dbOuhZrMapWe82hpOTBZ7QVnjZ2g==}
-    peerDependencies:
-      zod: ^3.24.2
-
-  zod@3.25.67:
-    resolution: {integrity: sha512-idA2YXwpCdqUSKRCACDE6ItZD9TZzy3OZMtpfLoh6oPR47lipysRrJfjzMqFxQ3uJuUPyUeWe1r9vLH33xO/Qw==}
+  zod@4.3.6:
+    resolution: {integrity: sha512-rftlrkhHZOcjDwkGlnUtZZkvaPHCsDATp4pGpuOOMDaTdDDXF91wuVDJoWoPsKX/3YPQ5fHuF3STjcYyKr+Qhg==}
 
 snapshots:
 
@@ -2630,8 +2622,4 @@ snapshots:
 
   yocto-queue@0.1.0: {}
 
-  znv@0.5.0(zod@3.25.67):
-    dependencies:
-      zod: 3.25.67
-
-  zod@3.25.67: {}
+  zod@4.3.6: {}

@@ -76,6 +76,11 @@ starRouter.get('/:id', validate([typeValidator]), async (req, res, next) => {
     return
   }
 
+  if (typeof starId !== 'string') {
+    next(new createError.BadRequest('star id must be a string'))
+    return
+  }
+
   const type = req.query.type as MovieType | undefined
 
   try {
@@ -95,6 +100,11 @@ magnetRouter.get('/:movieId', validate(magnetsValidator), async (req, res, next)
 
   if (!movieId) {
     next(new createError.BadRequest('movie id is required'))
+    return
+  }
+
+  if (typeof movieId !== 'string') {
+    next(new createError.BadRequest('movie id must be a string'))
     return
   }
 

@@ -12,8 +12,8 @@ import type {
   MagnetType,
   Movie,
   MovieDetail,
-  MoviesPage,
   MovieType,
+  MoviesPage,
   Property,
   Sample,
   SearchMoviesPage,
@@ -22,7 +22,7 @@ import type {
   SortOrder,
   StarInfo,
 } from './types.js'
-import { formatImageUrl, PAGE_REG } from './utils.js'
+import { PAGE_REG, formatImageUrl } from './utils.js'
 
 type StarInfoRequiredKey = 'avatar' | 'id' | 'name'
 
@@ -100,7 +100,7 @@ export function parseStarInfo(pageHTML: string, starId: string): StarInfo {
   }
 }
 
-export function parseFilterInfo(pageHTML: string, type: FilterType, value: string) {
+function parseFilterInfo(pageHTML: string, type: FilterType, value: string) {
   const doc = parse(pageHTML)
   const name = doc.querySelector('title')?.textContent.match(/^(?:第\d+?頁 - )?(.+?) - /)?.[1] ?? ''
 
@@ -183,7 +183,7 @@ export function convertMagnetsHTML(html: string) {
       return { id, link, isHD, title, size, numberSize, shareDate, hasSubtitle }
     })
     .filter(({ id, link, title }) => id && link && title)
-    .sort((a, b) => (a.numberSize && b.numberSize ? b.numberSize - a.numberSize : 0))
+    .toSorted((a, b) => (a.numberSize && b.numberSize ? b.numberSize - a.numberSize : 0))
 
   return magnets
 }
@@ -317,7 +317,7 @@ export async function getMovieDetail(id: string): Promise<MovieDetail> {
         },
       })
       imageSize = { width, height }
-    } catch (e) {
+    } catch {
       //
     }
   }
@@ -385,7 +385,7 @@ export async function getMovieDetail(id: string): Promise<MovieDetail> {
 
         return { id, title, img }
       })
-      .filter((movie): movie is SimilarMovie => Boolean(id) && Boolean(title)) ?? []
+      .filter((movie): movie is SimilarMovie => Boolean(movie.id) && Boolean(movie.title)) ?? []
 
   return {
     id,

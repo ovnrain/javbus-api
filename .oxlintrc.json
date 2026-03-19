@@ -1,0 +1,61 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "ignorePatterns": ["dist/**"],
+  "categories": {
+    "correctness": "error",
+    "suspicious": "warn",
+    "pedantic": "off",
+    "perf": "warn",
+    "style": "off",
+    "restriction": "off",
+    "nursery": "off"
+  },
+  "plugins": ["eslint", "unicorn", "typescript", "oxc", "import", "promise", "node"],
+  "env": {
+    "node": true,
+    "es2022": true,
+    "builtin": true
+  },
+  "rules": {
+    "no-console": "off",
+    "no-debugger": "error",
+    "no-await-in-loop": "off",
+    "no-shadow": "off",
+    "no-inline-comments": "error",
+    "no-promise-executor-return": "error",
+    "prefer-const": "error",
+    "sort-imports": ["warn", { "ignoreDeclarationSort": true }],
+    "typescript/restrict-template-expressions": ["error", { "allowNumber": true }],
+    "typescript/consistent-type-imports": ["error", { "fixStyle": "inline-type-imports" }],
+    "typescript/no-import-type-side-effects": "error",
+    "typescript/no-misused-promises": "error",
+    "typescript/switch-exhaustiveness-check": "warn",
+    "typescript/no-unnecessary-condition": "error",
+    "typescript/consistent-type-exports": "warn",
+    "typescript/no-unsafe-assignment": "off",
+    "typescript/no-explicit-any": "error",
+    "typescript/no-confusing-void-expression": "error",
+    "typescript/no-unnecessary-type-parameters": "error",
+    "typescript/no-empty-object-type": "error",
+    "typescript/array-type": ["error", { "default": "array" }],
+    "typescript/prefer-for-of": "error",
+    "typescript/prefer-reduce-type-parameter": "error",
+    "typescript/consistent-type-definitions": "error",
+    "typescript/explicit-module-boundary-types": "off",
+    "typescript/strict-void-return": "error",
+    "typescript/no-unsafe-type-assertion": "off",
+    "import/no-duplicates": ["error", { "preferInline": true }],
+    "import/no-namespace": "error",
+    "import/prefer-default-export": "error",
+    "unicorn/prefer-string-replace-all": "error",
+    "unicorn/explicit-length-check": "error",
+    "unicorn/filename-case": ["error", { "case": "kebabCase" }],
+    "unicorn/prefer-node-protocol": "error",
+    "unicorn/text-encoding-identifier-case": "error",
+    "oxc/no-async-endpoint-handlers": "off"
+  },
+  "options": {
+    "typeAware": true,
+    "typeCheck": true
+  }
+}

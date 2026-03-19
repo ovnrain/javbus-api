@@ -1,12 +1,15 @@
-/* eslint-disable no-console */
-import fs from 'fs'
-import http, { Server as HttpServer } from 'http'
-import https, { Server as HttpsServer } from 'https'
+import fs from 'node:fs'
+import http, { type Server as HttpServer } from 'node:http'
+import https, { type Server as HttpsServer } from 'node:https'
 
 import app from './app.js'
 import ENV from './env.js'
 
 const { PORT, SSL_CERT, SSL_KEY } = ENV
+
+const requestListener: http.RequestListener = (req, res) => {
+  app(req, res)
+}
 
 let server: HttpServer | HttpsServer
 let scheme: 'http' | 'https'
@@ -17,11 +20,11 @@ if (SSL_CERT && SSL_KEY && fs.existsSync(SSL_CERT) && fs.existsSync(SSL_KEY)) {
       cert: fs.readFileSync(SSL_CERT),
       key: fs.readFileSync(SSL_KEY),
     },
-    app,
+    requestListener,
   )
   scheme = 'https'
 } else {
-  server = http.createServer(app)
+  server = http.createServer(requestListener)
   scheme = 'http'
 }
 

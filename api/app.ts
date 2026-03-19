@@ -7,7 +7,7 @@ import memorystore from 'memorystore'
 
 import ENV from './env.js'
 import router from './router.js'
-import { commonValidate, QueryValidationError } from './validator-utils.js'
+import { QueryValidationError, commonValidate } from './validator-utils.js'
 
 // 扩展 express-session 的 SessionData
 declare module 'express-session' {
@@ -71,7 +71,8 @@ app.use(
     saveUninitialized: false,
     secret: JAVBUS_SESSION_SECRET ?? '_jav_bus_',
     store: new MemoryStore({
-      checkPeriod: 24 * 60 * 60 * 1000, // prune expired entries every 24h
+      // prune expired entries every 24h
+      checkPeriod: 24 * 60 * 60 * 1000,
     }),
   }),
 )

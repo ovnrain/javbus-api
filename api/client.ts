@@ -1,7 +1,6 @@
-import type { Agent as HttpsAgent } from 'node:https'
-
-import got, { type ExtendOptions } from 'got'
+import { type ExtendOptions, got } from 'got'
 import { HttpsProxyAgent } from 'https-proxy-agent'
+import type { Agent as HttpsAgent } from 'node:https'
 import { SocksProxyAgent } from 'socks-proxy-agent'
 
 import { JAVBUS_TIMEOUT, USER_AGENT } from './constants.js'

@@ -1,6 +1,6 @@
 import type { NextFunction, Request, Response } from 'express'
 import {
-  Result,
+  type Result,
   type ValidationChain,
   type ValidationError,
   validationResult,
@@ -48,7 +48,6 @@ export const validate = (
     next(
       new QueryValidationError(
         'query is invalid',
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
         errors.array().map((error) => error.msg),
       ),
     )

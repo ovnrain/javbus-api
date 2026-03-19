@@ -1,16 +1,30 @@
 {
   "js/ts.tsdk.path": "node_modules/typescript/lib",
 
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.defaultFormatter": "oxc.oxc-vscode",
   "editor.formatOnSave": true,
 
+  "oxc.typeAware": true,
+  "oxc.fixKind": "safe_fix",
+
+  // 保存时应用 OXC 的自动修复
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit"
+    "source.fixAll.oxc": "explicit"
   },
 
-  "[javascript][typescript]": {
-    "editor.formatOnSave": false
+  "[javascript]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
   },
 
-  "eslint.validate": ["javascript", "typescript"]
+  "js/ts.preferences.preferTypeOnlyAutoImports": true,
+  "js/ts.preferences.importModuleSpecifier": "non-relative"
 }

@@ -2,21 +2,12 @@
   "name": "javbus-api",
   "version": "2.1.5",
   "description": "JavBus API",
-  "main": "index.js",
-  "homepage": "https://github.com/ovnrain/javbus-api#readme",
-  "scripts": {
-    "start": "node -r dotenv/config dist/server.js",
-    "dev": "tsx watch --clear-screen=false -r dotenv/config api/server.ts",
-    "build": "tsc",
-    "vercel-build": "tsc",
-    "format": "prettier --write \"api/**/*.ts\"",
-    "lint": "eslint . --max-warnings 0",
-    "prepare": "husky"
-  },
   "keywords": [
-    "javbus",
-    "api"
+    "api",
+    "javbus"
   ],
+  "homepage": "https://github.com/ovnrain/javbus-api#readme",
+  "license": "MIT",
   "author": {
     "name": "ovnrain",
     "email": "ovnrain@gmail.com"
@@ -25,27 +16,18 @@
     "type": "git",
     "url": "https://github.com/ovnrain/javbus-api.git"
   },
-  "license": "MIT",
-  "devDependencies": {
-    "@eslint/js": "^10.0.1",
-    "@types/bytes": "^3.1.5",
-    "@types/express": "^5.0.6",
-    "@types/express-session": "^1.18.2",
-    "@types/http-errors": "^2.0.5",
-    "@types/node": "^25.5.0",
-    "@types/probe-image-size": "^7.2.5",
-    "@types/qs": "^6.15.0",
-    "eslint": "^10.0.3",
-    "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-prettier": "^5.5.5",
-    "eslint-plugin-simple-import-sort": "^12.1.1",
-    "globals": "^17.4.0",
-    "husky": "^9.1.7",
-    "lint-staged": "^16.4.0",
-    "prettier": "^3.8.1",
-    "tsx": "^4.21.0",
-    "typescript": "^5.9.3",
-    "typescript-eslint": "^8.57.1"
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node -r dotenv/config dist/server.js",
+    "dev": "tsx watch --clear-screen=false -r dotenv/config api/server.ts",
+    "build": "tsc",
+    "vercel-build": "tsc",
+    "lint": "oxlint --deny-warnings",
+    "fmt": "oxfmt",
+    "fmt:check": "oxfmt --check",
+    "check": "oxlint --deny-warnings && oxfmt --check",
+    "prepare": "husky"
   },
   "dependencies": {
     "bytes": "^3.1.2",
@@ -63,13 +45,28 @@
     "socks-proxy-agent": "^9.0.0",
     "zod": "^4.3.6"
   },
-  "type": "module",
+  "devDependencies": {
+    "@types/bytes": "^3.1.5",
+    "@types/express": "^5.0.6",
+    "@types/express-session": "^1.18.2",
+    "@types/http-errors": "^2.0.5",
+    "@types/node": "^25.5.0",
+    "@types/probe-image-size": "^7.2.5",
+    "@types/qs": "^6.15.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
+    "oxfmt": "^0.41.0",
+    "oxlint": "^1.56.0",
+    "oxlint-tsgolint": "^0.17.0",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  },
   "lint-staged": {
-    "*.ts": [
-      "eslint --max-warnings 0"
+    "*.{ts,json}": [
+      "oxfmt"
     ],
-    "*.html": [
-      "prettier --write"
+    "*.ts": [
+      "oxlint --deny-warnings"
     ]
   },
   "packageManager": "pnpm@10.32.1"

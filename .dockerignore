@@ -3,3 +3,14 @@ npm-debug.log
 dist
 .git
 .gitignore
+.github
+.husky
+.vercel
+.vscode
+.DS_Store
+.env
+.env.local
+design
+api.http
+docker-build.sh
+docker-build-push.sh

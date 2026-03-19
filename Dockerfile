@@ -1,6 +1,4 @@
-ARG NODE_IMAGE=node:lts-bookworm-slim
-
-FROM ${NODE_IMAGE} AS base
+FROM node:lts-slim AS base
 
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
@@ -28,7 +26,7 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
 
 # -------------------
 
-FROM ${NODE_IMAGE}
+FROM node:lts-slim
 
 RUN apt-get update && \
   apt-get install -y --no-install-recommends tini && \

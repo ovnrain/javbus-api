@@ -31,35 +31,35 @@
   },
   "dependencies": {
     "bytes": "^3.1.2",
-    "dotenv": "^17.4.1",
+    "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "express-session": "^1.19.0",
     "express-validator": "^7.3.2",
-    "got": "^15.0.1",
+    "got": "^15.0.5",
     "http-errors": "^2.0.1",
     "https-proxy-agent": "^9.0.0",
-    "memorystore": "^1.6.7",
+    "memorystore": "^1.6.8",
     "node-html-parser": "^7.1.0",
-    "probe-image-size": "^7.2.3",
+    "probe-image-size": "^7.3.0",
     "qs": "^6.15.1",
     "socks-proxy-agent": "^10.0.0",
-    "zod": "^4.3.6"
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@types/bytes": "^3.1.5",
     "@types/express": "^5.0.6",
-    "@types/express-session": "^1.18.2",
+    "@types/express-session": "^1.19.0",
     "@types/http-errors": "^2.0.5",
-    "@types/node": "^25.6.0",
+    "@types/node": "^25.7.0",
     "@types/probe-image-size": "^7.2.5",
-    "@types/qs": "^6.15.0",
+    "@types/qs": "^6.15.1",
     "husky": "^9.1.7",
-    "lint-staged": "^16.4.0",
-    "oxfmt": "^0.44.0",
-    "oxlint": "^1.59.0",
-    "oxlint-tsgolint": "^0.20.0",
+    "lint-staged": "^17.0.4",
+    "oxfmt": "^0.49.0",
+    "oxlint": "^1.64.0",
+    "oxlint-tsgolint": "^0.22.1",
     "tsx": "^4.21.0",
-    "typescript": "^6.0.2"
+    "typescript": "^6.0.3"
   },
   "lint-staged": {
     "*.{ts,json}": [

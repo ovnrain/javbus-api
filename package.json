@@ -35,14 +35,14 @@
     "express": "^5.2.1",
     "express-session": "^1.19.0",
     "express-validator": "^7.3.2",
-    "got": "^15.0.5",
+    "got": "^15.1.0",
     "http-errors": "^2.0.1",
-    "https-proxy-agent": "^9.0.0",
+    "https-proxy-agent": "^9.1.0",
     "memorystore": "^1.6.8",
-    "node-html-parser": "^7.1.0",
+    "node-html-parser": "^9.0.0",
     "probe-image-size": "^7.3.0",
-    "qs": "^6.15.2",
-    "socks-proxy-agent": "^10.0.0",
+    "qs": "^6.15.3",
+    "socks-proxy-agent": "^10.1.0",
     "zod": "^4.4.3"
   },
   "devDependencies": {
@@ -50,16 +50,16 @@
     "@types/express": "^5.0.6",
     "@types/express-session": "^1.19.0",
     "@types/http-errors": "^2.0.5",
-    "@types/node": "^25.9.1",
+    "@types/node": "^26.1.1",
     "@types/probe-image-size": "^7.2.5",
     "@types/qs": "^6.15.1",
     "husky": "^9.1.7",
-    "lint-staged": "^17.0.5",
-    "oxfmt": "^0.51.0",
-    "oxlint": "^1.66.0",
-    "oxlint-tsgolint": "^0.23.0",
-    "tsx": "^4.22.3",
-    "typescript": "^6.0.3"
+    "lint-staged": "^17.0.8",
+    "oxfmt": "^0.58.0",
+    "oxlint": "^1.73.0",
+    "oxlint-tsgolint": "^0.24.0",
+    "tsx": "^4.23.0",
+    "typescript": "^7.0.2"
   },
   "lint-staged": {
     "*.{ts,json}": [
@@ -69,5 +69,5 @@
       "oxlint --deny-warnings"
     ]
   },
-  "packageManager": "pnpm@11.1.2"
+  "packageManager": "pnpm@11.13.0"
 }

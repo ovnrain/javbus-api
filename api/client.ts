@@ -12,9 +12,9 @@ export let agent: HttpsAgent | undefined = undefined
 
 if (PROXY_URL) {
   if (/^https?:\/\//.test(PROXY_URL)) {
-    agent = new HttpsProxyAgent(PROXY_URL) as HttpsAgent
+    agent = new HttpsProxyAgent(PROXY_URL)
   } else if (PROXY_URL.startsWith('socks')) {
-    agent = new SocksProxyAgent(PROXY_URL) as HttpsAgent
+    agent = new SocksProxyAgent(PROXY_URL)
   }
 }
 

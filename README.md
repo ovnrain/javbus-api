@@ -627,7 +627,3 @@ GET
 ```
 
 </details>
-
-## Star 趋势 <!-- omit in toc -->
-
-[![Stargazers over time](https://starchart.cc/ovnrain/javbus-api.svg?variant=adaptive)](https://starchart.cc/ovnrain/javbus-api)

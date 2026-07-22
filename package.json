@@ -69,5 +69,5 @@
       "oxlint --deny-warnings"
     ]
   },
-  "packageManager": "pnpm@11.14.0"
+  "packageManager": "pnpm@11.15.1"
 }

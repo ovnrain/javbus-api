@@ -68,5 +68,5 @@
       "oxlint --deny-warnings --no-error-on-unmatched-pattern"
     ]
   },
-  "packageManager": "pnpm@12.3.4"
+  "packageManager": "pnpm@12.9.1"
 }

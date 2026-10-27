@@ -1,4 +1,4 @@
-FROM node:lts-slim AS base
+FROM node:lts-alpine AS base
 
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
@@ -37,11 +37,9 @@ RUN pnpm run build
 
 # -------------------
 
-FROM node:lts-slim AS runtime
+FROM node:lts-alpine AS runtime
 
-RUN apt-get update && \
-  apt-get install -y --no-install-recommends tini && \
-  rm -rf /var/lib/apt/lists/*
+RUN apk add --no-cache tini
 
 ENV NODE_ENV=production
 USER node
@@ -55,5 +53,5 @@ COPY --chown=node:node --from=build /app/public /app/public
 
 EXPOSE 3000
 
-ENTRYPOINT ["/usr/bin/tini", "--"]
+ENTRYPOINT ["/sbin/tini", "--"]
 CMD [ "node", "dist/server.js" ]

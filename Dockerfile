@@ -1,4 +1,4 @@
-FROM node:lts-alpine AS base
+FROM node:krypton-alpine AS base
 
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
@@ -37,7 +37,7 @@ RUN pnpm run build
 
 # -------------------
 
-FROM node:lts-alpine AS runtime
+FROM node:krypton-alpine AS runtime
 
 RUN apk add --no-cache tini
 
